@@ -1,7 +1,7 @@
 # Roadmap: Melody Map
 
 **Project:** Melody Map
-**Phases:** 4 (Coarse granularity)
+**Phases:** 5 (Coarse granularity)
 **Requirements:** 32 mapped | 0 unmapped
 **Generated:** 2026-04-20
 
@@ -134,6 +134,21 @@
 
 ---
 
+## Phase 5: UI Overhaul — Modernize and Improve Usability
+
+**Status:** Not started
+**Plans:** 0 plans
+
+**Goal:** Overhaul the visual design and interaction patterns to make the app more user-friendly and modern. The current inline-style UI is functional but visually lacking — improve layout, typography, spacing, responsiveness, and overall polish.
+
+**Depends on:** Phases 1–4
+
+**Requirements:** TBD
+
+**Success Criteria:** TBD
+
+---
+
 ## Phase Map
 
 | # | Phase | Goal | Requirements | Success Criteria |
@@ -142,6 +157,7 @@
 | 2 | Sheet Editor | Full sheet editing: lyrics, tempo, chord-aligned markers, three instrument arrangements | LYR-01–04, ARR-01–08 | 10 criteria |
 | 3 | Composition Builder | Create and manage compositions from multiple sheets | COMP-01–07 | 9 criteria |
 | 4 | Import/Export + Polish | JSON import/export, error handling, print styles, empty states | DATA-01–06 | 8 criteria |
+| 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | TBD | TBD |
 
 ---
 
@@ -163,11 +179,4 @@ After each phase, the **Verifier** agent will confirm:
 
 ## Backlog
 
-### Phase 999.1: UI Overhaul — Modernize and Improve Usability (BACKLOG)
-
-**Goal:** Overhaul the visual design and interaction patterns to make the app more user-friendly and modern. The current inline-style UI is functional but visually lacking — improve layout, typography, spacing, responsiveness, and overall polish.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
+_No items in backlog._
