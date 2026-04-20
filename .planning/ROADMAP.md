@@ -9,7 +9,15 @@
 
 ## Phase 1: App Foundation
 
-**Goal:** Project scaffold, data model, local persistence, and navigation
+**Status:** ● In Progress
+**Plans:** 3 plans in 2 waves
+
+**Plans:**
+- [ ] 01-01-PLAN.md — Types + Schemas + localStorage hook
+- [ ] 01-02-PLAN.md — Context providers + App routing
+- [ ] 01-03-PLAN.md — SheetList + SheetCard UI
+
+**Goal:** Data model, local persistence, context providers, and sheet list UI
 
 **Requirements:** SHEET-01, SHEET-02, SHEET-03, SHEET-04, SHEET-05, SAVE-01, SAVE-02
 
