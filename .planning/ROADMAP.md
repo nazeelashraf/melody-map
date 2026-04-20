@@ -98,6 +98,13 @@
 
 ## Phase 4: Import/Export + Polish
 
+**Status:** ○ Ready to Execute
+**Plans:** 2 plans in 2 waves
+
+**Plans:**
+- [ ] 04-01-PLAN.md — Data import/export with Zod validation and error handling
+- [ ] 04-02-PLAN.md — UX polish with ConfirmDialog, EmptyState, and print stylesheet
+
 **Goal:** JSON import/export for sheets and compositions, UX polish, print styles
 
 **Requirements:** DATA-01, DATA-02, DATA-03, DATA-04, DATA-05, DATA-06
