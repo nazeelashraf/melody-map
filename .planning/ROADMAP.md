@@ -2,7 +2,7 @@
 
 **Project:** Melody Map
 **Phases:** 4 (Coarse granularity)
-**Requirements:** 28 mapped | 0 unmapped
+**Requirements:** 32 mapped | 0 unmapped
 **Generated:** 2026-04-20
 
 ---
@@ -37,17 +37,19 @@
 
 **Goal:** Full sheet editing with lyrics, tempo, chords, and three instrument arrangements
 
-**Requirements:** LYR-01, LYR-02, LYR-03, ARR-01, ARR-02, ARR-03, ARR-04, ARR-05, ARR-06
+**Requirements:** LYR-01, LYR-02, LYR-03, LYR-04, ARR-01, ARR-02, ARR-03, ARR-04, ARR-05, ARR-06, ARR-07, ARR-08
 
 **Success Criteria:**
 1. User can type lyrics in a textarea and see preserved line breaks rendered below
 2. User can set and change tempo (BPM) with a numeric input (20–300 range)
-3. User can add and edit chord/section markers in the sheet
-4. User sees three instrument panels (Piano, Guitar, Drums) in the sheet editor
-5. Editing piano content does not affect guitar or drum content
-6. Editing any field auto-saves to localStorage (debounced)
-7. Sheet editor shows the sheet title and is editable
-8. User can navigate back to sheet list from editor
+3. User can add chord markers above specific character positions in each lyric line
+4. Chord markers stay character-aligned when lyric text is edited (chords shift to stay above correct syllable)
+5. Chord lines render visually above their corresponding lyric lines in the correct character positions
+6. User sees three instrument panels (Piano, Guitar, Drums) in the sheet editor
+7. Editing piano content does not affect guitar or drum content
+8. Editing any field auto-saves to localStorage (debounced)
+9. Sheet editor shows the sheet title and is editable
+10. User can navigate back to sheet list from editor
 
 **Delivered Artifacts:**
 - `src/components/SheetEditor.tsx` — Main sheet editing view
@@ -114,7 +116,7 @@
 | # | Phase | Goal | Requirements | Success Criteria |
 |---|-------|------|--------------|------------------|
 | 1 | App Foundation | Project scaffold, data model, persistence, navigation | SHEET-01–05, SAVE-01–02 | 6 criteria |
-| 2 | Sheet Editor | Full sheet editing: lyrics, tempo, chords, three instrument arrangements | LYR-01–03, ARR-01–06 | 8 criteria |
+| 2 | Sheet Editor | Full sheet editing: lyrics, tempo, chord-aligned markers, three instrument arrangements | LYR-01–04, ARR-01–08 | 10 criteria |
 | 3 | Composition Builder | Create and manage compositions from multiple sheets | COMP-01–07 | 9 criteria |
 | 4 | Import/Export + Polish | JSON import/export, error handling, print styles, empty states | DATA-01–06 | 8 criteria |
 

@@ -18,15 +18,18 @@
 - [ ] **LYR-01**: User can add and edit song lyrics in a sheet
 - [ ] **LYR-02**: User can preserve line breaks and verse structure in lyrics (textarea with preformatted output)
 - [ ] **LYR-03**: User can update lyrics without losing arrangement data
+- [ ] **LYR-04**: Editing lyric text automatically shifts chord markers to stay character-aligned
 
 ### Arrangement
 
-- [ ] **ARR-01**: User can add chord/section markers to a sheet
+- [ ] **ARR-01**: User can add chord markers above specific character positions in each lyric line (character-aligned, same length as lyric line)
 - [ ] **ARR-02**: User can edit tempo (BPM) for a sheet with numeric input (20–300 range)
-- [ ] **ARR-03**: User can create and edit piano arrangement content (text/section-based)
-- [ ] **ARR-04**: User can create and edit guitar arrangement content (text/section-based)
-- [ ] **ARR-05**: User can create and edit drum arrangement content (text/section-based)
-- [ ] **ARR-06**: User can edit each instrument's arrangement independently without affecting others
+- [ ] **ARR-03**: User can edit chord markers after editing lyric text (chords shift to stay aligned)
+- [ ] **ARR-04**: User can create and edit piano arrangement content (section-based text)
+- [ ] **ARR-05**: User can create and edit guitar arrangement content (section-based text)
+- [ ] **ARR-06**: User can create and edit drum arrangement content (section-based text)
+- [ ] **ARR-07**: User can edit each instrument's arrangement independently without affecting others
+- [ ] **ARR-08**: Chord line for a lyric line renders visually above the lyric line in correct character positions
 
 ### Composition
 
@@ -96,12 +99,15 @@
 | LYR-01 | Phase 2 | Pending |
 | LYR-02 | Phase 2 | Pending |
 | LYR-03 | Phase 2 | Pending |
+| LYR-04 | Phase 2 | Pending |
 | ARR-01 | Phase 2 | Pending |
 | ARR-02 | Phase 2 | Pending |
 | ARR-03 | Phase 2 | Pending |
 | ARR-04 | Phase 2 | Pending |
 | ARR-05 | Phase 2 | Pending |
 | ARR-06 | Phase 2 | Pending |
+| ARR-07 | Phase 2 | Pending |
+| ARR-08 | Phase 2 | Pending |
 | COMP-01 | Phase 3 | Pending |
 | COMP-02 | Phase 3 | Pending |
 | COMP-03 | Phase 3 | Pending |
@@ -117,10 +123,10 @@
 | DATA-06 | Phase 4 | Pending |
 
 **Coverage:**
-- v1 requirements: 28 total
-- Mapped to phases: 28
+- v1 requirements: 32 total
+- Mapped to phases: 32
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 after initial definition*
+*Last updated: 2026-04-20 after clarification (chord alignment model)*

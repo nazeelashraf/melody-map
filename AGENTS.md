@@ -22,8 +22,9 @@
 
 ## Data Model (Zod Schemas)
 
-- `Sheet`: id, title, tempo, lyrics, arrangements (record: instrument → content)
+- `Sheet`: id, title, tempo, lyricsLines (array of {lyrics: string, chords: string}), arrangements (record: instrument → sectionText)
 - `Composition`: id, title, sheetIds (ordered array)
+- **Lyrics are the root.** Each lyric line has a character-aligned chord line above it. The `chords` string is the same length as `lyrics` — each position is either a chord name or a space/`-` (no chord). Editing lyric text automatically shifts chord markers.
 - All JSON imports must be validated against Zod schema — never accept unvalidated external data
 
 ## Architecture
