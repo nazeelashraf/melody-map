@@ -98,12 +98,12 @@
 
 ## Phase 4: Import/Export + Polish
 
-**Status:** ○ Ready to Execute
+**Status:** ✓ Complete
 **Plans:** 2 plans in 2 waves
 
 **Plans:**
-- [ ] 04-01-PLAN.md — Data import/export with Zod validation and error handling
-- [ ] 04-02-PLAN.md — UX polish with ConfirmDialog, EmptyState, and print stylesheet
+- [x] 04-01-PLAN.md — Data import/export with Zod validation and error handling
+- [x] 04-02-PLAN.md — UX polish with ConfirmDialog, EmptyState, and print stylesheet
 
 **Goal:** JSON import/export for sheets and compositions, UX polish, print styles
 
@@ -120,11 +120,17 @@
 8. App has basic print stylesheet — printing a sheet shows readable output without UI chrome
 
 **Delivered Artifacts:**
-- `src/components/ExportButton.tsx` — Serialize entity to JSON, trigger download
-- `src/components/ImportDialog.tsx` — File picker + Zod validation + error display
-- `src/components/ConfirmDialog.tsx` — Reusable confirmation modal
-- `src/components/EmptyState.tsx` — Empty list placeholder with CTA
-- `src/styles/print.css` — Print media stylesheet
+- `src/components/ExportButton.tsx` — JSON export button that serializes Sheet or Composition to .json download
+- `src/components/ImportDialog.tsx` — File picker dialog with Zod validation and error display
+- `src/components/ConfirmDialog.tsx` — Reusable confirmation modal used by SheetCard and CompositionCard
+- `src/components/EmptyState.tsx` — Empty list placeholder with CTA, used in SheetList
+- `src/styles/print.css` — Print media stylesheet that hides UI chrome
+- `src/main.tsx` — Updated with print.css side-effect import
+- `src/components/SheetEditor.tsx` — Added ExportButton in header
+- `src/components/CompositionEditor.tsx` — Added ExportButton in header
+- `src/components/SheetList.tsx` — Added import buttons and EmptyState refactor
+- `src/components/SheetCard.tsx` — Refactored delete confirmation to use ConfirmDialog
+- `src/components/CompositionCard.tsx` — Refactored delete confirmation to use ConfirmDialog
 
 ---
 
@@ -154,3 +160,14 @@ After each phase, the **Verifier** agent will confirm:
 - All success criteria are demonstrable
 - No previously working features regressed
 - All mapped requirements are checked off in REQUIREMENTS.md traceability table
+
+## Backlog
+
+### Phase 999.1: UI Overhaul — Modernize and Improve Usability (BACKLOG)
+
+**Goal:** Overhaul the visual design and interaction patterns to make the app more user-friendly and modern. The current inline-style UI is functional but visually lacking — improve layout, typography, spacing, responsiveness, and overall polish.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd-review-backlog when ready)
