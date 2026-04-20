@@ -1,0 +1,12 @@
+node_modules/
+dist/
+
+# local planning artifacts
+.planning/
+
+# Editor & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store

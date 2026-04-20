@@ -12,19 +12,20 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Create a sheet for a single song with title and tempo
+- [x] Edit lyrics for a sheet with preserved verse structure
+- [x] Add and edit chord markers above aligned lyric positions
+- [x] Add and edit arrangement notes for piano, guitar, and drums
+- [x] Edit tempo for a sheet
+- [x] Create and rename compositions that combine multiple sheets in order
+- [x] Add, remove, and reorder sheets within a composition
+- [x] Changes persist locally in the browser between sessions
 
 ### Active
 
-- [ ] Create a sheet for a single song with title and tempo
-- [ ] Edit lyrics for a sheet with preserved verse structure
-- [ ] Add and edit chord/arrangement data for piano, guitar, and drums
-- [ ] Edit tempo for a sheet
-- [ ] Create a composition that combines multiple sheets in order
-- [ ] Add, remove, and reorder sheets within a composition
 - [ ] Export any sheet as JSON
 - [ ] Import a sheet from JSON with validation
-- [ ] Changes persist locally in the browser between sessions
+- [ ] Export and import compositions as JSON with validation
 
 ### Out of Scope
 
@@ -70,16 +71,17 @@ The `chords` string is the same length as `lyrics`. Chord markers sit above thei
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Frontend-only | Simplicity, no hosting/server costs, offline-capable | — Pending |
-| localStorage for persistence | Standard browser APIs, no extra dependencies | — Pending |
-| JSON for import/export | Human-readable, easy to back up, version-control friendly | — Pending |
-| SPA architecture | Smooth UX, no page reloads, fast transitions | — Pending |
-| Lyrics-first, chords above in fixed positions | Chords stay aligned to syllables when lyrics are edited | — Pending |
-| Chord alignment by character index | Each chord sits above its lyric character position; editing lyrics shifts chords | — Pending |
+| Frontend-only | Simplicity, no hosting/server costs, offline-capable | Implemented with React + Vite SPA |
+| localStorage for persistence | Standard browser APIs, no extra dependencies | Validated in Phases 1-3 with debounced hook |
+| JSON for import/export | Human-readable, easy to back up, version-control friendly | Planned for Phase 4 |
+| SPA architecture | Smooth UX, no page reloads, fast transitions | Implemented with React Router |
+| Lyrics-first, chords above in fixed positions | Chords stay aligned to syllables when lyrics are edited | Implemented in Phase 2 editor |
+| Chord alignment by character index | Each chord sits above its lyric character position; editing lyrics shifts chords | Implemented in Phase 2 editor |
+| Composition order stored as `sheetIds` | Keep sheet membership and ordering minimal, persistent, and easy to render | Implemented in Phase 3 composition editor |
 
 ---
 
-*Last updated: 2026-04-20 after clarification (chord alignment model)*
+*Last updated: 2026-04-20 after Phase 3 implementation*
 
 ## Evolution
 

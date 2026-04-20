@@ -9,13 +9,13 @@
 
 ## Phase 1: App Foundation
 
-**Status:** ● In Progress
+**Status:** ✓ Complete
 **Plans:** 3 plans in 2 waves
 
 **Plans:**
-- [ ] 01-01-PLAN.md — Types + Schemas + localStorage hook
-- [ ] 01-02-PLAN.md — Context providers + App routing
-- [ ] 01-03-PLAN.md — SheetList + SheetCard UI
+- [x] 01-01-PLAN.md — Types + Schemas + localStorage hook
+- [x] 01-02-PLAN.md — Context providers + App routing
+- [x] 01-03-PLAN.md — SheetList + SheetCard UI
 
 **Goal:** Data model, local persistence, context providers, and sheet list UI
 
@@ -43,6 +43,8 @@
 
 ## Phase 2: Sheet Editor
 
+**Status:** ✓ Complete
+
 **Goal:** Full sheet editing with lyrics, tempo, chords, and three instrument arrangements
 
 **Requirements:** LYR-01, LYR-02, LYR-03, LYR-04, ARR-01, ARR-02, ARR-03, ARR-04, ARR-05, ARR-06, ARR-07, ARR-08
@@ -60,16 +62,16 @@
 10. User can navigate back to sheet list from editor
 
 **Delivered Artifacts:**
-- `src/components/SheetEditor.tsx` — Main sheet editing view
-- `src/components/LyricsEditor.tsx` — Lyrics textarea with preview
-- `src/components/TempoInput.tsx` — BPM numeric input with range validation
-- `src/components/ChordMarkerInput.tsx` — Chord/section marker editor
-- `src/components/InstrumentPanel.tsx` — Per-instrument arrangement text editor
-- `src/components/InstrumentTabs.tsx` — Tabbed or split view for piano/guitar/drums
+- `src/components/SheetEditor.tsx` — Sheet metadata editor, lyrics textarea, per-line chord editing, rendered preview, and three arrangement panels
+- `src/App.tsx` — Live sheet editor route wiring for `/sheet/:id`
+- `src/context/SheetContext.tsx` — StrictMode-safe sheet hydration and persistence backing editor updates
+- `src/context/CompositionContext.tsx` — StrictMode-safe composition hydration to avoid duplicate persisted entries in development
 
 ---
 
 ## Phase 3: Composition Builder
+
+**Status:** ✓ Complete
 
 **Goal:** Create and manage compositions made from multiple sheets
 
@@ -87,10 +89,10 @@
 9. Composition state persists to localStorage
 
 **Delivered Artifacts:**
-- `src/components/CompositionList.tsx` — Home view for compositions
-- `src/components/CompositionEditor.tsx` — Composition editing view
-- `src/components/SheetPicker.tsx` — Modal to select sheets to add to composition
-- `src/components/CompositionSheetItem.tsx` — Sheet entry in composition with reorder controls
+- `src/components/SheetList.tsx` — Library home view showing both compositions and sheets with create flows
+- `src/components/CompositionCard.tsx` — Composition preview card with rename, delete, and open actions
+- `src/components/CompositionEditor.tsx` — Composition editing view with add/remove/reorder controls and missing-sheet handling
+- `src/App.tsx` — Live composition editor route wiring for `/composition/:id`
 
 ---
 

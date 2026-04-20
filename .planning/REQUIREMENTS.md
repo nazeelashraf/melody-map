@@ -7,44 +7,44 @@
 
 ### Sheets
 
-- [ ] **SHEET-01**: User can create a new sheet with a title and default tempo (120 BPM)
-- [ ] **SHEET-02**: User can rename a sheet's title
-- [ ] **SHEET-03**: User can open an existing sheet for editing
-- [ ] **SHEET-04**: User can delete a sheet with confirmation dialog
-- [ ] **SHEET-05**: User can view sheet metadata: title, tempo
+- [x] **SHEET-01**: User can create a new sheet with a title and default tempo (120 BPM)
+- [x] **SHEET-02**: User can rename a sheet's title
+- [x] **SHEET-03**: User can open an existing sheet for editing
+- [x] **SHEET-04**: User can delete a sheet with confirmation dialog
+- [x] **SHEET-05**: User can view sheet metadata: title, tempo
 
 ### Lyrics
 
-- [ ] **LYR-01**: User can add and edit song lyrics in a sheet
-- [ ] **LYR-02**: User can preserve line breaks and verse structure in lyrics (textarea with preformatted output)
-- [ ] **LYR-03**: User can update lyrics without losing arrangement data
-- [ ] **LYR-04**: Editing lyric text automatically shifts chord markers to stay character-aligned
+- [x] **LYR-01**: User can add and edit song lyrics in a sheet
+- [x] **LYR-02**: User can preserve line breaks and verse structure in lyrics (textarea with preformatted output)
+- [x] **LYR-03**: User can update lyrics without losing arrangement data
+- [x] **LYR-04**: Editing lyric text automatically shifts chord markers to stay character-aligned
 
 ### Arrangement
 
-- [ ] **ARR-01**: User can add chord markers above specific character positions in each lyric line (character-aligned, same length as lyric line)
-- [ ] **ARR-02**: User can edit tempo (BPM) for a sheet with numeric input (20–300 range)
-- [ ] **ARR-03**: User can edit chord markers after editing lyric text (chords shift to stay aligned)
-- [ ] **ARR-04**: User can create and edit piano arrangement content (section-based text)
-- [ ] **ARR-05**: User can create and edit guitar arrangement content (section-based text)
-- [ ] **ARR-06**: User can create and edit drum arrangement content (section-based text)
-- [ ] **ARR-07**: User can edit each instrument's arrangement independently without affecting others
-- [ ] **ARR-08**: Chord line for a lyric line renders visually above the lyric line in correct character positions
+- [x] **ARR-01**: User can add chord markers above specific character positions in each lyric line (character-aligned, same length as lyric line)
+- [x] **ARR-02**: User can edit tempo (BPM) for a sheet with numeric input (20–300 range)
+- [x] **ARR-03**: User can edit chord markers after editing lyric text (chords shift to stay aligned)
+- [x] **ARR-04**: User can create and edit piano arrangement content (section-based text)
+- [x] **ARR-05**: User can create and edit guitar arrangement content (section-based text)
+- [x] **ARR-06**: User can create and edit drum arrangement content (section-based text)
+- [x] **ARR-07**: User can edit each instrument's arrangement independently without affecting others
+- [x] **ARR-08**: Chord line for a lyric line renders visually above the lyric line in correct character positions
 
 ### Composition
 
-- [ ] **COMP-01**: User can create a new composition with a title
-- [ ] **COMP-02**: User can add existing sheets to a composition
-- [ ] **COMP-03**: User can remove sheets from a composition
-- [ ] **COMP-04**: User can reorder sheets within a composition (drag-and-drop or up/down controls)
-- [ ] **COMP-05**: User can view an ordered list of sheets in a composition
-- [ ] **COMP-06**: User can rename a composition
-- [ ] **COMP-07**: User can delete a composition with confirmation dialog
+- [x] **COMP-01**: User can create a new composition with a title
+- [x] **COMP-02**: User can add existing sheets to a composition
+- [x] **COMP-03**: User can remove sheets from a composition
+- [x] **COMP-04**: User can reorder sheets within a composition (drag-and-drop or up/down controls)
+- [x] **COMP-05**: User can view an ordered list of sheets in a composition
+- [x] **COMP-06**: User can rename a composition
+- [x] **COMP-07**: User can delete a composition with confirmation dialog
 
 ### Persistence
 
-- [ ] **SAVE-01**: All changes persist locally in browser localStorage and survive page refresh
-- [ ] **SAVE-02**: User can reopen the app and continue editing existing local sheets and compositions
+- [x] **SAVE-01**: All changes persist locally in browser localStorage and survive page refresh
+- [x] **SAVE-02**: User can reopen the app and continue editing existing local sheets and compositions
 
 ### Import / Export
 
@@ -89,32 +89,32 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SHEET-01 | Phase 1 | Pending |
-| SHEET-02 | Phase 1 | Pending |
-| SHEET-03 | Phase 1 | Pending |
-| SHEET-04 | Phase 1 | Pending |
-| SHEET-05 | Phase 1 | Pending |
-| SAVE-01 | Phase 1 | Pending |
-| SAVE-02 | Phase 1 | Pending |
-| LYR-01 | Phase 2 | Pending |
-| LYR-02 | Phase 2 | Pending |
-| LYR-03 | Phase 2 | Pending |
-| LYR-04 | Phase 2 | Pending |
-| ARR-01 | Phase 2 | Pending |
-| ARR-02 | Phase 2 | Pending |
-| ARR-03 | Phase 2 | Pending |
-| ARR-04 | Phase 2 | Pending |
-| ARR-05 | Phase 2 | Pending |
-| ARR-06 | Phase 2 | Pending |
-| ARR-07 | Phase 2 | Pending |
-| ARR-08 | Phase 2 | Pending |
-| COMP-01 | Phase 3 | Pending |
-| COMP-02 | Phase 3 | Pending |
-| COMP-03 | Phase 3 | Pending |
-| COMP-04 | Phase 3 | Pending |
-| COMP-05 | Phase 3 | Pending |
-| COMP-06 | Phase 3 | Pending |
-| COMP-07 | Phase 3 | Pending |
+| SHEET-01 | Phase 1 | Complete |
+| SHEET-02 | Phase 1 | Complete |
+| SHEET-03 | Phase 1 | Complete |
+| SHEET-04 | Phase 1 | Complete |
+| SHEET-05 | Phase 1 | Complete |
+| SAVE-01 | Phase 1 | Complete |
+| SAVE-02 | Phase 1 | Complete |
+| LYR-01 | Phase 2 | Complete |
+| LYR-02 | Phase 2 | Complete |
+| LYR-03 | Phase 2 | Complete |
+| LYR-04 | Phase 2 | Complete |
+| ARR-01 | Phase 2 | Complete |
+| ARR-02 | Phase 2 | Complete |
+| ARR-03 | Phase 2 | Complete |
+| ARR-04 | Phase 2 | Complete |
+| ARR-05 | Phase 2 | Complete |
+| ARR-06 | Phase 2 | Complete |
+| ARR-07 | Phase 2 | Complete |
+| ARR-08 | Phase 2 | Complete |
+| COMP-01 | Phase 3 | Complete |
+| COMP-02 | Phase 3 | Complete |
+| COMP-03 | Phase 3 | Complete |
+| COMP-04 | Phase 3 | Complete |
+| COMP-05 | Phase 3 | Complete |
+| COMP-06 | Phase 3 | Complete |
+| COMP-07 | Phase 3 | Complete |
 | DATA-01 | Phase 4 | Pending |
 | DATA-02 | Phase 4 | Pending |
 | DATA-03 | Phase 4 | Pending |
@@ -129,4 +129,4 @@
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 after clarification (chord alignment model)*
+*Last updated: 2026-04-20 after Phase 3 implementation*
