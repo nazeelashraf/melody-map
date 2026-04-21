@@ -1,8 +1,22 @@
 export type InstrumentType = 'piano' | 'guitar' | 'drums';
 
+export type DrumLane = 'C' | 'H' | 'R' | 'S' | 'B';
+
+export interface DrumCues {
+  C: string;
+  H: string;
+  R: string;
+  S: string;
+  B: string;
+}
+
 export interface LyricsLine {
   lyrics: string;
-  chords: string;
+  cues: {
+    piano: string;
+    guitar: string;
+    drums: DrumCues;
+  };
 }
 
 export interface Sheet {

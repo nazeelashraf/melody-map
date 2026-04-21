@@ -1,7 +1,34 @@
-import type { LyricsLine } from '../types';
+import type { DrumCues, DrumLane, InstrumentType, LyricsLine } from '../types';
+
+export const drumLaneOrder: DrumLane[] = ['C', 'H', 'R', 'S', 'B'];
+
+export const drumLaneLabels: Record<DrumLane, string> = {
+  C: 'Crash',
+  H: 'Hi-hat',
+  R: 'Ride',
+  S: 'Snare',
+  B: 'Bass',
+};
+
+export function createEmptyDrumCues(targetLength: number): DrumCues {
+  return {
+    C: ''.padEnd(targetLength, ' '),
+    H: ''.padEnd(targetLength, ' '),
+    R: ''.padEnd(targetLength, ' '),
+    S: ''.padEnd(targetLength, ' '),
+    B: ''.padEnd(targetLength, ' '),
+  };
+}
 
 export function createLyricsLine(lyrics = ''): LyricsLine {
-  return { lyrics, chords: ''.padEnd(lyrics.length, ' ') };
+  return {
+    lyrics,
+    cues: {
+      piano: ''.padEnd(lyrics.length, ' '),
+      guitar: ''.padEnd(lyrics.length, ' '),
+      drums: createEmptyDrumCues(lyrics.length),
+    },
+  };
 }
 
 export function clampTempo(value: number): number {
@@ -9,19 +36,29 @@ export function clampTempo(value: number): number {
   return Math.min(300, Math.max(20, value));
 }
 
-export function normalizeChordLine(rawValue: string, targetLength: number): string {
+export function normalizeCueLine(rawValue: string, targetLength: number): string {
   if (rawValue.length >= targetLength) {
     return rawValue.slice(0, targetLength);
   }
   return rawValue.padEnd(targetLength, ' ');
 }
 
+export function normalizeDrumCues(rawValue: Partial<DrumCues>, targetLength: number): DrumCues {
+  return {
+    C: normalizeCueLine(rawValue.C ?? '', targetLength),
+    H: normalizeCueLine(rawValue.H ?? '', targetLength),
+    R: normalizeCueLine(rawValue.R ?? '', targetLength),
+    S: normalizeCueLine(rawValue.S ?? '', targetLength),
+    B: normalizeCueLine(rawValue.B ?? '', targetLength),
+  };
+}
+
 export function splitLyricsText(value: string): string[] {
   return value === '' ? [] : value.split('\n');
 }
 
-export function syncChordsToLyrics(previousLyrics: string, nextLyrics: string, previousChords: string): string {
-  const normalizedPreviousChords = normalizeChordLine(previousChords, previousLyrics.length);
+export function syncCueLineToLyrics(previousLyrics: string, nextLyrics: string, previousCueLine: string): string {
+  const normalizedPreviousCueLine = normalizeCueLine(previousCueLine, previousLyrics.length);
 
   let prefixLength = 0;
   while (
@@ -43,22 +80,36 @@ export function syncChordsToLyrics(previousLyrics: string, nextLyrics: string, p
 
   const previousMiddleLength = previousLyrics.length - prefixLength - suffixLength;
   const nextMiddleLength = nextLyrics.length - prefixLength - suffixLength;
-  const previousMiddleChords = normalizedPreviousChords.slice(prefixLength, prefixLength + previousMiddleLength);
+  const previousMiddleCueLine = normalizedPreviousCueLine.slice(prefixLength, prefixLength + previousMiddleLength);
 
-  let nextMiddleChords = '';
+  let nextMiddleCueLine = '';
   if (previousMiddleLength === nextMiddleLength) {
-    nextMiddleChords = previousMiddleChords;
+    nextMiddleCueLine = previousMiddleCueLine;
   } else if (nextMiddleLength > previousMiddleLength) {
-    nextMiddleChords = previousMiddleChords + ' '.repeat(nextMiddleLength - previousMiddleLength);
+    nextMiddleCueLine = previousMiddleCueLine + ' '.repeat(nextMiddleLength - previousMiddleLength);
   } else {
-    nextMiddleChords = previousMiddleChords.slice(0, nextMiddleLength);
+    nextMiddleCueLine = previousMiddleCueLine.slice(0, nextMiddleLength);
   }
 
   return [
-    normalizedPreviousChords.slice(0, prefixLength),
-    nextMiddleChords,
-    normalizedPreviousChords.slice(previousLyrics.length - suffixLength),
+    normalizedPreviousCueLine.slice(0, prefixLength),
+    nextMiddleCueLine,
+    normalizedPreviousCueLine.slice(previousLyrics.length - suffixLength),
   ].join('');
+}
+
+export function syncLyricsLine(previousLine: LyricsLine, nextLyrics: string): LyricsLine {
+  return {
+    lyrics: nextLyrics,
+    cues: {
+      piano: syncCueLineToLyrics(previousLine.lyrics, nextLyrics, previousLine.cues.piano),
+      guitar: syncCueLineToLyrics(previousLine.lyrics, nextLyrics, previousLine.cues.guitar),
+      drums: drumLaneOrder.reduce<DrumCues>((nextDrumCues, lane) => {
+        nextDrumCues[lane] = syncCueLineToLyrics(previousLine.lyrics, nextLyrics, previousLine.cues.drums[lane]);
+        return nextDrumCues;
+      }, createEmptyDrumCues(nextLyrics.length)),
+    },
+  };
 }
 
 export function syncLyricsLines(previousLines: LyricsLine[], nextLyricsText: string): LyricsLine[] {
@@ -91,10 +142,7 @@ export function syncLyricsLines(previousLines: LyricsLine[], nextLyricsText: str
       if (!previousLine) {
         return createLyricsLine(lyrics);
       }
-      return {
-        lyrics,
-        chords: syncChordsToLyrics(previousLine.lyrics, lyrics, previousLine.chords),
-      };
+      return syncLyricsLine(previousLine, lyrics);
     });
 
   return [
@@ -104,9 +152,67 @@ export function syncLyricsLines(previousLines: LyricsLine[], nextLyricsText: str
   ];
 }
 
-export function formatPreviewLine(line: LyricsLine): string {
+export function flattenDrumCues(drumCues: DrumCues, targetLength: number): string {
+  return Array.from({ length: targetLength }, (_, index) => {
+    const visibleHit = drumLaneOrder
+      .map((lane) => normalizeCueLine(drumCues[lane], targetLength)[index] ?? ' ')
+      .find((character) => character !== ' ');
+
+    return visibleHit ?? ' ';
+  }).join('');
+}
+
+export function copyLineCues(line: LyricsLine, source: InstrumentType, target: InstrumentType): LyricsLine {
+  if (source === target) {
+    return line;
+  }
+
+  const targetLength = line.lyrics.length;
+
+  if (source === 'drums') {
+    const flattenedDrums = flattenDrumCues(line.cues.drums, targetLength);
+    return {
+      ...line,
+      cues: {
+        ...line.cues,
+        [target]: target === 'drums' ? line.cues.drums : flattenedDrums,
+      },
+    };
+  }
+
+  const sourceCueLine = normalizeCueLine(line.cues[source], targetLength);
+
+  if (target === 'drums') {
+    return {
+      ...line,
+      cues: {
+        ...line.cues,
+        drums: drumLaneOrder.reduce<DrumCues>((nextDrumCues, lane) => {
+          nextDrumCues[lane] = sourceCueLine;
+          return nextDrumCues;
+        }, createEmptyDrumCues(targetLength)),
+      },
+    };
+  }
+
+  return {
+    ...line,
+    cues: {
+      ...line.cues,
+      [target]: sourceCueLine,
+    },
+  };
+}
+
+export function copyLineCuesToAll(line: LyricsLine, source: InstrumentType): LyricsLine {
+  const targets: InstrumentType[] = ['piano', 'guitar', 'drums'];
+
+  return targets.reduce((nextLine, target) => copyLineCues(nextLine, source, target), line);
+}
+
+export function formatPreviewLine(line: LyricsLine, instrument: Exclude<InstrumentType, 'drums'>): string {
   if (line.lyrics.length === 0) {
     return '';
   }
-  return `${normalizeChordLine(line.chords, line.lyrics.length)}\n${line.lyrics}`;
+  return `${normalizeCueLine(line.cues[instrument], line.lyrics.length)}\n${line.lyrics}`;
 }

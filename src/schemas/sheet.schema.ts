@@ -1,14 +1,34 @@
 import { z } from 'zod';
-import type { InstrumentType, LyricsLine } from '../types';
+import type { DrumCues, InstrumentType, LyricsLine } from '../types';
 
 export const instrumentTypes: InstrumentType[] = ['piano', 'guitar', 'drums'];
 
+export const drumCueLaneOrder = ['C', 'H', 'R', 'S', 'B'] as const;
+
+const drumCuesSchema: z.ZodType<DrumCues> = z.object({
+  C: z.string(),
+  H: z.string(),
+  R: z.string(),
+  S: z.string(),
+  B: z.string(),
+});
+
 export const lyricsLineSchema: z.ZodType<LyricsLine> = z.object({
   lyrics: z.string(),
-  chords: z.string(),
+  cues: z.object({
+    piano: z.string(),
+    guitar: z.string(),
+    drums: drumCuesSchema,
+  }),
 }).refine(
-  (data) => data.chords.length === data.lyrics.length,
-  { message: "Chords string must be same length as lyrics string" }
+  (data) => {
+    const targetLength = data.lyrics.length;
+
+    return data.cues.piano.length === targetLength
+      && data.cues.guitar.length === targetLength
+      && drumCueLaneOrder.every((lane) => data.cues.drums[lane].length === targetLength);
+  },
+  { message: 'All cue strings must be the same length as the lyrics string' }
 );
 
 export const sheetSchema = z.object({

@@ -1,51 +1,110 @@
 import { Music } from 'lucide-react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { instrumentTypes } from '@/schemas/sheet.schema';
-import type { Sheet } from '@/types';
-import { formatPreviewLine } from '@/lib/lyrics-utils';
+import type { InstrumentType, Sheet } from '@/types';
+import {
+  drumLaneLabels,
+  drumLaneOrder,
+  formatPreviewLine,
+  normalizeCueLine,
+  normalizeDrumCues,
+} from '@/lib/lyrics-utils';
 
 interface PerformanceViewProps {
   sheet: Sheet;
 }
 
+const instrumentLabels: Record<InstrumentType, string> = {
+  piano: 'Piano',
+  guitar: 'Guitar',
+  drums: 'Percussion',
+};
+
 export default function PerformanceView({ sheet }: PerformanceViewProps) {
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Header */}
+    <div className="max-w-5xl mx-auto">
       <div className="text-center mb-6">
         <h1 className="text-3xl font-bold text-foreground">{sheet.title}</h1>
         <Badge variant="secondary" className="mt-2 text-lg">{sheet.tempo} BPM</Badge>
       </div>
 
-      {/* Instrument tabs */}
       <Tabs defaultValue={instrumentTypes[0]}>
-        <TabsList className="w-full justify-start mb-4">
+        <TabsList className="w-full justify-start mb-4 flex-wrap h-auto">
           {instrumentTypes.map((instrument) => (
             <TabsTrigger key={instrument} value={instrument} className="flex items-center gap-1.5">
               <Music className="h-4 w-4" />
-              {instrument.charAt(0).toUpperCase() + instrument.slice(1)}
+              {instrumentLabels[instrument]}
             </TabsTrigger>
           ))}
         </TabsList>
 
         {instrumentTypes.map((instrument) => (
           <TabsContent key={instrument} value={instrument} className="mt-0">
-            <div className="bg-card rounded-xl p-6 md:p-8">
-              {/* Chord chart */}
+            <div className="bg-card rounded-xl p-6 md:p-8 space-y-6">
               {sheet.lyricsLines.length > 0 ? (
-                <pre className="text-xl font-mono leading-relaxed whitespace-pre-wrap overflow-x-auto text-foreground">
-                  {sheet.lyricsLines.map(formatPreviewLine).join('\n')}
-                </pre>
+                instrument === 'drums' ? (
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                      {drumLaneOrder.map((lane) => (
+                        <span key={lane} className="rounded-full bg-muted px-2.5 py-1 font-medium">
+                          {lane} {drumLaneLabels[lane]}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="rounded-xl bg-muted/35 p-4 md:p-5 overflow-x-auto">
+                      <div className="font-mono text-lg leading-relaxed min-w-max space-y-3 text-foreground">
+                        {sheet.lyricsLines.map((line, lineIndex) => {
+                          if (line.lyrics.length === 0) {
+                            return <div key={`drums-${lineIndex}`} className="h-8" />;
+                          }
+
+                          const normalizedDrums = normalizeDrumCues(line.cues.drums, line.lyrics.length);
+
+                          return (
+                            <div key={`drums-${lineIndex}`} className="space-y-0.5">
+                              {drumLaneOrder.map((lane) => (
+                                <div key={lane} className="whitespace-pre">
+                                  <span className="inline-block w-6 text-primary/80">{lane}</span>
+                                  {normalizedDrums[lane]}
+                                </div>
+                              ))}
+                              <div className="whitespace-pre text-foreground">
+                                <span className="inline-block w-6 text-transparent">_</span>
+                                {line.lyrics}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <pre className="rounded-xl bg-muted/35 p-6 text-xl font-mono leading-relaxed whitespace-pre-wrap overflow-x-auto text-foreground">
+                    {sheet.lyricsLines.map((line) => {
+                      if (line.lyrics.length === 0) {
+                        return '';
+                      }
+
+                      return formatPreviewLine({
+                        ...line,
+                        cues: {
+                          ...line.cues,
+                          [instrument]: normalizeCueLine(line.cues[instrument], line.lyrics.length),
+                        },
+                      }, instrument);
+                    }).join('\n')}
+                  </pre>
+                )
               ) : (
                 <p className="text-muted-foreground text-center py-8">No lyrics yet.</p>
               )}
 
-              {/* Arrangement notes */}
               {sheet.arrangements[instrument] && (
-                <div className="mt-6 pt-6 border-t">
+                <div className="pt-6 border-t">
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                    {instrument} Notes
+                    {instrumentLabels[instrument]} Notes
                   </h3>
                   <p className="text-base leading-relaxed whitespace-pre-wrap text-foreground">
                     {sheet.arrangements[instrument]}

@@ -134,7 +134,7 @@ function CueRowInput({
           }
           syncGuideColumn(event.currentTarget);
         }}
-        className="h-10 rounded-xl border-primary/25 bg-primary/5 px-3 font-mono text-sm tracking-[0.04em]"
+        className="h-10 rounded-xl border-primary/25 bg-primary/5 px-3 font-mono text-sm"
       />
     </div>
   );
@@ -579,7 +579,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                           onClick={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
                           onKeyUp={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
                           onSelect={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
-                          className="h-10 rounded-xl border-border/80 bg-background px-3 font-mono text-sm tracking-[0.04em]"
+                           className="h-10 rounded-xl border-border/80 bg-background px-3 font-mono text-sm"
                         />
                       </div>
                     </label>
