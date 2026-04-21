@@ -136,16 +136,30 @@
 
 ## Phase 5: UI Overhaul — Modernize and Improve Usability
 
-**Status:** Not started
-**Plans:** 0 plans
+**Status:** ◆ Planning complete
+**Plans:** 3 plans in 3 waves
+
+**Plans:**
+- [ ] 05-01-PLAN.md — Tailwind + shadcn/ui setup + ThemeProvider + holy grail layout
+- [ ] 05-02-PLAN.md — Library component migration to Tailwind + shadcn
+- [ ] 05-03-PLAN.md — Editor redesign with Edit/Performance modes + responsive + print
 
 **Goal:** Overhaul the visual design and interaction patterns to make the app more user-friendly and modern. The current inline-style UI is functional but visually lacking — improve layout, typography, spacing, responsiveness, and overall polish.
 
 **Depends on:** Phases 1–4
 
-**Requirements:** TBD
+**Requirements:** VIS-01, VIS-02
 
-**Success Criteria:** TBD
+**Success Criteria:**
+1. All inline `style={{}}` objects replaced with Tailwind utility classes across all 9 components
+2. Holy grail layout with collapsible sidebar and top bar renders on desktop and mobile
+3. Dark mode toggle works and persists across page refresh
+4. Sheet editor has Edit and Performance view modes with visible toggle
+5. Performance mode shows single instrument focus with Piano/Guitar/Drums tabs and large readable chords
+6. Responsive design: sidebar collapses to hamburger menu on narrow screens, content stacks on mobile
+7. shadcn/ui Dialog and AlertDialog replace custom ConfirmDialog and ImportDialog
+8. Print stylesheet hides layout chrome and shows clean readable output
+9. All existing functionality preserved (CRUD, import/export, navigation, persistence)
 
 ---
 
@@ -157,7 +171,7 @@
 | 2 | Sheet Editor | Full sheet editing: lyrics, tempo, chord-aligned markers, three instrument arrangements | LYR-01–04, ARR-01–08 | 10 criteria |
 | 3 | Composition Builder | Create and manage compositions from multiple sheets | COMP-01–07 | 9 criteria |
 | 4 | Import/Export + Polish | JSON import/export, error handling, print styles, empty states | DATA-01–06 | 8 criteria |
-| 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | TBD | TBD |
+| 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | VIS-01, VIS-02 | 9 criteria |
 
 ---
 
