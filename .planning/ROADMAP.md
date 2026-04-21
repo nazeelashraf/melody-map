@@ -136,13 +136,13 @@
 
 ## Phase 5: UI Overhaul — Modernize and Improve Usability
 
-**Status:** ◆ Planning complete
+**Status:** ✓ Complete
 **Plans:** 3 plans in 3 waves
 
 **Plans:**
-- [ ] 05-01-PLAN.md — Tailwind + shadcn/ui setup + ThemeProvider + holy grail layout
-- [ ] 05-02-PLAN.md — Library component migration to Tailwind + shadcn
-- [ ] 05-03-PLAN.md — Editor redesign with Edit/Performance modes + responsive + print
+- [x] 05-01-PLAN.md — Tailwind + shadcn/ui setup + ThemeProvider + holy grail layout
+- [x] 05-02-PLAN.md — Library component migration to Tailwind + shadcn
+- [x] 05-03-PLAN.md — Editor redesign with Edit/Performance modes + responsive + print
 
 **Goal:** Overhaul the visual design and interaction patterns to make the app more user-friendly and modern. The current inline-style UI is functional but visually lacking — improve layout, typography, spacing, responsiveness, and overall polish.
 
@@ -160,6 +160,28 @@
 7. shadcn/ui Dialog and AlertDialog replace custom ConfirmDialog and ImportDialog
 8. Print stylesheet hides layout chrome and shows clean readable output
 9. All existing functionality preserved (CRUD, import/export, navigation, persistence)
+
+**Delivered Artifacts:**
+- `src/index.css` — Tailwind v4 directives, dark mode CSS variables, Inter font
+- `src/context/ThemeProvider.tsx` — Dark mode context with localStorage persistence
+- `src/components/layout/AppLayout.tsx` — Holy grail grid layout with responsive sidebar
+- `src/components/layout/Sidebar.tsx` — Navigation sidebar with sheet/composition links
+- `src/components/layout/TopBar.tsx` — Top bar with dark mode toggle
+- `src/components/ui/` — 12 shadcn component primitives
+- `src/lib/utils.ts` — cn() utility function
+- `src/lib/lyrics-utils.ts` — Shared chord/lyrics formatting utilities
+- `src/components/PerformanceView.tsx` — Performance mode with instrument tabs
+- `src/components/ConfirmDialog.tsx` — Migrated to shadcn AlertDialog
+- `src/components/ImportDialog.tsx` — Migrated to shadcn Dialog
+- `src/components/ExportButton.tsx` — Restyled with shadcn Button + Lucide Download
+- `src/components/EmptyState.tsx` — Restyled with Tailwind + Lucide Inbox
+- `src/components/SheetCard.tsx` — Restyled with Tailwind + Lucide icons
+- `src/components/CompositionCard.tsx` — Restyled with Tailwind + Lucide icons
+- `src/components/SheetList.tsx` — Restyled with responsive grid
+- `src/components/SheetEditor.tsx` — Redesigned with Edit/Performance toggle, Tailwind styling
+- `src/components/CompositionEditor.tsx` — Redesigned with Tailwind styling
+- `src/styles/print.css` — Updated for new layout chrome
+- `src/App.tsx` — Updated with ThemeProvider, TooltipProvider, AppLayout wrappers
 
 ---
 
