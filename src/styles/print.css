@@ -1,23 +1,28 @@
 @media print {
+  /* Hide layout chrome */
+  nav,
+  [data-sidebar],
+  [data-topbar],
+  button[aria-label="Toggle sidebar"],
+  button[aria-label="Toggle dark mode"],
+  .sidebar,
+  .topbar,
+  [role="navigation"],
   button,
   input,
   textarea,
-  a,
-  nav,
-  [role="navigation"] {
+  a {
     display: none !important;
   }
 
+  /* Remove layout grid, make content full-width */
   body {
     background: white !important;
   }
 
-  div[style*="box-shadow"],
-  div[style*="backdrop-filter"],
-  div[style*="background: linear-gradient"] {
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    background: white !important;
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   pre {
