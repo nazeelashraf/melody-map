@@ -73,10 +73,40 @@ function shiftLineOverrides(
   }, {});
 }
 
-function guideLineStyle(guideColumn: number) {
-  return {
-    left: `calc(0.75rem + ${Math.max(0, guideColumn)}ch)`,
-  };
+function GuideMarker({
+  value,
+  guideColumn,
+  toneClassName,
+}: {
+  value: string;
+  guideColumn: number;
+  toneClassName: string;
+}) {
+  const measureRef = useRef<HTMLSpanElement>(null);
+  const [leftOffset, setLeftOffset] = useState(12);
+
+  const prefix = value.slice(0, Math.max(0, guideColumn));
+
+  useLayoutEffect(() => {
+    setLeftOffset(12 + (measureRef.current?.getBoundingClientRect().width ?? 0));
+  }, [prefix]);
+
+  return (
+    <>
+      <span
+        ref={measureRef}
+        aria-hidden
+        className="pointer-events-none absolute left-3 top-2 invisible whitespace-pre font-mono text-sm"
+      >
+        {prefix}
+      </span>
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-y-2 w-px rounded-full ${toneClassName}`}
+        style={{ left: `${leftOffset}px` }}
+      />
+    </>
+  );
 }
 
 function CueRowInput({
@@ -106,11 +136,7 @@ function CueRowInput({
 
   return (
     <div className="relative">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-2 w-px rounded-full bg-primary/25"
-        style={guideLineStyle(guideColumn)}
-      />
+      <GuideMarker value={value} guideColumn={guideColumn} toneClassName="bg-primary/25" />
       <Input
         ref={inputRef}
         type="text"
@@ -564,10 +590,10 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                       <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lyrics</span>
                       <div className="relative">
                         {!isBlankLine && (
-                          <div
-                            aria-hidden
-                            className="pointer-events-none absolute inset-y-2 w-px rounded-full bg-foreground/15"
-                            style={guideLineStyle(getGuideColumn(lineIndex, activeInstrument))}
+                          <GuideMarker
+                            value={line.lyrics}
+                            guideColumn={getGuideColumn(lineIndex, activeInstrument)}
+                            toneClassName="bg-foreground/15"
                           />
                         )}
                         <Input
@@ -579,7 +605,15 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                           onClick={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
                           onKeyUp={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
                           onSelect={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
-                           className="h-10 rounded-xl border-border/80 bg-background px-3 font-mono text-sm"
+                          onFocus={(event) => {
+                            const guideColumn = getGuideColumn(lineIndex, activeInstrument);
+                            if ((event.currentTarget.selectionStart ?? 0) === 0 && guideColumn > 0) {
+                              const nextSelection = Math.min(guideColumn, line.lyrics.length);
+                              event.currentTarget.setSelectionRange(nextSelection, nextSelection);
+                            }
+                            setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0);
+                          }}
+                          className="h-10 rounded-xl border-border/80 bg-background px-3 font-mono text-sm"
                         />
                       </div>
                     </label>
