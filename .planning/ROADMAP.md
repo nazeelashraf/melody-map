@@ -1,8 +1,8 @@
 # Roadmap: Melody Map
 
 **Project:** Melody Map
-**Phases:** 5 (Coarse granularity)
-**Requirements:** 32 mapped | 0 unmapped
+**Phases:** 6 (Coarse granularity)
+**Requirements:** 45 mapped | 4 unmapped
 **Generated:** 2026-04-20
 
 ---
@@ -185,6 +185,37 @@
 
 ---
 
+## Phase 6: Instrument-Specific Cues + Editor Precision
+
+**Status:** ○ Not Started
+
+**Goal:** Replace the shared lyric-line chord model with instrument-specific cues, improve cue editing precision, and update performance view so each player sees their own readable cues.
+
+**Depends on:** Phases 1–5
+
+**Requirements:** CUE-01, CUE-02, CUE-03, CUE-04, CUE-05, EDIT-01, EDIT-02, EDIT-03, PERF-01, PERF-02, PERF-03
+
+**Success Criteria:**
+1. Each lyric line stores separate cue content for piano, guitar, and percussion instead of one shared `chords` string
+2. Piano and guitar can display different cues for the same lyric line in both edit and performance views
+3. Percussion editing supports five aligned lanes (`C`, `H`, `R`, `S`, `B`) with simultaneous hits at the same lyric position
+4. The lyric-line editor uses vertically linked monospace cue/lyric inputs with substantially clearer position targeting than the current split layout
+5. Entering multi-character chord names such as `Bm` or `Am` preserves caret position and does not jump to the end unexpectedly
+6. A per-line action lets the user copy the current instrument cue pattern to the other instruments
+7. Performance view renders cues in a visually distinct monospace style above lyrics for piano/guitar and as stacked lanes for percussion
+8. Existing v1 sheet data compatibility is not preserved; the new schema is allowed to replace the old one without migration
+
+**Delivered Artifacts:**
+- `src/types/index.ts` — Updated lyric-line and instrument cue types
+- `src/schemas/sheet.schema.ts` — Updated sheet schema for instrument-specific cues
+- `src/lib/lyrics-utils.ts` — Cue normalization and lyric-sync utilities for multiple instruments
+- `src/components/SheetEditor.tsx` — Redesigned per-line cue editor with linked cue/lyric fields and copy action
+- `src/components/PerformanceView.tsx` — Instrument-specific cue rendering with distinct typography and percussion lanes
+- `src/context/SheetContext.tsx` — Updated persistence for the new sheet shape
+- `src/components/CompositionEditor.tsx` — Any required compatibility updates for the revised sheet model
+
+---
+
 ## Phase Map
 
 | # | Phase | Goal | Requirements | Success Criteria |
@@ -194,6 +225,7 @@
 | 3 | Composition Builder | Create and manage compositions from multiple sheets | COMP-01–07 | 9 criteria |
 | 4 | Import/Export + Polish | JSON import/export, error handling, print styles, empty states | DATA-01–06 | 8 criteria |
 | 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | VIS-01, VIS-02 | 9 criteria |
+| 6 | Instrument-Specific Cues + Editor Precision | Replace shared chord lines with instrument-specific cues and improve cue editing/performance readability | CUE-01–05, EDIT-01–03, PERF-01–03 | 8 criteria |
 
 ---
 
@@ -215,4 +247,4 @@ After each phase, the **Verifier** agent will confirm:
 
 ## Backlog
 
-_No items in backlog._
+- **PDF Import** — Add PDF ingestion for song sheets once a stable, machine-readable source format is available. Scope should cover extracting lyrics, section markers, and instrument cues without weakening the JSON-first import path.

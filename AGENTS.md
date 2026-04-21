@@ -12,6 +12,8 @@
 | 2 — Sheet Editor | ✓ Complete | 100% |
 | 3 — Composition Builder | ✓ Complete | 100% |
 | 4 — Import/Export + Polish | ✓ Complete | 100% |
+| 5 — UI Overhaul | ✓ Complete | 100% |
+| 6 — Instrument-Specific Cues + Editor Precision | ○ Planned | 0% |
 
 ## Key Constraints
 
@@ -22,7 +24,7 @@
 
 ## Data Model (Zod Schemas)
 
-- `Sheet`: id, title, tempo, lyricsLines (array of {lyrics: string, chords: string}), arrangements (`piano`, `guitar`, `drums` text fields)
+- `Sheet`: id, title, tempo, lyricsLines (currently shared `chords`; Phase 6 will replace this with instrument-specific cues), arrangements (`piano`, `guitar`, `drums` text fields)
 - `Composition`: id, title, sheetIds (ordered array)
 - **Lyrics are the root.** Each lyric line has a character-aligned chord line above it. The `chords` string is the same length as `lyrics` — each position is either a chord name or a space/`-` (no chord). Editing lyric text automatically shifts chord markers.
 - All JSON imports must be validated against Zod schema — never accept unvalidated external data
@@ -52,11 +54,11 @@
 
 ## Next Step
 
-All four phases are complete. The v1.0 milestone is achieved. Possible next steps:
-- Run `/gsd-complete-milestone` to finalize
-- Start v2 planning (section markers, dark mode)
-- Review and test import/export edge cases in the browser
+Phase 6 is now defined. Possible next steps:
+- Run `/gsd-spec-phase 6` to lock the phase requirements
+- Run `/gsd-plan-phase 6` to produce executable plans
+- Run `/gsd-complete-milestone` later if you want to close out v1 formally first
 
 ---
 
-*Last updated: 2026-04-20 after Phase 4 implementation*
+*Last updated: 2026-04-21 after Phase 6 scope definition*

@@ -62,6 +62,26 @@
 - [ ] **STRUC-01**: User can add section markers (Verse, Chorus, Bridge, Intro, Outro) to lyrics
 - [ ] **STRUC-02**: Section markers are visually distinct in the lyrics editor
 
+### Instrument Cues
+
+- [ ] **CUE-01**: Each lyric line stores independent cue data for piano and guitar instead of one shared chord line
+- [ ] **CUE-02**: Guitar cues can differ from piano cues for the same lyric line
+- [ ] **CUE-03**: Percussion cues are edited as five named lanes (`C`, `H`, `R`, `S`, `B`) aligned to the lyric line
+- [ ] **CUE-04**: Multiple percussion hits can stack at the same lyric position across different lanes
+- [ ] **CUE-05**: User can copy the currently selected instrument cue line to the other instruments for a lyric line
+
+### Editor UX
+
+- [ ] **EDIT-01**: Cue editing keeps the caret stable while entering multi-character chord names such as `Bm`
+- [ ] **EDIT-02**: Each lyric line is edited with vertically linked monospace cue and lyric fields so position targeting is visually reliable
+- [ ] **EDIT-03**: Cue rows remain visually distinct from lyrics without appearing disabled
+
+### Performance
+
+- [ ] **PERF-01**: Performance view shows cues for the selected instrument only
+- [ ] **PERF-02**: Piano and guitar cues render in a distinct monospace style that is visually separated from lyrics
+- [ ] **PERF-03**: Performance view renders percussion as separate `C`, `H`, `R`, `S`, `B` lanes aligned to the lyric line
+
 ### Visual
 
 - [x] **VIS-01**: User can toggle dark mode
@@ -123,12 +143,23 @@
 | DATA-06 | Phase 4 | Complete |
 | VIS-01 | Phase 5 | Complete |
 | VIS-02 | Phase 4 | Complete |
+| CUE-01 | Phase 6 | Planned |
+| CUE-02 | Phase 6 | Planned |
+| CUE-03 | Phase 6 | Planned |
+| CUE-04 | Phase 6 | Planned |
+| CUE-05 | Phase 6 | Planned |
+| EDIT-01 | Phase 6 | Planned |
+| EDIT-02 | Phase 6 | Planned |
+| EDIT-03 | Phase 6 | Planned |
+| PERF-01 | Phase 6 | Planned |
+| PERF-02 | Phase 6 | Planned |
+| PERF-03 | Phase 6 | Planned |
 
 **Coverage:**
-- v1 requirements: 34 total
-- Mapped to phases: 34
-- Unmapped: 0 ✓
+- Total requirements: 49
+- Mapped to phases: 45
+- Unmapped: 4
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-21 after Phase 5 implementation*
+*Last updated: 2026-04-21 after Phase 6 requirements definition*

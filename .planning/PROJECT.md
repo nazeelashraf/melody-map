@@ -27,7 +27,9 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 
 ### Active
 
-(No remaining v1 requirements — all v1 features are complete)
+- Redesign the sheet cue model so each lyric line can store instrument-specific cues for piano, guitar, and percussion
+- Make cue editing easier with vertically linked monospace cue/lyric fields and stable caret behavior for multi-character chord entry
+- Improve performance view readability by distinguishing cues from lyrics and showing instrument-specific cue lines
 
 ### Out of Scope
 
@@ -47,20 +49,33 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 
 ### Arrangement Data Model
 
-**Lyrics are the root.** Each lyric line has an optional chord line above it. The chord line is character-aligned with the lyric line — each character position in the chord line either holds a chord name (e.g., "C", "Am7", "Fmaj9") or a placeholder (space or `-`) indicating no chord at that position.
+**Lyrics are the root.** Each lyric line has instrument-specific cue lines above it. Piano and guitar use character-aligned monospace cue strings. Percussion uses multiple character-aligned lanes for hit markers.
 
 **How it works:**
-- "Mary had a little lamb" → chord line: " C                 "
-- "His fleece was white as snow" → chord line: "      F       G   C"
-- Chord positions are locked to character positions — editing lyrics shifts chords automatically
+- Piano and guitar each keep their own cue line aligned to the lyric text
+- Percussion keeps multiple named lanes (`C`, `H`, `R`, `S`, `B`) aligned to the same lyric positions so simultaneous hits can stack vertically
+- Cue positions are locked to character positions — editing lyrics shifts instrument cues automatically
 
-**Data shape (per line):**
+**Target data shape (per line):**
 ```json
-{ "lyrics": "Mary had a little lamb", "chords": " C                 " }
+{
+  "lyrics": "Mary had a little lamb",
+  "cues": {
+    "piano": " C                 ",
+    "guitar": " Am                ",
+    "percussion": {
+      "crash": "                   ",
+      "hihat": "x x x x x x x x x ",
+      "ride": "                   ",
+      "snare": "    o       o      ",
+      "bass": "o       o          "
+    }
+  }
+}
 ```
-The `chords` string is the same length as `lyrics`. Chord markers sit above their target syllable/word. No chord = space or `-` at that position.
+Each cue string is the same length as `lyrics`. Piano/guitar cues sit above their target syllable/word. Percussion lanes share that same character grid.
 
-**Instrument arrangements** (piano/guitar/drums): separate section-based text blocks, not chord-annotated — guitar chords above lyrics is separate from the guitar arrangement notation.
+**Instrument arrangements** (piano/guitar/percussion): separate section-based text blocks remain available for longer notes and sections beyond per-line cues.
 
 ## Constraints
 
@@ -68,6 +83,7 @@ The `chords` string is the same length as `lyrics`. Chord markers sit above thei
 - **Persistence**: Data must survive page refreshes via browser storage.
 - **Import/Export**: JSON is the only external data format — no proprietary lock-in.
 - **Instrument Extensibility**: The data model should support adding more instruments later without restructuring.
+- **Compatibility**: Phase 6 may intentionally break existing v1 sheet data; migration is out of scope.
 
 ## Key Decisions
 
@@ -80,10 +96,12 @@ The `chords` string is the same length as `lyrics`. Chord markers sit above thei
 | Lyrics-first, chords above in fixed positions | Chords stay aligned to syllables when lyrics are edited | Implemented in Phase 2 editor |
 | Chord alignment by character index | Each chord sits above its lyric character position; editing lyrics shifts chords | Implemented in Phase 2 editor |
 | Composition order stored as `sheetIds` | Keep sheet membership and ordering minimal, persistent, and easy to render | Implemented in Phase 3 composition editor |
+| Instrument-specific line cues | Guitar and piano may need different displayed cues; percussion needs stacked beat lanes | Approved for the next phase; replace shared chord line with per-instrument cues |
+| No Phase 6 migration | Faster redesign with less compatibility code | Existing v1 sheet data may break; migration explicitly deferred |
 
 ---
 
-*Last updated: 2026-04-20 after Phase 4 implementation*
+*Last updated: 2026-04-21 after Phase 5 implementation and Phase 6 scope definition*
 
 ## Evolution
 
