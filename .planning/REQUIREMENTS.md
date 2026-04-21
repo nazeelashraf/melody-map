@@ -64,7 +64,7 @@
 
 ### Visual
 
-- [ ] **VIS-01**: User can toggle dark mode
+- [x] **VIS-01**: User can toggle dark mode
 - [x] **VIS-02**: App has a print-friendly stylesheet so sheets render cleanly on paper
 
 ### Future
@@ -121,12 +121,14 @@
 | DATA-04 | Phase 4 | Complete |
 | DATA-05 | Phase 4 | Complete |
 | DATA-06 | Phase 4 | Complete |
+| VIS-01 | Phase 5 | Complete |
+| VIS-02 | Phase 4 | Complete |
 
 **Coverage:**
-- v1 requirements: 32 total
-- Mapped to phases: 32
+- v1 requirements: 34 total
+- Mapped to phases: 34
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 after Phase 4 implementation*
+*Last updated: 2026-04-21 after Phase 5 implementation*
