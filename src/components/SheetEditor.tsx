@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { instrumentTypes } from '../schemas/sheet.schema';
 import { useSheet, useSheetActions } from '../context/SheetContext';
 import type { InstrumentType, LyricsLine } from '../types';
+import ExportButton from './ExportButton';
 
 interface SheetEditorProps {
   sheetId: string;
@@ -247,6 +248,9 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
             Sheets
           </Link>
           <h1 style={titleStyle}>{sheet.title}</h1>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+            <ExportButton data={sheet} label="Export sheet" />
+          </div>
           <p style={subtitleStyle}>Edit lyrics, place chord text above each character position, and keep separate arrangements per instrument.</p>
         </div>
       </div>

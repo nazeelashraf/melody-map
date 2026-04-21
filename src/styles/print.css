@@ -1,0 +1,37 @@
+@media print {
+  button,
+  input,
+  textarea,
+  a,
+  nav,
+  [role="navigation"] {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  div[style*="box-shadow"],
+  div[style*="backdrop-filter"],
+  div[style*="background: linear-gradient"] {
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    background: white !important;
+  }
+
+  pre {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+    page-break-inside: avoid;
+  }
+
+  body, h1, h2, h3, p, span, pre {
+    color: black !important;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
+}

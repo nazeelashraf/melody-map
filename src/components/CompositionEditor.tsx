@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useComposition, useCompositionActions } from '../context/CompositionContext';
 import { useSheet } from '../context/SheetContext';
 import type { Composition } from '../types';
+import ExportButton from './ExportButton';
 
 interface CompositionEditorProps {
   compositionId: string;
@@ -112,6 +113,9 @@ export default function CompositionEditor({ compositionId }: CompositionEditorPr
             Library
           </Link>
           <h1 style={titleStyle}>{composition.title}</h1>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+            <ExportButton data={composition} label="Export composition" />
+          </div>
           <p style={subtitleStyle}>Build an ordered setlist from your saved sheets, then adjust the sequence as the arrangement changes.</p>
         </div>
       </div>

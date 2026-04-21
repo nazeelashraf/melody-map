@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Composition } from '../types';
 import { useCompositionActions } from '../context/CompositionContext';
+import ConfirmDialog from './ConfirmDialog';
 
 interface CompositionCardProps {
   composition: Composition;
@@ -102,54 +103,27 @@ export default function CompositionCard({ composition }: CompositionCardProps) {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        {showDeleteConfirm ? (
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.875rem', color: '#ef4444' }}>Delete?</span>
-            <button
-              onClick={() => deleteComposition(composition.id)}
-              style={{
-                fontSize: '0.75rem',
-                padding: '2px 8px',
-                backgroundColor: '#ef4444',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              Yes
-            </button>
-            <button
-              onClick={() => setShowDeleteConfirm(false)}
-              style={{
-                fontSize: '0.75rem',
-                padding: '2px 8px',
-                backgroundColor: '#9ca3af',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              No
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={() => setShowDeleteConfirm(true)}
-            style={{
-              fontSize: '0.75rem',
-              padding: '2px 8px',
-              backgroundColor: 'transparent',
-              color: '#9ca3af',
-              border: '1px solid #e5e7eb',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-          >
-            Delete
-          </button>
+        {showDeleteConfirm && (
+          <ConfirmDialog
+            message={`Delete "${composition.title}"? This cannot be undone.`}
+            onConfirm={() => deleteComposition(composition.id)}
+            onCancel={() => setShowDeleteConfirm(false)}
+          />
         )}
+        <button
+          onClick={() => setShowDeleteConfirm(true)}
+          style={{
+            fontSize: '0.75rem',
+            padding: '2px 8px',
+            backgroundColor: 'transparent',
+            color: '#9ca3af',
+            border: '1px solid #e5e7eb',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

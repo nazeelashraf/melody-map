@@ -48,12 +48,12 @@
 
 ### Import / Export
 
-- [ ] **DATA-01**: User can export any sheet as JSON (downloaded as .json file)
-- [ ] **DATA-02**: User can import a sheet from JSON file upload
-- [ ] **DATA-03**: Imported JSON is validated against the Sheet Zod schema before loading
-- [ ] **DATA-04**: Invalid JSON import shows a clear, user-friendly error message without corrupting current work
-- [ ] **DATA-05**: User can export any composition as JSON
-- [ ] **DATA-06**: User can import a composition from JSON file upload
+- [x] **DATA-01**: User can export any sheet as JSON (downloaded as .json file)
+- [x] **DATA-02**: User can import a sheet from JSON file upload
+- [x] **DATA-03**: Imported JSON is validated against the Sheet Zod schema before loading
+- [x] **DATA-04**: Invalid JSON import shows a clear, user-friendly error message without corrupting current work
+- [x] **DATA-05**: User can export any composition as JSON
+- [x] **DATA-06**: User can import a composition from JSON file upload
 
 ## v2 Requirements
 
@@ -65,7 +65,7 @@
 ### Visual
 
 - [ ] **VIS-01**: User can toggle dark mode
-- [ ] **VIS-02**: App has a print-friendly stylesheet so sheets render cleanly on paper
+- [x] **VIS-02**: App has a print-friendly stylesheet so sheets render cleanly on paper
 
 ### Future
 
@@ -115,12 +115,12 @@
 | COMP-05 | Phase 3 | Complete |
 | COMP-06 | Phase 3 | Complete |
 | COMP-07 | Phase 3 | Complete |
-| DATA-01 | Phase 4 | Pending |
-| DATA-02 | Phase 4 | Pending |
-| DATA-03 | Phase 4 | Pending |
-| DATA-04 | Phase 4 | Pending |
-| DATA-05 | Phase 4 | Pending |
-| DATA-06 | Phase 4 | Pending |
+| DATA-01 | Phase 4 | Complete |
+| DATA-02 | Phase 4 | Complete |
+| DATA-03 | Phase 4 | Complete |
+| DATA-04 | Phase 4 | Complete |
+| DATA-05 | Phase 4 | Complete |
+| DATA-06 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 32 total
@@ -129,4 +129,4 @@
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 after Phase 3 implementation*
+*Last updated: 2026-04-20 after Phase 4 implementation*

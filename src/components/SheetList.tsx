@@ -3,6 +3,8 @@ import { useComposition, useCompositionActions } from '../context/CompositionCon
 import CompositionCard from './CompositionCard';
 import { useSheet, useSheetActions } from '../context/SheetContext';
 import SheetCard from './SheetCard';
+import ImportDialog from './ImportDialog';
+import EmptyState from './EmptyState';
 
 export default function SheetList() {
   const { state } = useSheet();
@@ -11,6 +13,7 @@ export default function SheetList() {
   const { createComposition } = useCompositionActions();
   const [creatingType, setCreatingType] = useState<'sheet' | 'composition' | null>(null);
   const [newTitle, setNewTitle] = useState('');
+  const [importMode, setImportMode] = useState<'sheet' | 'composition' | null>(null);
 
   const handleCreate = () => {
     const trimmed = newTitle.trim();
@@ -56,6 +59,36 @@ export default function SheetList() {
             </p>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => setImportMode('composition')}
+              style={{
+                padding: '10px 16px',
+                backgroundColor: 'transparent',
+                color: '#111827',
+                border: '1px solid #111827',
+                borderRadius: '999px',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              ⬆ Import Composition
+            </button>
+            <button
+              onClick={() => setImportMode('sheet')}
+              style={{
+                padding: '10px 16px',
+                backgroundColor: 'transparent',
+                color: '#3b82f6',
+                border: '1px solid #3b82f6',
+                borderRadius: '999px',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              ⬆ Import Sheet
+            </button>
             <button
               onClick={() => startCreate('composition')}
               style={{
@@ -159,33 +192,13 @@ export default function SheetList() {
           </div>
 
           {compositionState.compositions.length === 0 ? (
-            <div
-              style={{
-                textAlign: 'center',
-                padding: '2.5rem 2rem',
-                backgroundColor: '#f9fafb',
-                borderRadius: '12px',
-                border: '2px dashed #e5e7eb',
-              }}
-            >
-              <p style={{ fontSize: '1rem', color: '#6b7280', marginBottom: '1rem' }}>
-                No compositions yet. Create one to build an ordered setlist from your sheets.
-              </p>
-              <button
-                onClick={() => startCreate('composition')}
-                style={{
-                  padding: '8px 16px',
-                  backgroundColor: '#111827',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                }}
-              >
-                + Create Composition
-              </button>
-            </div>
+            <EmptyState
+              title="No compositions yet"
+              description="Create one to build an ordered setlist from your sheets."
+              actionLabel="+ Create Composition"
+              onAction={() => startCreate('composition')}
+              variant="secondary"
+            />
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
               {compositionState.compositions.map((composition) => (
@@ -207,33 +220,13 @@ export default function SheetList() {
           </div>
 
           {state.sheets.length === 0 ? (
-            <div
-              style={{
-                textAlign: 'center',
-                padding: '3rem 2rem',
-                backgroundColor: '#f9fafb',
-                borderRadius: '12px',
-                border: '2px dashed #e5e7eb',
-              }}
-            >
-              <p style={{ fontSize: '1rem', color: '#6b7280', marginBottom: '1rem' }}>
-                No sheets yet. Create your first sheet to get started.
-              </p>
-              <button
-                onClick={() => startCreate('sheet')}
-                style={{
-                  padding: '8px 16px',
-                  backgroundColor: '#3b82f6',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                }}
-              >
-                + Create Sheet
-              </button>
-            </div>
+            <EmptyState
+              title="No sheets yet"
+              description="Create your first sheet to get started."
+              actionLabel="+ Create Sheet"
+              onAction={() => startCreate('sheet')}
+              variant="primary"
+            />
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
               {state.sheets.map(sheet => (
@@ -243,6 +236,9 @@ export default function SheetList() {
           )}
         </section>
       </div>
+      {importMode && (
+        <ImportDialog mode={importMode} onClose={() => setImportMode(null)} />
+      )}
     </div>
   );
 }

@@ -20,12 +20,14 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 - [x] Create and rename compositions that combine multiple sheets in order
 - [x] Add, remove, and reorder sheets within a composition
 - [x] Changes persist locally in the browser between sessions
+- [x] Export any sheet or composition as JSON
+- [x] Import sheets and compositions from JSON with Zod validation
+- [x] Delete actions show a confirmation dialog
+- [x] Print stylesheet hides UI chrome and shows readable content
 
 ### Active
 
-- [ ] Export any sheet as JSON
-- [ ] Import a sheet from JSON with validation
-- [ ] Export and import compositions as JSON with validation
+(No remaining v1 requirements — all v1 features are complete)
 
 ### Out of Scope
 
@@ -73,7 +75,7 @@ The `chords` string is the same length as `lyrics`. Chord markers sit above thei
 |----------|-----------|---------|
 | Frontend-only | Simplicity, no hosting/server costs, offline-capable | Implemented with React + Vite SPA |
 | localStorage for persistence | Standard browser APIs, no extra dependencies | Validated in Phases 1-3 with debounced hook |
-| JSON for import/export | Human-readable, easy to back up, version-control friendly | Planned for Phase 4 |
+| JSON for import/export | Human-readable, easy to back up, version-control friendly | Implemented in Phase 4 with Blob+FileReader and Zod validation |
 | SPA architecture | Smooth UX, no page reloads, fast transitions | Implemented with React Router |
 | Lyrics-first, chords above in fixed positions | Chords stay aligned to syllables when lyrics are edited | Implemented in Phase 2 editor |
 | Chord alignment by character index | Each chord sits above its lyric character position; editing lyrics shifts chords | Implemented in Phase 2 editor |
@@ -81,7 +83,7 @@ The `chords` string is the same length as `lyrics`. Chord markers sit above thei
 
 ---
 
-*Last updated: 2026-04-20 after Phase 3 implementation*
+*Last updated: 2026-04-20 after Phase 4 implementation*
 
 ## Evolution
 
