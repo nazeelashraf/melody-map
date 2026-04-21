@@ -1,7 +1,16 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { Upload } from 'lucide-react';
 import { useSheet } from '../context/SheetContext';
 import { useComposition } from '../context/CompositionContext';
 import { sheetSchema, compositionSchema } from '../schemas/sheet.schema';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 interface ImportDialogProps {
   mode: 'sheet' | 'composition';
@@ -51,82 +60,31 @@ export default function ImportDialog({ mode, onClose }: ImportDialogProps) {
   };
 
   return (
-    <div style={overlayStyle} onClick={onClose}>
-      <div style={cardStyle} onClick={(e) => e.stopPropagation()}>
-        <h2 style={titleStyle}>Import {mode === 'sheet' ? 'Sheet' : 'Composition'}</h2>
-        <button onClick={() => fileInputRef.current?.click()} style={fileButtonStyle}>
-          Choose File
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".json"
-          onChange={handleFile}
-          style={{ display: 'none' }}
-        />
-        {error && <p style={errorStyle}>{error}</p>}
-        <div style={actionRowStyle}>
-          <button onClick={onClose} style={cancelButtonStyle}>Cancel</button>
+    <Dialog open onOpenChange={(open) => !open && onClose()}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Import {mode === 'sheet' ? 'Sheet' : 'Composition'}</DialogTitle>
+        </DialogHeader>
+
+        <div className="flex flex-col gap-4">
+          <Button onClick={() => fileInputRef.current?.click()} variant="default">
+            <Upload className="h-4 w-4 mr-2" />
+            Choose File
+          </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            onChange={handleFile}
+            className="hidden"
+          />
+          {error && <p className="text-destructive text-sm">{error}</p>}
         </div>
-      </div>
-    </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>Cancel</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
-
-const overlayStyle: React.CSSProperties = {
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: 'rgba(0,0,0,0.4)',
-  display: 'grid',
-  placeItems: 'center',
-  zIndex: 50,
-};
-
-const cardStyle: React.CSSProperties = {
-  backgroundColor: '#fff',
-  borderRadius: '18px',
-  padding: '1.5rem',
-  maxWidth: '28rem',
-  width: '90%',
-};
-
-const titleStyle: React.CSSProperties = {
-  margin: '0 0 1rem',
-  fontSize: '1.15rem',
-  fontWeight: 700,
-  color: '#111827',
-};
-
-const fileButtonStyle: React.CSSProperties = {
-  padding: '0.6rem 1rem',
-  backgroundColor: '#3b82f6',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '8px',
-  fontSize: '0.875rem',
-  fontWeight: 600,
-  cursor: 'pointer',
-};
-
-const errorStyle: React.CSSProperties = {
-  color: '#dc2626',
-  fontSize: '0.875rem',
-  marginTop: '0.75rem',
-};
-
-const actionRowStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'flex-end',
-  marginTop: '1rem',
-};
-
-const cancelButtonStyle: React.CSSProperties = {
-  padding: '0.55rem 1rem',
-  backgroundColor: '#f3f4f6',
-  color: '#374151',
-  border: '1px solid #d1d5db',
-  borderRadius: '999px',
-  fontSize: '0.875rem',
-  fontWeight: 600,
-  cursor: 'pointer',
-};

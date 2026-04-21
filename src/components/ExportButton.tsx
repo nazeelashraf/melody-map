@@ -1,5 +1,6 @@
-import React from 'react';
 import type { Sheet, Composition } from '../types';
+import { Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ExportButtonProps {
   data: Sheet | Composition;
@@ -19,19 +20,9 @@ export default function ExportButton({ data, label = 'Export' }: ExportButtonPro
   };
 
   return (
-    <button onClick={handleExport} style={buttonStyle}>
-      ⬇ {label}
-    </button>
+    <Button onClick={handleExport} variant="outline" size="sm">
+      <Download className="h-4 w-4 mr-1.5" />
+      {label}
+    </Button>
   );
 }
-
-const buttonStyle: React.CSSProperties = {
-  border: '1px solid #cbd5e1',
-  borderRadius: '999px',
-  padding: '0.45rem 0.75rem',
-  backgroundColor: '#fff',
-  color: '#334155',
-  fontSize: '0.8rem',
-  fontWeight: 600,
-  cursor: 'pointer',
-};

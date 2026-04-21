@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Music, Pencil, Trash2, ArrowRight } from 'lucide-react';
 import type { Sheet } from '../types';
 import { useSheetActions } from '../context/SheetContext';
 import ConfirmDialog from './ConfirmDialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface SheetCardProps {
   sheet: Sheet;
@@ -43,69 +46,44 @@ export default function SheetCard({ sheet }: SheetCardProps) {
   };
 
   return (
-    <div
-      style={{
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
-        padding: '1rem',
-        backgroundColor: '#fff',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-      }}
-    >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+    <div className="rounded-lg border border-border bg-card p-4 shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-center justify-between gap-3 mb-2">
         {isEditing ? (
-          <input
+          <Input
             ref={inputRef}
             value={editTitle}
-            onChange={(event) => setEditTitle(event.target.value)}
+            onChange={(e) => setEditTitle(e.target.value)}
             onBlur={handleRename}
             onKeyDown={handleKeyDown}
-            style={{
-              fontSize: '1rem',
-              fontWeight: 600,
-              border: '1px solid #3b82f6',
-              borderRadius: '4px',
-              padding: '2px 6px',
-              width: '100%',
-            }}
+            className="text-base font-semibold"
           />
         ) : (
           <span
             onClick={() => setIsEditing(true)}
-            style={{
-              fontSize: '1rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-              flex: 1,
-            }}
+            className="text-base font-semibold cursor-pointer flex-1 flex items-center gap-1.5"
             title="Click to rename"
           >
+            <Pencil className="h-3 w-3 text-muted-foreground/50 opacity-0 group-hover:opacity-100" />
             {sheet.title}
           </span>
         )}
         <Link
           to={`/sheet/${sheet.id}`}
-          style={{
-            fontSize: '0.875rem',
-            color: '#3b82f6',
-            textDecoration: 'none',
-            padding: '4px 8px',
-            borderRadius: '4px',
-            whiteSpace: 'nowrap',
-          }}
+          className="inline-flex items-center justify-center shrink-0 h-7 gap-1.5 px-2.5 rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none hover:bg-muted hover:text-foreground text-muted-foreground"
         >
-          Open →
+          <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
 
-      <div style={{ fontSize: '0.875rem', color: '#6b7280', marginBottom: '0.75rem' }}>
+      <div className="text-sm text-muted-foreground mb-2 flex items-center gap-1.5">
+        <Music className="h-3.5 w-3.5" />
         {sheet.tempo} BPM
         {sheet.lyricsLines.length > 0 && (
           <span> • {sheet.lyricsLines.length} lyric lines</span>
         )}
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div className="flex justify-end">
         {showDeleteConfirm && (
           <ConfirmDialog
             message={`Delete "${sheet.title}"? This cannot be undone.`}
@@ -113,20 +91,14 @@ export default function SheetCard({ sheet }: SheetCardProps) {
             onCancel={() => setShowDeleteConfirm(false)}
           />
         )}
-        <button
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={() => setShowDeleteConfirm(true)}
-          style={{
-            fontSize: '0.75rem',
-            padding: '2px 8px',
-            backgroundColor: 'transparent',
-            color: '#9ca3af',
-            border: '1px solid #e5e7eb',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
+          className="text-muted-foreground"
         >
-          Delete
-        </button>
+          <Trash2 className="h-3.5 w-3.5" />
+        </Button>
       </div>
     </div>
   );
