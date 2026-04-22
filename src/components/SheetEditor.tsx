@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
-  ChevronDown,
+  CircleDot,
   Copy,
   Download,
   Edit3,
@@ -18,8 +18,8 @@ import PerformanceView from './PerformanceView';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { cn } from '@/lib/utils';
 import {
   clampTempo,
   copyLineCues,
@@ -44,6 +44,7 @@ interface CueRowInputProps {
   ariaLabel: string;
   onChange: (value: string, selectionStart: number) => void;
   onGuideColumnChange: (selectionStart: number) => void;
+  className?: string;
 }
 
 const instrumentLabels: Record<InstrumentType, string> = {
@@ -124,6 +125,7 @@ function CueRowInput({
   ariaLabel,
   onChange,
   onGuideColumnChange,
+  className,
 }: CueRowInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const pendingSelectionRef = useRef<number | null>(null);
@@ -144,7 +146,7 @@ function CueRowInput({
 
   return (
     <div className="relative">
-      <GuideMarker value={value} guideColumn={guideColumn} toneClassName="bg-primary/25" />
+      <GuideMarker value={value} guideColumn={guideColumn} toneClassName="bg-accent/20" />
       <Input
         ref={inputRef}
         type="text"
@@ -168,7 +170,7 @@ function CueRowInput({
           }
           syncGuideColumn(event.currentTarget);
         }}
-        className="h-10 rounded-xl border-primary/25 bg-primary/5 px-3 font-mono text-sm"
+        className={cn('h-9 bg-transparent border-0 focus-visible:ring-1 focus-visible:ring-accent px-3 font-mono text-sm', className)}
       />
     </div>
   );
@@ -495,16 +497,18 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
             <p className="text-sm text-muted-foreground">Add a line, type lyrics, and place instrument-specific cues directly above the text.</p>
           </div>
         ) : (
-          <div className="space-y-1">
+          <div className="space-y-0 divide-y divide-canvas-muted">
             {sheet.lyricsLines.map((line, lineIndex) => {
               const activeInstrument = getLineInstrument(lineIndex);
               const isBlankLine = line.lyrics.length === 0;
 
               return (
-                <article key={`${sheet.id}-${lineIndex}`} className="py-2 border-b border-canvas-muted space-y-3">
-                  <div className="flex justify-between items-start gap-3 flex-wrap">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge variant="outline">Line {lineIndex + 1}</Badge>
+                <article key={`${sheet.id}-${lineIndex}`} className="py-3 group relative">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-[10px] text-muted-foreground font-mono">
+                      Line {lineIndex + 1}
+                    </span>
+                    <div className="hidden">
                       <ToggleGroup
                         value={[activeInstrument]}
                         onValueChange={(value) => {
@@ -521,37 +525,74 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                         ))}
                       </ToggleGroup>
                     </div>
-
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <Button variant="ghost" size="sm" onClick={() => handleCopyLine(lineIndex, 'all')}>
-                        <Copy className="h-3.5 w-3.5 mr-1" />
-                        Copy to all
+                    <div className="flex items-center gap-0.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        title="Copy cues to all instruments"
+                        aria-label="Copy cues to all instruments"
+                        onClick={() => handleCopyLine(lineIndex, 'all')}
+                      >
+                        <Copy className="h-3.5 w-3.5" />
                       </Button>
-                      {instrumentTypes.filter((instrument) => instrument !== activeInstrument).map((instrument) => (
-                        <Button
-                          key={instrument}
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleCopyLine(lineIndex, instrument)}
-                        >
-                          {`To ${instrumentLabels[instrument]}`}
-                        </Button>
-                      ))}
-                      <Button variant="ghost" size="sm" onClick={() => handleInsertLine(lineIndex)}>
-                        <ChevronDown className="h-3.5 w-3.5 mr-1" />
-                        Insert
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        title="Copy cues to piano"
+                        aria-label="Copy cues to piano"
+                        onClick={() => handleCopyLine(lineIndex, 'piano')}
+                      >
+                        <Music className="h-3.5 w-3.5" />
                       </Button>
-                      <Button variant="ghost" size="sm" onClick={() => handleDeleteLine(lineIndex)} className="text-destructive">
-                        <Trash2 className="h-3.5 w-3.5 mr-1" />
-                        Remove
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        title="Copy cues to guitar"
+                        aria-label="Copy cues to guitar"
+                        onClick={() => handleCopyLine(lineIndex, 'guitar')}
+                      >
+                        <Music className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        title="Copy cues to drums"
+                        aria-label="Copy cues to drums"
+                        onClick={() => handleCopyLine(lineIndex, 'drums')}
+                      >
+                        <CircleDot className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        title="Insert line below"
+                        aria-label="Insert line below"
+                        onClick={() => handleInsertLine(lineIndex)}
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-destructive"
+                        title="Remove line"
+                        aria-label="Remove line"
+                        onClick={() => handleDeleteLine(lineIndex)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </div>
 
-                  <div className="grid gap-3">
+                  <div className="flex flex-col gap-0">
                     {!isBlankLine && activeInstrument !== 'drums' && (
-                      <label className="grid gap-1.5">
-                        <span className="text-xs font-semibold uppercase tracking-wide text-primary/90">
+                      <div className={activeInstrument === 'piano' ? 'bg-piano-muted border-l-2 border-piano' : 'bg-guitar-muted border-l-2 border-guitar'}>
+                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground px-3 pt-1 block">
                           {instrumentLabels[activeInstrument]} cues
                         </span>
                         <CueRowInput
@@ -564,21 +605,27 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                             setGuideColumn(lineIndex, activeInstrument, selectionStart);
                             handleCueLineChange(lineIndex, activeInstrument, value);
                           }}
+                          className="focus-visible:ring-accent"
                         />
-                      </label>
+                      </div>
                     )}
 
                     {!isBlankLine && activeInstrument === 'drums' && (
-                      <div className="grid gap-2 rounded-lg border border-primary/10 bg-canvas-muted/20 p-3">
-                        <div className="flex items-center justify-between gap-2 flex-wrap">
-                          <span className="text-xs font-semibold uppercase tracking-wide text-primary/90">
-                            Percussion lanes
-                          </span>
-                          <span className="text-xs text-muted-foreground">C crash, H hi-hat, R ride, S snare, B bass</span>
-                        </div>
-                        {drumLaneOrder.map((lane) => (
-                          <label key={lane} className="grid grid-cols-[auto,1fr] items-center gap-2">
-                            <span className="text-xs font-semibold text-muted-foreground w-14">{`${lane} ${drumLaneLabels[lane]}`}</span>
+                      <div className="bg-drums-muted/30 py-2">
+                        {drumLaneOrder.map((lane, laneIndex) => (
+                          <div
+                            key={lane}
+                            className={cn(
+                              'grid grid-cols-[auto,1fr] items-center gap-2 py-0.5',
+                              laneIndex < drumLaneOrder.length - 1 && 'border-b border-drums/10',
+                            )}
+                          >
+                            <span
+                              className="text-[10px] font-bold uppercase tracking-wider text-drums w-12 text-right"
+                              title={drumLaneLabels[lane]}
+                            >
+                              {lane}
+                            </span>
                             <CueRowInput
                               value={line.cues.drums[lane]}
                               placeholder="x   x x   x"
@@ -589,49 +636,41 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                                 setGuideColumn(lineIndex, 'drums', selectionStart, lane);
                                 handleDrumLaneChange(lineIndex, lane, value);
                               }}
+                              className="focus-visible:ring-drums"
                             />
-                          </label>
+                          </div>
                         ))}
                       </div>
                     )}
 
-                    <label className="grid gap-1.5">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lyrics</span>
-                      <div className="relative">
-                        {!isBlankLine && (
-                          <GuideMarker
-                            value={line.lyrics}
-                            guideColumn={getGuideColumn(lineIndex, activeInstrument)}
-                            toneClassName="bg-foreground/15"
-                          />
-                        )}
-                        <Input
-                          type="text"
+                    <div className="relative px-3">
+                      {!isBlankLine && (
+                        <GuideMarker
                           value={line.lyrics}
-                          placeholder="Type the lyric text for this row"
-                          spellCheck={false}
-                          onChange={(event) => handleLyricsChange(lineIndex, event.currentTarget.value)}
-                          onClick={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
-                          onKeyUp={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
-                          onSelect={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
-                          onFocus={(event) => {
-                            const guideColumn = getGuideColumn(lineIndex, activeInstrument);
-                            if ((event.currentTarget.selectionStart ?? 0) === 0 && guideColumn > 0) {
-                              const nextSelection = Math.min(guideColumn, line.lyrics.length);
-                              event.currentTarget.setSelectionRange(nextSelection, nextSelection);
-                            }
-                            setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0);
-                          }}
-                          className="h-10 rounded-xl border-border/80 bg-background px-3 font-mono text-sm"
+                          guideColumn={getGuideColumn(lineIndex, activeInstrument)}
+                          toneClassName="bg-foreground/10"
                         />
-                      </div>
-                    </label>
-
-                    {isBlankLine && (
-                      <div className="rounded-lg border border-dashed border-primary/30 bg-primary/5 px-3 py-2 text-sm text-primary">
-                        Blank spacer line preserved. Cue rows stay hidden here so verse spacing remains clean.
-                      </div>
-                    )}
+                      )}
+                      <Input
+                        type="text"
+                        value={line.lyrics}
+                        placeholder="Type the lyric text for this row"
+                        spellCheck={false}
+                        onChange={(event) => handleLyricsChange(lineIndex, event.currentTarget.value)}
+                        onClick={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
+                        onKeyUp={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
+                        onSelect={(event) => setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0)}
+                        onFocus={(event) => {
+                          const guideColumn = getGuideColumn(lineIndex, activeInstrument);
+                          if ((event.currentTarget.selectionStart ?? 0) === 0 && guideColumn > 0) {
+                            const nextSelection = Math.min(guideColumn, line.lyrics.length);
+                            event.currentTarget.setSelectionRange(nextSelection, nextSelection);
+                          }
+                          setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0);
+                        }}
+                        className="h-9 w-full bg-transparent border-0 border-b border-border/50 focus-visible:border-accent focus-visible:ring-0 px-0 font-mono text-sm"
+                      />
+                    </div>
                   </div>
                 </article>
               );
