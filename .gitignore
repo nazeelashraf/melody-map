@@ -7,3 +7,7 @@ dist/
 *.swp
 *.swo
 .DS_Store
+
+# Sample files
+sample-chords.pdf
+sample-chords.html
