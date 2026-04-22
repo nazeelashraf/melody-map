@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: "Melody Map v1.1 — DESIGN.md Implementation"
+milestone: v1.0
+milestone_name: "**Completed:** 2026-04-22"
 current_phase: 9 — Sheet Canvas Redesign
 status: milestone_in_progress
-last_updated: "2026-04-22T05:30:00Z"
+last_updated: "2026-04-22T05:54:11Z"
 progress:
   total_phases: 11
   completed_phases: 8
   total_plans: 17
-  completed_plans: 11
-  percent: 65
+  completed_plans: 12
+  percent: 71
 ---
 
 # State: Melody Map
@@ -39,13 +39,13 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | 6 — Instrument-Specific Cues + Editor Precision | ✓ Complete | 3/3 | 100% |
 | 7 — Design Foundations | ✓ Complete | 1/1 | 100% |
 | 8 — Shell + Library Redesign | ✓ Complete | 3/3 | 100% |
-| 9 — Sheet Canvas Redesign | In Progress | 1/3 | 33% |
+| 9 — Sheet Canvas Redesign | In Progress | 2/3 | 67% |
 | 10 — Performance + Print Redesign | Planned | — | 0% |
 | 11 — Responsive + Motion Polish | Planned | — | 0% |
 
 ## Active Context
 
-**Current session:** Phase 9 Plan 01 — SheetEditor canvas-first redesign execution
+**Current session:** Phase 9 Plan 02 — Per-line lane styling refinements execution
 **Completed steps:**
 
 - v1.0 milestone complete (Phases 1–6)
@@ -65,6 +65,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Phase 8 Plan 02 — Shared UI Primitives Redesign: ConfirmDialog, ImportDialog, EmptyState redesigned with cohesive card-based visual language
 - Phase 8 Plan 03 — Library Components Redesign: SheetList, SheetCard, CompositionCard redesigned with instrument identity hints, sheet order visualization, and responsive grid
 - Phase 9 Plan 01 — SheetEditor Canvas-First Redesign: minimal chrome header, compact metadata bar, full-width editing surface, reduced-chrome arrangements at bottom
+- Phase 9 Plan 02 — Per-line Lane Styling Refinements: distinct instrument-colored cue lanes, underline-style lyric inputs, compact floating action buttons
 
 **Current work:** Phase 9 — Sheet Canvas Redesign
 
@@ -72,8 +73,12 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Redesigned metadata bar with underline-style title input, BPM icon + compact input, subtle line count
 - Established full-width canvas editing surface with no card containers, lightweight per-line blocks, and lighter preview section
 - Moved arrangements to bottom with border-t separator, instrument color dots, and reduced chrome
+- Redesigned per-line cue lanes with instrument-colored backgrounds and left borders (piano blue, guitar green, drums purple)
+- Redesigned lyric lanes with transparent background and clean underline input style
+- Redesigned drum lane grid with compact labels, subtle row separators, and transparent inputs
+- Converted line action buttons to compact icon-only ghost buttons with hover visibility on desktop
 
-**Next step:** Phase 9 Plan 02 — Per-line lane styling refinements
+**Next step:** Phase 9 Plan 03 — Track-style instrument controls and PerformanceView
 
 ## Notes
 
