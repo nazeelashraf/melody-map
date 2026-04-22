@@ -1,15 +1,16 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.1
-milestone_name: Melody Map v1.1 — DESIGN.md Implementation
+milestone_name: "Melody Map v1.1 — DESIGN.md Implementation"
+current_phase: 9 — Sheet Canvas Redesign
 status: milestone_in_progress
-last_updated: "2026-04-22T05:10:00Z"
+last_updated: "2026-04-22T05:30:00Z"
 progress:
   total_phases: 11
-  completed_phases: 7
-  total_plans: 14
-  completed_plans: 10
-  percent: 71
+  completed_phases: 8
+  total_plans: 17
+  completed_plans: 11
+  percent: 65
 ---
 
 # State: Melody Map
@@ -38,13 +39,13 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | 6 — Instrument-Specific Cues + Editor Precision | ✓ Complete | 3/3 | 100% |
 | 7 — Design Foundations | ✓ Complete | 1/1 | 100% |
 | 8 — Shell + Library Redesign | ✓ Complete | 3/3 | 100% |
-| 9 — Sheet Canvas Redesign | Planned | — | 0% |
+| 9 — Sheet Canvas Redesign | In Progress | 1/3 | 33% |
 | 10 — Performance + Print Redesign | Planned | — | 0% |
 | 11 — Responsive + Motion Polish | Planned | — | 0% |
 
 ## Active Context
 
-**Current session:** Phase 8 Plan 03 — library components redesign execution
+**Current session:** Phase 9 Plan 01 — SheetEditor canvas-first redesign execution
 **Completed steps:**
 
 - v1.0 milestone complete (Phases 1–6)
@@ -63,20 +64,16 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Phase 8 Plan 01 — Shell Library Redesign: AppLayout, Sidebar, TopBar redesigned with warm-canvas/dark-shell split
 - Phase 8 Plan 02 — Shared UI Primitives Redesign: ConfirmDialog, ImportDialog, EmptyState redesigned with cohesive card-based visual language
 - Phase 8 Plan 03 — Library Components Redesign: SheetList, SheetCard, CompositionCard redesigned with instrument identity hints, sheet order visualization, and responsive grid
+- Phase 9 Plan 01 — SheetEditor Canvas-First Redesign: minimal chrome header, compact metadata bar, full-width editing surface, reduced-chrome arrangements at bottom
 
-**Current work:** Phase 8 — Shell + Library Redesign
+**Current work:** Phase 9 — Sheet Canvas Redesign
 
-- Redesigned AppLayout with intentional canvas/shell zoning
-- Redesigned Sidebar with enhanced dark shell navigation, active border accent, bottom create actions
-- Redesigned TopBar with context-aware title, breadcrumb hint, improved mobile hamburger
-- Redesigned ConfirmDialog with alert icon, card background, clear destructive actions, and safer default focus
-- Redesigned ImportDialog with dashed-border file selection area, helper text, and styled error display
-- Redesigned EmptyState with solid border, larger iconography, better typography, and prominent CTA
-- Redesigned SheetCard with Music icon, tempo/lines metadata, colored instrument identity dots, accent open button
-- Redesigned CompositionCard with Layers icon, sheet count, mini title preview, order dot visualization
-- Redesigned SheetList with cleaner "Song Library" header, grouped action buttons with icons, card-styled create form, responsive grid
+- Redesigned SheetEditor header with minimal back link, plain title text, compact view toggle, and ghost export button
+- Redesigned metadata bar with underline-style title input, BPM icon + compact input, subtle line count
+- Established full-width canvas editing surface with no card containers, lightweight per-line blocks, and lighter preview section
+- Moved arrangements to bottom with border-t separator, instrument color dots, and reduced chrome
 
-**Next step:** Phase 9 — Sheet Canvas Redesign
+**Next step:** Phase 9 Plan 02 — Per-line lane styling refinements
 
 ## Notes
 
@@ -103,3 +100,4 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | Subtle motion only | User preference for smooth but not flashy | Short transitions, reduced-motion support via `prefers-reduced-motion` |
 | Kept component interfaces unchanged during shell redesign | Avoid downstream breakage in SheetEditor and CompositionEditor | AppLayout, Sidebar, TopBar props unchanged; all existing navigation flows preserved |
 | Used cross-context read in CompositionCard for sheet titles | CompositionCard needs sheet titles for mini preview; both providers always mounted | `useSheet()` inside CompositionCard is safe and avoids prop drilling |
+| Replaced ExportButton with inline ghost button in SheetEditor header | ExportButton does not accept variant/className props; design spec requires ghost styling | Inline button preserves export logic while matching canvas-first minimal chrome design |
