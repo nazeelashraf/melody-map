@@ -289,6 +289,13 @@
 ## Phase 9: Sheet Canvas Redesign
 
 **Status:** Planned
+**Plans:** 3 plans in 3 waves
+
+**Plans:**
+- [ ] 09-01-PLAN.md — Canvas-first layout and chrome reduction
+- [ ] 09-02-PLAN.md — Cue lane visual system and per-line editing
+- [ ] 09-03-PLAN.md — Track-style instrument controls and PerformanceView
+
 **Goal:** Turn the editor into a canvas-first sheet surface while preserving current Phase 6 cue-editing capabilities.
 
 **Depends on:** Phase 7, Phase 8
