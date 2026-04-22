@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Music, Pencil, Trash2, ArrowRight } from 'lucide-react';
+import { Music, Pencil, Trash2, Clock, AlignLeft } from 'lucide-react';
 import type { Sheet } from '../types';
 import { useSheetActions } from '../context/SheetContext';
 import ConfirmDialog from './ConfirmDialog';
@@ -45,9 +45,13 @@ export default function SheetCard({ sheet }: SheetCardProps) {
     }
   };
 
+  const hasPiano = sheet.arrangements.piano.trim().length > 0;
+  const hasGuitar = sheet.arrangements.guitar.trim().length > 0;
+  const hasDrums = sheet.arrangements.drums.trim().length > 0;
+
   return (
-    <div className="rounded-lg border border-border bg-card p-4 shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between gap-3 mb-2">
+    <div className="bg-card border border-border p-5 shadow-sm hover:shadow-md transition-all duration-200 hover:border-border/80 rounded-lg flex flex-col gap-3">
+      <div className="flex items-start justify-between gap-3">
         {isEditing ? (
           <Input
             ref={inputRef}
@@ -55,35 +59,57 @@ export default function SheetCard({ sheet }: SheetCardProps) {
             onChange={(e) => setEditTitle(e.target.value)}
             onBlur={handleRename}
             onKeyDown={handleKeyDown}
-            className="text-base font-semibold"
+            className="text-lg font-semibold h-auto py-1"
           />
         ) : (
-          <span
+          <div
             onClick={() => setIsEditing(true)}
-            className="text-base font-semibold cursor-pointer flex-1 flex items-center gap-1.5"
+            className="group flex items-center gap-2 cursor-pointer flex-1 min-w-0"
             title="Click to rename"
           >
-            <Pencil className="h-3 w-3 text-muted-foreground/50 opacity-0 group-hover:opacity-100" />
-            {sheet.title}
+            <Music className="h-5 w-5 text-accent shrink-0" />
+            <span className="text-lg font-semibold text-foreground truncate">
+              {sheet.title}
+            </span>
+            <Pencil className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
+        <span className="flex items-center gap-1">
+          <Clock className="h-3.5 w-3.5" />
+          {sheet.tempo} BPM
+        </span>
+        <span className="text-muted-foreground/60">•</span>
+        <span className="flex items-center gap-1">
+          <AlignLeft className="h-3.5 w-3.5" />
+          {sheet.lyricsLines.length} {sheet.lyricsLines.length === 1 ? 'line' : 'lines'}
+        </span>
+      </div>
+
+      <div className="flex items-center gap-2">
+        {hasPiano && (
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-piano">
+            <span className="h-2 w-2 rounded-full bg-piano" />
+            Piano
           </span>
         )}
-        <Link
-          to={`/sheet/${sheet.id}`}
-          className="inline-flex items-center justify-center shrink-0 h-7 gap-1.5 px-2.5 rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none hover:bg-muted hover:text-foreground text-muted-foreground"
-        >
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-
-      <div className="text-sm text-muted-foreground mb-2 flex items-center gap-1.5">
-        <Music className="h-3.5 w-3.5" />
-        {sheet.tempo} BPM
-        {sheet.lyricsLines.length > 0 && (
-          <span> • {sheet.lyricsLines.length} lyric lines</span>
+        {hasGuitar && (
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-guitar">
+            <span className="h-2 w-2 rounded-full bg-guitar" />
+            Guitar
+          </span>
+        )}
+        {hasDrums && (
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-drums">
+            <span className="h-2 w-2 rounded-full bg-drums" />
+            Drums
+          </span>
         )}
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex items-center justify-end gap-2 mt-auto pt-1">
         {showDeleteConfirm && (
           <ConfirmDialog
             message={`Delete "${sheet.title}"? This cannot be undone.`}
@@ -93,12 +119,18 @@ export default function SheetCard({ sheet }: SheetCardProps) {
         )}
         <Button
           variant="ghost"
-          size="sm"
+          size="icon"
           onClick={() => setShowDeleteConfirm(true)}
-          className="text-muted-foreground"
+          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 w-8"
         >
-          <Trash2 className="h-3.5 w-3.5" />
+          <Trash2 className="h-4 w-4" />
         </Button>
+        <Link
+          to={`/sheet/${sheet.id}`}
+          className="inline-flex items-center justify-center gap-1.5 px-3 h-8 rounded-md text-sm font-medium bg-accent text-accent-foreground hover:bg-accent-hover transition-colors focus-visible:ring-2 focus-visible:ring-focus"
+        >
+          Open
+        </Link>
       </div>
     </div>
   );
