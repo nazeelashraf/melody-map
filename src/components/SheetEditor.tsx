@@ -4,15 +4,16 @@ import {
   ArrowLeft,
   ChevronDown,
   Copy,
+  Download,
   Edit3,
   Eye,
+  Music,
   Plus,
   Trash2,
 } from 'lucide-react';
 import { instrumentTypes } from '../schemas/sheet.schema';
 import { useSheet, useSheetActions } from '../context/SheetContext';
 import type { DrumLane, InstrumentType, LyricsLine } from '../types';
-import ExportButton from './ExportButton';
 import PerformanceView from './PerformanceView';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -49,6 +50,12 @@ const instrumentLabels: Record<InstrumentType, string> = {
   piano: 'Piano',
   guitar: 'Guitar',
   drums: 'Percussion',
+};
+
+const instrumentDotColors: Record<InstrumentType, string> = {
+  piano: 'bg-blue-500',
+  guitar: 'bg-green-500',
+  drums: 'bg-purple-500',
 };
 
 function shiftLineOverrides(
@@ -379,29 +386,38 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
 
   return (
     <div className="space-y-6">
-      <div>
-        <Link to="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary no-underline hover:underline">
-          <ArrowLeft className="h-4 w-4" />
-          Sheets
-        </Link>
-        <div className="flex items-start justify-between gap-4 flex-wrap mt-2">
-          <div className="flex-1 min-w-0">
-            <Input
-              type="text"
-              value={titleDraft}
-              onChange={event => setTitleDraft(event.target.value)}
-              onBlur={commitTitle}
-              onKeyDown={handleTitleKeyDown}
-              className="text-2xl font-bold border-0 px-0 h-auto focus-visible:ring-0"
-            />
-            <div className="flex gap-2 mt-2">
-              <ExportButton data={sheet} label="Export sheet" />
-            </div>
-            <p className="text-muted-foreground mt-2 max-w-2xl leading-relaxed">
-              Edit one instrument at a time, keep cues vertically locked to the lyric text, and copy a line's cue pattern where needed.
-            </p>
-          </div>
-
+      {/* Header */}
+      <header className="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-canvas-muted">
+        <div className="flex items-center gap-3 min-w-0">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground no-underline shrink-0"
+          >
+            <ArrowLeft className="h-3 w-3" />
+            Sheets
+          </Link>
+          <span className="text-lg font-semibold text-foreground truncate">
+            {sheet.title || 'Untitled Sheet'}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              const json = JSON.stringify(sheet, null, 2);
+              const blob = new Blob([json], { type: 'application/json' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `${sheet.title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.json`;
+              a.click();
+              setTimeout(() => URL.revokeObjectURL(url), 100);
+            }}
+          >
+            <Download className="h-4 w-4" />
+            <span className="hidden sm:inline ml-1.5">Export</span>
+          </Button>
           <ToggleGroup
             value={[viewMode]}
             onValueChange={(value) => {
@@ -419,81 +435,73 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
+      </header>
+
+      {/* Metadata bar */}
+      <div className="flex items-center gap-4 flex-wrap pb-4">
+        <Input
+          type="text"
+          value={titleDraft}
+          onChange={event => setTitleDraft(event.target.value)}
+          onBlur={commitTitle}
+          onKeyDown={handleTitleKeyDown}
+          className="flex-1 min-w-0 bg-transparent border-0 border-b border-border px-0 text-sm focus-visible:ring-0"
+          placeholder="Untitled Sheet"
+        />
+        <div className="flex items-center gap-2">
+          <Music className="h-4 w-4 text-muted-foreground" />
+          <span className="text-xs text-muted-foreground">BPM</span>
+          <Input
+            type="number"
+            min={20}
+            max={300}
+            value={sheet.tempo}
+            onChange={handleTempoChange}
+            className="w-20"
+          />
+        </div>
+        <span className="text-xs text-muted-foreground">
+          {sheet.lyricsLines.length} lines
+        </span>
       </div>
 
-      <section className="rounded-lg border bg-card p-4 shadow-sm">
-        <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
-          <h2 className="text-base font-semibold text-foreground">Sheet Details</h2>
-          <Badge variant="secondary">{sheet.lyricsLines.length} lines</Badge>
-        </div>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-          <label className="grid gap-1.5">
-            <span className="text-sm font-semibold text-foreground">Title</span>
-            <Input
-              type="text"
-              value={titleDraft}
-              onChange={event => setTitleDraft(event.target.value)}
-              onBlur={commitTitle}
-              onKeyDown={handleTitleKeyDown}
-            />
-          </label>
-          <label className="grid gap-1.5">
-            <span className="text-sm font-semibold text-foreground">Tempo</span>
-            <Input
-              type="number"
-              min={20}
-              max={300}
-              value={sheet.tempo}
-              onChange={handleTempoChange}
-            />
-          </label>
-        </div>
-      </section>
-
-      <section className="rounded-lg border bg-card p-4 shadow-sm space-y-4">
-        <div className="flex justify-between items-start flex-wrap gap-3">
-          <div>
-            <h2 className="text-base font-semibold text-foreground">Instrument Cues</h2>
-            <p className="text-sm text-muted-foreground mt-0.5">
-              Pick an instrument for the section, then fine-tune any line with its own override. Clicking the lyric row also updates the cue guide.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <ToggleGroup
-              value={[editorInstrument]}
-              onValueChange={(value) => {
-                const nextInstrument = value[0];
-                if (nextInstrument === 'piano' || nextInstrument === 'guitar' || nextInstrument === 'drums') {
-                  setEditorInstrument(nextInstrument);
-                }
-              }}
-            >
-              {instrumentTypes.map((instrument) => (
-                <ToggleGroupItem key={instrument} value={instrument} aria-label={`Edit ${instrumentLabels[instrument]} cues`}>
-                  {instrumentLabels[instrument]}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
-            <Button onClick={handleAddLine}>
-              <Plus className="h-4 w-4 mr-1.5" />
-              Add line
-            </Button>
-          </div>
+      {/* Canvas — Cues */}
+      <div>
+        <div className="flex items-center justify-between flex-wrap gap-2 pb-4">
+          <ToggleGroup
+            value={[editorInstrument]}
+            onValueChange={(value) => {
+              const nextInstrument = value[0];
+              if (nextInstrument === 'piano' || nextInstrument === 'guitar' || nextInstrument === 'drums') {
+                setEditorInstrument(nextInstrument);
+              }
+            }}
+          >
+            {instrumentTypes.map((instrument) => (
+              <ToggleGroupItem key={instrument} value={instrument} aria-label={`Edit ${instrumentLabels[instrument]} cues`}>
+                {instrumentLabels[instrument]}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+          <Button onClick={handleAddLine}>
+            <Plus className="h-4 w-4 mr-1.5" />
+            Add line
+          </Button>
         </div>
 
         {sheet.lyricsLines.length === 0 ? (
-          <div className="text-center py-8 rounded-lg border border-dashed bg-muted/50">
+          <div className="text-center py-8 rounded-lg border border-dashed border-canvas-muted bg-canvas-muted/30">
             <p className="text-base font-bold text-foreground mb-1">No lyric lines yet</p>
             <p className="text-sm text-muted-foreground">Add a line, type lyrics, and place instrument-specific cues directly above the text.</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-1">
             {sheet.lyricsLines.map((line, lineIndex) => {
               const activeInstrument = getLineInstrument(lineIndex);
               const isBlankLine = line.lyrics.length === 0;
 
               return (
-                <article key={`${sheet.id}-${lineIndex}`} className="rounded-xl border bg-muted/40 p-4 space-y-3">
+                <article key={`${sheet.id}-${lineIndex}`} className="py-2 border-b border-canvas-muted space-y-3">
                   <div className="flex justify-between items-start gap-3 flex-wrap">
                     <div className="flex items-center gap-2 flex-wrap">
                       <Badge variant="outline">Line {lineIndex + 1}</Badge>
@@ -561,7 +569,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                     )}
 
                     {!isBlankLine && activeInstrument === 'drums' && (
-                      <div className="grid gap-2 rounded-xl border border-primary/15 bg-card/80 p-3">
+                      <div className="grid gap-2 rounded-lg border border-primary/10 bg-canvas-muted/20 p-3">
                         <div className="flex items-center justify-between gap-2 flex-wrap">
                           <span className="text-xs font-semibold uppercase tracking-wide text-primary/90">
                             Percussion lanes
@@ -620,7 +628,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                     </label>
 
                     {isBlankLine && (
-                      <div className="rounded-xl border border-dashed border-primary/30 bg-primary/5 px-3 py-2 text-sm text-primary">
+                      <div className="rounded-lg border border-dashed border-primary/30 bg-primary/5 px-3 py-2 text-sm text-primary">
                         Blank spacer line preserved. Cue rows stay hidden here so verse spacing remains clean.
                       </div>
                     )}
@@ -632,7 +640,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
         )}
 
         {sheet.lyricsLines.length > 0 && (
-          <div className="pt-4 border-t space-y-3">
+          <div className="pt-4 mt-4 space-y-3">
             <div className="flex justify-between items-baseline gap-2 flex-wrap">
               <h3 className="text-sm font-semibold text-foreground">Current Preview</h3>
               <span className="text-xs text-muted-foreground">
@@ -643,7 +651,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
             </div>
 
             {editorInstrument === 'drums' ? (
-              <div className="rounded-xl bg-foreground text-background dark:bg-background dark:text-foreground p-4 font-mono text-sm overflow-x-auto space-y-1">
+              <div className="rounded-lg bg-canvas-muted/30 text-foreground p-4 font-mono text-sm overflow-x-auto space-y-1">
                 {sheet.lyricsLines.map((line, lineIndex) => {
                   if (line.lyrics.length === 0) {
                     return <div key={`preview-${lineIndex}`} className="h-4" />;
@@ -662,28 +670,32 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                 })}
               </div>
             ) : (
-              <pre className="bg-foreground text-background dark:bg-background dark:text-foreground rounded-xl p-4 font-mono text-sm overflow-x-auto whitespace-pre-wrap">
+              <pre className="bg-canvas-muted/30 text-foreground rounded-lg p-4 font-mono text-sm overflow-x-auto whitespace-pre-wrap">
                 {previewLines}
               </pre>
             )}
           </div>
         )}
-      </section>
+      </div>
 
-      <section className="rounded-lg border bg-card p-4 shadow-sm">
+      {/* Arrangements */}
+      <section className="border-t pt-4 mt-6">
         <div className="mb-3">
           <h2 className="text-base font-semibold text-foreground">Arrangements</h2>
-          <p className="text-sm text-muted-foreground mt-0.5">Keep notes, sections, or cues for piano, guitar, and drums independently.</p>
         </div>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
           {instrumentTypes.map((instrument) => (
             <label key={instrument} className="grid gap-1">
-              <span className="text-sm font-semibold text-foreground">{instrumentLabels[instrument]} arrangement</span>
+              <span className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <span className={`h-2 w-2 rounded-full ${instrumentDotColors[instrument]}`} />
+                {instrumentLabels[instrument]}
+              </span>
               <Textarea
                 value={sheet.arrangements[instrument]}
                 onChange={(event) => handleArrangementChange(instrument, event.target.value)}
                 rows={10}
                 placeholder="Verse: sparse voicings\nChorus: open chords"
+                className="bg-canvas-muted/50"
               />
             </label>
           ))}
