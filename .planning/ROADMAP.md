@@ -1,9 +1,11 @@
 # Roadmap: Melody Map
 
 **Project:** Melody Map
+**Milestone:** v1.0 — ✓ COMPLETE
 **Phases:** 6 (Coarse granularity)
 **Requirements:** 45 mapped | 4 unmapped
 **Generated:** 2026-04-20
+**Last Updated:** 2026-04-22 (milestone completion)
 
 ---
 
@@ -254,3 +256,35 @@ After each phase, the **Verifier** agent will confirm:
 ## Backlog
 
 - **PDF Import** — Add PDF ingestion for song sheets once a stable, machine-readable source format is available. Scope should cover extracting lyrics, section markers, and instrument cues without weakening the JSON-first import path.
+
+---
+
+## Milestone Completion — v1.0
+
+**Completed:** 2026-04-22
+
+All 6 phases have been successfully implemented and verified:
+
+| Phase | Plans | Status |
+|-------|-------|--------|
+| 1 — App Foundation | 3/3 | ✓ Complete |
+| 2 — Sheet Editor | direct | ✓ Complete |
+| 3 — Composition Builder | direct | ✓ Complete |
+| 4 — Import/Export + Polish | 2/2 | ✓ Complete |
+| 5 — UI Overhaul | 3/3 | ✓ Complete |
+| 6 — Instrument-Specific Cues + Editor Precision | 3/3 | ✓ Complete |
+
+**Verification:**
+- `npm run typecheck` — PASSED
+- `npm run build` — PASSED (2037 modules, 2.01s)
+
+**Delivered Features:**
+- Sheet creation, editing, and deletion with localStorage persistence
+- Multi-instrument arrangements (Piano, Guitar, Drums) alongside lyrics
+- Instrument-specific cues that align to lyric lines
+- Composition builder for organizing multiple sheets
+- JSON import/export with Zod validation
+- Dark mode support with theme persistence
+- Responsive design with collapsible sidebar
+- Print stylesheet for clean output
+- Modern UI with Tailwind CSS and shadcn/ui components

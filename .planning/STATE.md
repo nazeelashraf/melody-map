@@ -1,10 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
+milestone_name: Melody Map v1.0
 current_phase: 6 — Instrument-Specific Cues + Editor Precision
-status: complete
-last_updated: "2026-04-22T03:13:00Z"
+status: milestone_complete
+milestone_completed: "2026-04-22T00:00:00Z"
+last_updated: "2026-04-22T04:30:00Z"
 progress:
   total_phases: 6
   completed_phases: 6
@@ -24,6 +25,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-21)
 
 **Core value:** A musician can quickly create, edit, and organize multi-instrument song sheets with lyrics — no account, no backend, just the browser.
 
+**Milestone:** Melody Map v1.0 — ✓ COMPLETE
 **Current phase:** 6 — Instrument-Specific Cues + Editor Precision (Complete)
 
 ## Phase Status
@@ -62,7 +64,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-21)
   - PerformanceView: instrument tabs with switching (PERF-01), monospace cues above lyrics (PERF-02), 5-lane percussion display (PERF-03)
 - Verification passed: `npm run typecheck` and `npm run build`
 
-**Next step:** Phase 6 complete — Melody Map v1.0 fully implemented
+**Next step:** None — Melody Map v1.0 milestone complete
 
 ## Notes
 
