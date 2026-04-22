@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, FileUp, AlertCircle } from 'lucide-react';
 import { useSheet } from '../context/SheetContext';
 import { useComposition } from '../context/CompositionContext';
 import { sheetSchema, compositionSchema } from '../schemas/sheet.schema';
@@ -61,16 +61,24 @@ export default function ImportDialog({ mode, onClose }: ImportDialogProps) {
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent>
+      <DialogContent className="bg-card text-card-foreground p-6">
         <DialogHeader>
-          <DialogTitle>Import {mode === 'sheet' ? 'Sheet' : 'Composition'}</DialogTitle>
+          <DialogTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <FileUp className="h-5 w-5 text-accent" />
+            Import {mode === 'sheet' ? 'Sheet' : 'Composition'}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
-          <Button onClick={() => fileInputRef.current?.click()} variant="default">
-            <Upload className="h-4 w-4 mr-2" />
-            Choose File
-          </Button>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="border-2 border-dashed border-border rounded-lg bg-muted/50 p-8 flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-muted/80 transition-colors w-full"
+          >
+            <Upload className="h-8 w-8 text-muted-foreground" />
+            <span className="text-sm font-medium text-foreground">Choose File</span>
+            <span className="text-sm text-muted-foreground">Select a JSON file to import</span>
+          </button>
           <input
             ref={fileInputRef}
             type="file"
@@ -78,10 +86,15 @@ export default function ImportDialog({ mode, onClose }: ImportDialogProps) {
             onChange={handleFile}
             className="hidden"
           />
-          {error && <p className="text-destructive text-sm">{error}</p>}
+          {error && (
+            <div className="flex items-start gap-2 rounded-lg bg-destructive/10 p-3 text-destructive text-sm">
+              <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="gap-3 bg-transparent border-t-0 mx-0 mb-0 p-0 pt-4 rounded-none">
           <Button variant="outline" onClick={onClose}>Cancel</Button>
         </DialogFooter>
       </DialogContent>
