@@ -362,10 +362,14 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
   };
 
   const handleLineInstrumentChange = (lineIndex: number, instrument: InstrumentType) => {
-    setLineInstrumentOverrides((previousOverrides) => ({
-      ...previousOverrides,
-      [lineIndex]: instrument,
-    }));
+    setLineInstrumentOverrides((previousOverrides) => {
+      if (previousOverrides[lineIndex] === instrument) {
+        const next = { ...previousOverrides };
+        delete next[lineIndex];
+        return next;
+      }
+      return { ...previousOverrides, [lineIndex]: instrument };
+    });
   };
 
   const handleCopyLine = (lineIndex: number, target: InstrumentType | 'all') => {
@@ -469,22 +473,43 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
 
       {/* Canvas — Cues */}
       <div>
-        <div className="flex items-center justify-between flex-wrap gap-2 pb-4">
-          <ToggleGroup
-            value={[editorInstrument]}
-            onValueChange={(value) => {
-              const nextInstrument = value[0];
-              if (nextInstrument === 'piano' || nextInstrument === 'guitar' || nextInstrument === 'drums') {
-                setEditorInstrument(nextInstrument);
-              }
-            }}
-          >
-            {instrumentTypes.map((instrument) => (
-              <ToggleGroupItem key={instrument} value={instrument} aria-label={`Edit ${instrumentLabels[instrument]} cues`}>
-                {instrumentLabels[instrument]}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
+        <div className="flex items-center justify-between flex-wrap gap-2 pb-2 mb-4">
+          <div className="flex gap-1" role="tablist" aria-label="Instrument editing context">
+            {instrumentTypes.map((instrument) => {
+              const isActive = editorInstrument === instrument;
+              return (
+                <button
+                  key={instrument}
+                  type="button"
+                  role="tab"
+                  aria-pressed={isActive}
+                  aria-label={`Edit ${instrumentLabels[instrument]} cues`}
+                  onClick={() => setEditorInstrument(instrument)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                      const currentIndex = instrumentTypes.indexOf(instrument);
+                      const nextIndex = event.key === 'ArrowRight'
+                        ? (currentIndex + 1) % instrumentTypes.length
+                        : (currentIndex - 1 + instrumentTypes.length) % instrumentTypes.length;
+                      setEditorInstrument(instrumentTypes[nextIndex]);
+                    }
+                  }}
+                  className={cn(
+                    'px-3 py-1.5 text-sm font-medium transition-colors border-l-4',
+                    isActive && instrument === 'piano' && 'border-piano bg-piano-muted text-foreground',
+                    isActive && instrument === 'guitar' && 'border-guitar bg-guitar-muted text-foreground',
+                    isActive && instrument === 'drums' && 'border-drums bg-drums-muted text-foreground',
+                    !isActive && 'border-transparent text-muted-foreground hover:bg-canvas-muted',
+                  )}
+                >
+                  <span className="flex items-center gap-1.5">
+                    {instrumentLabels[instrument]}
+                    {isActive && <Edit3 className="h-3.5 w-3.5" />}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
           <Button onClick={handleAddLine}>
             <Plus className="h-4 w-4 mr-1.5" />
             Add line
@@ -505,25 +530,38 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
               return (
                 <article key={`${sheet.id}-${lineIndex}`} className="py-3 group relative">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-[10px] text-muted-foreground font-mono">
-                      Line {lineIndex + 1}
-                    </span>
-                    <div className="hidden">
-                      <ToggleGroup
-                        value={[activeInstrument]}
-                        onValueChange={(value) => {
-                          const nextInstrument = value[0];
-                          if (nextInstrument === 'piano' || nextInstrument === 'guitar' || nextInstrument === 'drums') {
-                            handleLineInstrumentChange(lineIndex, nextInstrument);
-                          }
-                        }}
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] text-muted-foreground font-mono">
+                        Line {lineIndex + 1}
+                      </span>
+                      <div
+                        className={cn(
+                          'flex gap-1 rounded-full p-0.5 transition-all',
+                          lineInstrumentOverrides[lineIndex] && lineInstrumentOverrides[lineIndex] !== editorInstrument && 'ring-1 ring-accent/30',
+                        )}
+                        title={lineInstrumentOverrides[lineIndex] ? `Line uses ${instrumentLabels[lineInstrumentOverrides[lineIndex]]} instead of global ${instrumentLabels[editorInstrument]}` : `Following global ${instrumentLabels[editorInstrument]}`}
                       >
-                        {instrumentTypes.map((instrument) => (
-                          <ToggleGroupItem key={instrument} value={instrument} size="sm">
-                            {instrumentLabels[instrument]}
-                          </ToggleGroupItem>
-                        ))}
-                      </ToggleGroup>
+                        {instrumentTypes.map((instrument) => {
+                          const isActive = activeInstrument === instrument;
+                          return (
+                            <button
+                              key={instrument}
+                              type="button"
+                              onClick={() => handleLineInstrumentChange(lineIndex, instrument)}
+                              className={cn(
+                                'text-[10px] px-2 py-0.5 rounded-full transition-colors',
+                                isActive && instrument === 'piano' && 'bg-piano text-white',
+                                isActive && instrument === 'guitar' && 'bg-guitar text-white',
+                                isActive && instrument === 'drums' && 'bg-drums text-white',
+                                !isActive && 'bg-transparent text-muted-foreground border border-border hover:bg-canvas-muted',
+                              )}
+                              aria-label={`Set line ${lineIndex + 1} to ${instrumentLabels[instrument]}`}
+                            >
+                              {instrumentLabels[instrument]}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                     <div className="flex items-center gap-0.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                       <Button

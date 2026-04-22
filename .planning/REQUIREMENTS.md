@@ -76,7 +76,8 @@
 
 - [x] **CANV-01
 **: User can edit a sheet on a canvas-style surface that visually prioritizes lyrics and cues over surrounding chrome
-- [ ] **CANV-02**: User can distinguish cue lanes from lyric lines at a glance while preserving their shared alignment
+- [x] **CANV-02
+**: User can distinguish cue lanes from lyric lines at a glance while preserving their shared alignment
 - [x] **CANV-03
 **: User can use redesigned metadata, line controls, and arrangement panels without losing the current Phase 6 editing capabilities
 - [ ] **TRACK-01**: User can identify and switch instrument contexts through visually distinct track-style controls in the editor
