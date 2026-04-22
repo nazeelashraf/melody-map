@@ -34,9 +34,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const handleNavigate = () => setMobileOpen(false);
 
   return (
-    <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen bg-canvas">
+    <div className="flex h-full bg-canvas">
       {/* Desktop sidebar */}
-      <aside data-sidebar className="hidden md:flex md:flex-col w-64 border-r border-shell-border bg-shell overflow-hidden">
+      <aside data-sidebar className="hidden md:flex md:flex-col w-64 border-r border-shell-border bg-shell overflow-hidden flex-shrink-0">
         <Sidebar />
       </aside>
 
@@ -48,12 +48,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </Sheet>
 
       {/* Top bar + main content */}
-      <div className="grid grid-rows-[auto_1fr] overflow-hidden">
+      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <TopBar
           onMenuClick={() => setMobileOpen(true)}
           title={getPageTitle()}
         />
-        <main className="overflow-y-auto p-4 md:p-6 bg-canvas">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-canvas">
           {children}
         </main>
       </div>
