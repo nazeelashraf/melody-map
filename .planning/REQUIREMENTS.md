@@ -67,10 +67,10 @@
 
 ### Shell and Library
 
-- [ ] **SHEL-01**: User can navigate the app within a redesigned shell that clearly separates navigation from editing and performance content
-- [ ] **LIB-01**: User can scan sheets and compositions from redesigned library cards with clearer hierarchy, metadata, and primary actions
+- [x] **SHEL-01**: User can navigate the app within a redesigned shell that clearly separates navigation from editing and performance content
+- [x] **LIB-01**: User can scan sheets and compositions from redesigned library cards with clearer hierarchy, metadata, and primary actions
 - [x] **UI-01**: User can use buttons, dialogs, empty states, and action controls that share one cohesive visual language across the app
-- [ ] **RESP-01**: User can access navigation and core actions on mobile, tablet, and desktop through layout-appropriate shell behavior
+- [x] **RESP-01**: User can access navigation and core actions on mobile, tablet, and desktop through layout-appropriate shell behavior
 
 ### Sheet Canvas
 
@@ -199,10 +199,10 @@
 | DSGN-02 | Phase 7 | Planned |
 | DSGN-03 | Phase 7 | Planned |
 | DSGN-04 | Phase 7 | Planned |
-| SHEL-01 | Phase 8 | Planned |
-| LIB-01 | Phase 8 | Planned |
-| UI-01 | Phase 8 | Planned |
-| RESP-01 | Phase 8 | Planned |
+| SHEL-01 | Phase 8 | Complete |
+| LIB-01 | Phase 8 | Complete |
+| UI-01 | Phase 8 | Complete |
+| RESP-01 | Phase 8 | Complete |
 | CANV-01 | Phase 9 | Planned |
 | CANV-02 | Phase 9 | Planned |
 | CANV-03 | Phase 9 | Planned |

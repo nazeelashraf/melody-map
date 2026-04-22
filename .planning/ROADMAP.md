@@ -250,10 +250,10 @@
 
 ## Phase 8: Shell + Library Redesign
 
-**Status:** In Progress
+**Status:** Complete
 **Goal:** Rebuild app shell and library around warm-canvas / dark-shell split with cohesive cards, actions, and responsive navigation.
 
-**Completed Plans:** 2/3
+**Completed Plans:** 3/3
 
 **Depends on:** Phase 7
 
@@ -264,7 +264,7 @@
 **Plans:**
 - [x] 08-01-PLAN.md — Shell redesign: AppLayout, Sidebar, TopBar with warm-canvas/dark-shell split
 - [x] 08-02-PLAN.md — Shared primitives: ConfirmDialog, ImportDialog, EmptyState with cohesive visual language
-- [ ] 08-03-PLAN.md — Library components: SheetList, SheetCard, CompositionCard with responsive grid
+- [x] 08-03-PLAN.md — Library components: SheetList, SheetCard, CompositionCard with responsive grid
 
 **Success Criteria:**
 1. Desktop layout clearly separates dark shell (navigation) from warm canvas (content)

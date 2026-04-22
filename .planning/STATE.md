@@ -2,21 +2,20 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Melody Map v1.1 — DESIGN.md Implementation
-current_phase: 8 — Shell + Library Redesign
 status: milestone_in_progress
-last_updated: "2026-04-22T04:48:31Z"
+last_updated: "2026-04-22T05:10:00Z"
 progress:
   total_phases: 11
   completed_phases: 7
   total_plans: 14
-  completed_plans: 8
-  percent: 57
+  completed_plans: 10
+  percent: 71
 ---
 
 # State: Melody Map
 
 **Project:** Melody Map
-**Last updated:** 2026-04-22 after Phase 8 Plan 01 shell redesign execution
+**Last updated:** 2026-04-22 after Phase 8 Plan 03 library components redesign execution
 
 ## Project Reference
 
@@ -38,14 +37,14 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | 5 — UI Overhaul | ✓ Complete | 3/3 | 100% |
 | 6 — Instrument-Specific Cues + Editor Precision | ✓ Complete | 3/3 | 100% |
 | 7 — Design Foundations | ✓ Complete | 1/1 | 100% |
-| 8 — Shell + Library Redesign | In Progress | 2/3 | 67% |
+| 8 — Shell + Library Redesign | ✓ Complete | 3/3 | 100% |
 | 9 — Sheet Canvas Redesign | Planned | — | 0% |
 | 10 — Performance + Print Redesign | Planned | — | 0% |
 | 11 — Responsive + Motion Polish | Planned | — | 0% |
 
 ## Active Context
 
-**Current session:** Phase 8 Plan 02 — shared UI primitives redesign execution
+**Current session:** Phase 8 Plan 03 — library components redesign execution
 **Completed steps:**
 
 - v1.0 milestone complete (Phases 1–6)
@@ -63,6 +62,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Phase 7 — Design Foundations: design tokens, typography, focus/selection language implemented
 - Phase 8 Plan 01 — Shell Library Redesign: AppLayout, Sidebar, TopBar redesigned with warm-canvas/dark-shell split
 - Phase 8 Plan 02 — Shared UI Primitives Redesign: ConfirmDialog, ImportDialog, EmptyState redesigned with cohesive card-based visual language
+- Phase 8 Plan 03 — Library Components Redesign: SheetList, SheetCard, CompositionCard redesigned with instrument identity hints, sheet order visualization, and responsive grid
 
 **Current work:** Phase 8 — Shell + Library Redesign
 
@@ -72,8 +72,11 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Redesigned ConfirmDialog with alert icon, card background, clear destructive actions, and safer default focus
 - Redesigned ImportDialog with dashed-border file selection area, helper text, and styled error display
 - Redesigned EmptyState with solid border, larger iconography, better typography, and prominent CTA
+- Redesigned SheetCard with Music icon, tempo/lines metadata, colored instrument identity dots, accent open button
+- Redesigned CompositionCard with Layers icon, sheet count, mini title preview, order dot visualization
+- Redesigned SheetList with cleaner "Song Library" header, grouped action buttons with icons, card-styled create form, responsive grid
 
-**Next step:** Phase 8 Plan 03 — Library components redesign (SheetList, SheetCard, CompositionCard)
+**Next step:** Phase 9 — Sheet Canvas Redesign
 
 ## Notes
 
@@ -99,3 +102,4 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | Visual-only collaboration | DESIGN.md references collaboration motifs | No real-time or multi-user features; only styling hints |
 | Subtle motion only | User preference for smooth but not flashy | Short transitions, reduced-motion support via `prefers-reduced-motion` |
 | Kept component interfaces unchanged during shell redesign | Avoid downstream breakage in SheetEditor and CompositionEditor | AppLayout, Sidebar, TopBar props unchanged; all existing navigation flows preserved |
+| Used cross-context read in CompositionCard for sheet titles | CompositionCard needs sheet titles for mini preview; both providers always mounted | `useSheet()` inside CompositionCard is safe and avoids prop drilling |
