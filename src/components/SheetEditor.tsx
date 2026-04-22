@@ -514,7 +514,6 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                       </ToggleGroup>
                     </div>
 
-                    // Phase 6: CUE-05 copy-to-all and copy-to-one verified per lyric line
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <Button variant="ghost" size="sm" onClick={() => handleCopyLine(lineIndex, 'all')}>
                         <Copy className="h-3.5 w-3.5 mr-1" />
@@ -544,7 +543,6 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                   <div className="grid gap-3">
                     {!isBlankLine && activeInstrument !== 'drums' && (
                       <label className="grid gap-1.5">
-                        // Phase 6: EDIT-02 (linked monospace alignment via guideColumn) and EDIT-03 (distinct active styling) verified
                         <span className="text-xs font-semibold uppercase tracking-wide text-primary/90">
                           {instrumentLabels[activeInstrument]} cues
                         </span>

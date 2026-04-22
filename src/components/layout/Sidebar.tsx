@@ -103,7 +103,7 @@ export default function Sidebar({ collapsed = false, onNavigate }: SidebarProps)
 
   return (
     <div className="flex flex-col h-full bg-shell">
-      <nav className="flex-1 overflow-y-auto" aria-label="Main navigation">
+      <nav className="flex-1 overflow-y-auto overflow-x-hidden" aria-label="Main navigation">
         {navItems}
       </nav>
 
