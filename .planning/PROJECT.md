@@ -14,7 +14,7 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 
 - [x] Create a sheet for a single song with title and tempo
 - [x] Edit lyrics for a sheet with preserved verse structure
-- [x] Add and edit chord markers above aligned lyric positions
+- [x] Add and edit instrument-specific cue markers above aligned lyric positions
 - [x] Add and edit arrangement notes for piano, guitar, and drums
 - [x] Edit tempo for a sheet
 - [x] Create and rename compositions that combine multiple sheets in order
@@ -24,20 +24,28 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 - [x] Import sheets and compositions from JSON with Zod validation
 - [x] Delete actions show a confirmation dialog
 - [x] Print stylesheet hides UI chrome and shows readable content
+- [x] Toggle dark mode with persistence across sessions
 
 ### Active
 
-- Redesign the sheet cue model so each lyric line can store instrument-specific cues for piano, guitar, and percussion
-- Make cue editing easier with vertically linked monospace cue/lyric fields and stable caret behavior for multi-character chord entry
-- Improve performance view readability by distinguishing cues from lyrics and showing instrument-specific cue lines
+- Redesign the visual system around a warm-canvas / dark-shell split with semantic tokens
+- Implement typography hierarchy: Inter Variable for UI, monospace for notation
+- Establish instrument identity colors (stable pastel mapping for piano, guitar, drums)
+- Redesign focus and selection states (dashed violet selection, solid violet focus)
+- Rebuild app shell, library, sheet editor, performance view, and print output to match DESIGN.md
+- Preserve existing dark-mode toggle while both themes share the new design language
+- Preserve Phase 6 instrument-specific cue editing capabilities
 
 ### Out of Scope
 
 - Backend, authentication, or cloud sync — frontend-only for v1
-- Real-time collaboration — single-user workflow
+- Real-time collaboration — single-user workflow (collaboration motifs are visual-only)
 - Audio playback or music generation — visual arranger only
 - PDF export or professional music engraving
 - Multi-user or sharing features
+- Data model changes to cues, sheets, or compositions
+- New instruments beyond piano, guitar, and drums
+- Audio/metronome, transposition, and section-marker feature work
 
 ## Context
 
@@ -83,7 +91,8 @@ Each cue string is the same length as `lyrics`. Piano/guitar cues sit above thei
 - **Persistence**: Data must survive page refreshes via browser storage.
 - **Import/Export**: JSON is the only external data format — no proprietary lock-in.
 - **Instrument Extensibility**: The data model should support adding more instruments later without restructuring.
-- **Compatibility**: Phase 6 may intentionally break existing v1 sheet data; migration is out of scope.
+- **Compatibility**: Phase 6 intentionally breaks existing v1 sheet data; migration is out of scope.
+- **Design System**: All v1.1 visual changes must use the semantic token system defined in DESIGN.md.
 
 ## Key Decisions
 
@@ -93,15 +102,19 @@ Each cue string is the same length as `lyrics`. Piano/guitar cues sit above thei
 | localStorage for persistence | Standard browser APIs, no extra dependencies | Validated in Phases 1-3 with debounced hook |
 | JSON for import/export | Human-readable, easy to back up, version-control friendly | Implemented in Phase 4 with Blob+FileReader and Zod validation |
 | SPA architecture | Smooth UX, no page reloads, fast transitions | Implemented with React Router |
-| Lyrics-first, chords above in fixed positions | Chords stay aligned to syllables when lyrics are edited | Implemented in Phase 2 editor |
-| Chord alignment by character index | Each chord sits above its lyric character position; editing lyrics shifts chords | Implemented in Phase 2 editor |
+| Lyrics-first, cues above in fixed positions | Cues stay aligned to syllables when lyrics are edited | Implemented in Phase 2 editor, refined in Phase 6 |
+| Cue alignment by character index | Each cue sits above its lyric character position; editing lyrics shifts cues | Implemented in Phase 2 editor, refined in Phase 6 |
 | Composition order stored as `sheetIds` | Keep sheet membership and ordering minimal, persistent, and easy to render | Implemented in Phase 3 composition editor |
-| Instrument-specific line cues | Guitar and piano may need different displayed cues; percussion needs stacked beat lanes | Approved for the next phase; replace shared chord line with per-instrument cues |
+| Instrument-specific line cues | Guitar and piano may need different displayed cues; percussion needs stacked beat lanes | Implemented in Phase 6 |
 | No Phase 6 migration | Faster redesign with less compatibility code | Existing v1 sheet data may break; migration explicitly deferred |
+| Preserve dark-mode toggle in v1.1 | Already shipped and validated | Both themes share warm-canvas/dark-shell language |
+| Adapt DESIGN.md to cues (not chord chips) | Phase 6 cue model is already delivered | Visual language adapts to cue rows/lanes |
+| Visual-only collaboration | DESIGN.md references collaboration motifs | No real-time or multi-user features |
+| Subtle motion only | User preference for smooth but not flashy | Short transitions, reduced-motion support |
 
 ---
 
-*Last updated: 2026-04-21 after Phase 5 implementation and Phase 6 scope definition*
+*Last updated: 2026-04-22 after v1.1 milestone start*
 
 ## Evolution
 

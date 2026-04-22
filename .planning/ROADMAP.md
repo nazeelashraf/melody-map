@@ -1,11 +1,11 @@
 # Roadmap: Melody Map
 
 **Project:** Melody Map
-**Milestone:** v1.0 — ✓ COMPLETE
-**Phases:** 6 (Coarse granularity)
-**Requirements:** 45 mapped | 4 unmapped
+**Milestone:** v1.1 — DESIGN.md Implementation — In Progress
+**Phases:** 11 (6 complete, 5 in progress/planned)
+**Requirements:** 64 mapped | 0 unmapped
 **Generated:** 2026-04-20
-**Last Updated:** 2026-04-22 (milestone completion)
+**Last Updated:** 2026-04-22 (v1.1 milestone start)
 
 ---
 
@@ -224,16 +224,139 @@
 
 ---
 
+## Phase 7: Design Foundations
+
+**Status:** In Progress
+**Goal:** Establish the design-system tokens, typography, selection/focus language, and instrument identity colors that all later phases depend on.
+
+**Depends on:** Phases 1–6
+
+**Requirements:** DSGN-01, DSGN-02, DSGN-03, DSGN-04, A11Y-01, A11Y-02
+
+**Success Criteria:**
+1. Semantic tokens for warm canvas, dark shell, accent, focus, selection, and instrument colors are defined in CSS and accessible to Tailwind/shadcn
+2. Typography roles are established: Inter Variable for UI labels and reading text, monospace for notation/cues
+3. Dashed violet borders represent selected state; solid violet borders represent keyboard focus
+4. Instrument color tokens map piano, guitar, and drums to stable pastel identities
+5. Existing dark-mode toggle continues to work; both themes share the new shell/canvas language
+6. Focus indicators are clearly visible and meet WCAG 2.2 non-text contrast guidelines
+
+**Planned Artifacts:**
+- `src/index.css` — Semantic token definitions for canvas, shell, accent, selection, focus, instrument colors
+- `src/context/ThemeProvider.tsx` — Updated to support new token architecture while preserving toggle
+- Typography configuration — Inter Variable + monospace stack for notation
+
+---
+
+## Phase 8: Shell + Library Redesign
+
+**Status:** Planned
+**Goal:** Rebuild app shell and library around warm-canvas / dark-shell split with cohesive cards, actions, and responsive navigation.
+
+**Depends on:** Phase 7
+
+**Requirements:** SHEL-01, LIB-01, UI-01, RESP-01
+
+**Success Criteria:**
+1. Desktop layout clearly separates dark shell (navigation) from warm canvas (content)
+2. Mobile/tablet navigation is accessible via drawer or collapsed shell
+3. Library cards, empty states, buttons, dialogs, and action controls share one cohesive visual language
+4. Navigation flows between library, sheets, and compositions are preserved
+5. Shell layout works across mobile, tablet, and desktop breakpoints
+
+**Planned Artifacts:**
+- `src/components/layout/AppLayout.tsx` — Redesigned shell with canvas/shell zoning
+- `src/components/layout/Sidebar.tsx` — Redesigned sidebar with dark shell styling
+- `src/components/layout/TopBar.tsx` — Redesigned top bar
+- `src/components/SheetList.tsx` — Redesigned library page
+- `src/components/SheetCard.tsx` — Redesigned sheet cards
+- `src/components/CompositionCard.tsx` — Redesigned composition cards
+- `src/components/EmptyState.tsx` — Redesigned empty states
+- `src/components/ConfirmDialog.tsx` — Redesigned dialogs
+- `src/components/ImportDialog.tsx` — Redesigned import dialog
+
+---
+
+## Phase 9: Sheet Canvas Redesign
+
+**Status:** Planned
+**Goal:** Turn the editor into a canvas-first sheet surface while preserving current Phase 6 cue-editing capabilities.
+
+**Depends on:** Phase 7, Phase 8
+
+**Requirements:** CANV-01, CANV-02, CANV-03, TRACK-01
+
+**Success Criteria:**
+1. Sheet editor visually prioritizes lyrics and cues over surrounding chrome
+2. Cue lanes are visually distinct from lyric lines while preserving shared alignment
+3. Metadata, line controls, and arrangement panels are redesigned without losing Phase 6 editing capabilities
+4. Track-style instrument context controls are visually distinct in the editor
+5. Canvas layout works across mobile, tablet, and desktop
+
+**Planned Artifacts:**
+- `src/components/SheetEditor.tsx` — Canvas-first redesign
+- `src/components/PerformanceView.tsx` — Track-style instrument controls
+
+---
+
+## Phase 10: Performance + Print Redesign
+
+**Status:** Planned
+**Goal:** Rework performance mode and print output into intentional reading surfaces with instrument-aware presentation.
+
+**Depends on:** Phase 7, Phase 8, Phase 9
+
+**Requirements:** PERF-04, PERF-05, PRNT-01
+
+**Success Criteria:**
+1. Performance surface is optimized for reading with minimal edit chrome
+2. Instrument-specific cues and notes display with stable instrument identity styling
+3. Printed output preserves readable cue and lyric hierarchy while removing non-essential chrome
+4. Print stylesheet is intentional and not a broad hide-all approach
+
+**Planned Artifacts:**
+- `src/components/PerformanceView.tsx` — Reading-first performance surface
+- `src/styles/print.css` — Purposeful print stylesheet
+
+---
+
+## Phase 11: Responsive + Motion Polish
+
+**Status:** Planned
+**Goal:** Finish cross-screen refinement and subtle accessible motion across the redesigned app.
+
+**Depends on:** Phases 7–10
+
+**Requirements:** RESP-02, MOTN-01, MOTN-02
+
+**Success Criteria:**
+1. Redesigned editor and performance surfaces are usable across mobile, tablet, and desktop without clipped controls or unreadable content
+2. Subtle transitions support orientation for navigation, dialogs, and mode changes
+3. Reduced-motion preferences are respected; non-essential animations are reduced or replaced
+4. Cross-screen visual cleanup is complete
+
+**Planned Artifacts:**
+- Motion and transition utilities
+- Responsive breakpoint refinements
+- Reduced-motion media query handling
+
+---
+
 ## Phase Map
 
-| # | Phase | Goal | Requirements | Success Criteria |
-|---|-------|------|--------------|------------------|
-| 1 | App Foundation | Project scaffold, data model, persistence, navigation | SHEET-01–05, SAVE-01–02 | 6 criteria |
-| 2 | Sheet Editor | Full sheet editing: lyrics, tempo, chord-aligned markers, three instrument arrangements | LYR-01–04, ARR-01–08 | 10 criteria |
-| 3 | Composition Builder | Create and manage compositions from multiple sheets | COMP-01–07 | 9 criteria |
-| 4 | Import/Export + Polish | JSON import/export, error handling, print styles, empty states | DATA-01–06 | 8 criteria |
-| 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | VIS-01, VIS-02 | 9 criteria |
-| 6 | Instrument-Specific Cues + Editor Precision | Replace shared chord lines with instrument-specific cues and improve cue editing/performance readability | CUE-01–05, EDIT-01–03, PERF-01–03 | 8 criteria |
+| # | Phase | Goal | Requirements | Status |
+|---|-------|------|--------------|--------|
+| 1 | App Foundation | Project scaffold, data model, persistence, navigation | SHEET-01–05, SAVE-01–02 | ✓ Complete |
+| 2 | Sheet Editor | Full sheet editing: lyrics, tempo, chord-aligned markers, three instrument arrangements | LYR-01–04, ARR-01–08 | ✓ Complete |
+| 3 | Composition Builder | Create and manage compositions from multiple sheets | COMP-01–07 | ✓ Complete |
+| 4 | Import/Export + Polish | JSON import/export, error handling, print styles, empty states | DATA-01–06 | ✓ Complete |
+| 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | VIS-01, VIS-02 | ✓ Complete |
+| 6 | Instrument-Specific Cues + Editor Precision | Replace shared chord lines with instrument-specific cues and improve cue editing/performance readability | CUE-01–05, EDIT-01–03, PERF-01–03 | ✓ Complete |
+| 7 | Design Foundations | Establish design-system tokens, typography, selection/focus language, and instrument identity colors | DSGN-01–04, A11Y-01–02 | In Progress |
+| 8 | Shell + Library Redesign | Rebuild app shell and library around warm-canvas / dark-shell split | SHEL-01, LIB-01, UI-01, RESP-01 | Planned |
+| 9 | Sheet Canvas Redesign | Turn the editor into a canvas-first sheet surface while preserving Phase 6 capabilities | CANV-01–03, TRACK-01 | Planned |
+| 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | Planned |
+| 11 | Responsive + Motion Polish | Finish cross-screen refinement and subtle accessible motion | RESP-02, MOTN-01–02 | Planned |
 
 ---
 
@@ -243,6 +366,10 @@
 2. **Sheet editor next** — The core differentiator (multi-instrument arrangements alongside lyrics) must work before composition building
 3. **Composition third** — Depends entirely on sheets existing; straightforward once sheet editor is complete
 4. **Import/export + polish last** — Cross-cutting concern that benefits from having real data to test with; polish rounds out the experience
+5. **Design foundations before shell** — Token and typography system must exist before shell and library can use them
+6. **Shell before canvas** — Navigation and layout structure must be in place before editor content can be positioned correctly
+7. **Canvas before performance** — Editor surface informs the reading surface design
+8. **Responsive/motion last** — Polish phase that depends on all surfaces being complete
 
 ---
 
@@ -288,3 +415,17 @@ All 6 phases have been successfully implemented and verified:
 - Responsive design with collapsible sidebar
 - Print stylesheet for clean output
 - Modern UI with Tailwind CSS and shadcn/ui components
+
+---
+
+## Milestone Start — v1.1
+
+**Started:** 2026-04-22
+**Goal:** Implement DESIGN.md visual system across the entire app
+**Phases:** 7–11
+
+**Key Decisions:**
+- Preserve dark-mode toggle (both themes share new shell/canvas language)
+- Adapt DESIGN.md language to current instrument-specific cue model
+- Collaboration motifs are visual-only
+- Subtle motion with reduced-motion support

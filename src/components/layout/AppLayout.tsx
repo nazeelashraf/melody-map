@@ -34,9 +34,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const handleNavigate = () => setMobileOpen(false);
 
   return (
-    <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen bg-background">
+    <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen bg-canvas">
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex md:flex-col w-64 border-r bg-card overflow-hidden">
+      <aside data-sidebar className="hidden md:flex md:flex-col w-64 border-r border-shell-border bg-shell overflow-hidden">
         <Sidebar />
       </aside>
 
@@ -53,7 +53,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           onMenuClick={() => setMobileOpen(true)}
           title={getPageTitle()}
         />
-        <main className="overflow-y-auto p-4 md:p-6">
+        <main className="overflow-y-auto p-4 md:p-6 bg-canvas">
           {children}
         </main>
       </div>
