@@ -187,7 +187,13 @@
 
 ## Phase 6: Instrument-Specific Cues + Editor Precision
 
-**Status:** ○ Not Started
+**Status:** ○ Planned
+**Plans:** 3 plans in 3 waves
+
+**Plans:**
+- [ ] 06-01-PLAN.md — Verify data model: types, schema, utilities
+- [ ] 06-02-PLAN.md — SheetEditor cue editor verification: stable caret, linked fields, copy actions
+- [ ] 06-03-PLAN.md — PerformanceView instrument-specific rendering with distinct styles and percussion lanes
 
 **Goal:** Replace the shared lyric-line chord model with instrument-specific cues, improve cue editing precision, and update performance view so each player sees their own readable cues.
 
