@@ -4,7 +4,7 @@ milestone: v1.1
 milestone_name: Melody Map v1.1 — DESIGN.md Implementation
 current_phase: 8 — Shell + Library Redesign
 status: milestone_in_progress
-last_updated: "2026-04-22T04:42:00Z"
+last_updated: "2026-04-22T04:48:31Z"
 progress:
   total_phases: 11
   completed_phases: 7
@@ -38,14 +38,14 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | 5 — UI Overhaul | ✓ Complete | 3/3 | 100% |
 | 6 — Instrument-Specific Cues + Editor Precision | ✓ Complete | 3/3 | 100% |
 | 7 — Design Foundations | ✓ Complete | 1/1 | 100% |
-| 8 — Shell + Library Redesign | In Progress | 1/1 | 100% |
+| 8 — Shell + Library Redesign | In Progress | 2/3 | 67% |
 | 9 — Sheet Canvas Redesign | Planned | — | 0% |
 | 10 — Performance + Print Redesign | Planned | — | 0% |
 | 11 — Responsive + Motion Polish | Planned | — | 0% |
 
 ## Active Context
 
-**Current session:** Phase 8 Plan 01 — shell redesign execution
+**Current session:** Phase 8 Plan 02 — shared UI primitives redesign execution
 **Completed steps:**
 
 - v1.0 milestone complete (Phases 1–6)
@@ -62,14 +62,18 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
   - `.planning/ROADMAP.md` updated
 - Phase 7 — Design Foundations: design tokens, typography, focus/selection language implemented
 - Phase 8 Plan 01 — Shell Library Redesign: AppLayout, Sidebar, TopBar redesigned with warm-canvas/dark-shell split
+- Phase 8 Plan 02 — Shared UI Primitives Redesign: ConfirmDialog, ImportDialog, EmptyState redesigned with cohesive card-based visual language
 
 **Current work:** Phase 8 — Shell + Library Redesign
 
 - Redesigned AppLayout with intentional canvas/shell zoning
 - Redesigned Sidebar with enhanced dark shell navigation, active border accent, bottom create actions
 - Redesigned TopBar with context-aware title, breadcrumb hint, improved mobile hamburger
+- Redesigned ConfirmDialog with alert icon, card background, clear destructive actions, and safer default focus
+- Redesigned ImportDialog with dashed-border file selection area, helper text, and styled error display
+- Redesigned EmptyState with solid border, larger iconography, better typography, and prominent CTA
 
-**Next step:** Phase 8 Plan 02 — Library surface redesign (SheetList, SheetCard, CompositionCard)
+**Next step:** Phase 8 Plan 03 — Library components redesign (SheetList, SheetCard, CompositionCard)
 
 ## Notes
 

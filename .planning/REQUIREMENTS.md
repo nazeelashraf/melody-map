@@ -69,7 +69,7 @@
 
 - [ ] **SHEL-01**: User can navigate the app within a redesigned shell that clearly separates navigation from editing and performance content
 - [ ] **LIB-01**: User can scan sheets and compositions from redesigned library cards with clearer hierarchy, metadata, and primary actions
-- [ ] **UI-01**: User can use buttons, dialogs, empty states, and action controls that share one cohesive visual language across the app
+- [x] **UI-01**: User can use buttons, dialogs, empty states, and action controls that share one cohesive visual language across the app
 - [ ] **RESP-01**: User can access navigation and core actions on mobile, tablet, and desktop through layout-appropriate shell behavior
 
 ### Sheet Canvas

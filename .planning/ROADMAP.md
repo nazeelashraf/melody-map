@@ -250,12 +250,21 @@
 
 ## Phase 8: Shell + Library Redesign
 
-**Status:** Planned
+**Status:** In Progress
 **Goal:** Rebuild app shell and library around warm-canvas / dark-shell split with cohesive cards, actions, and responsive navigation.
+
+**Completed Plans:** 2/3
 
 **Depends on:** Phase 7
 
 **Requirements:** SHEL-01, LIB-01, UI-01, RESP-01
+
+**Plans:** 3 plans in 3 waves
+
+**Plans:**
+- [x] 08-01-PLAN.md — Shell redesign: AppLayout, Sidebar, TopBar with warm-canvas/dark-shell split
+- [x] 08-02-PLAN.md — Shared primitives: ConfirmDialog, ImportDialog, EmptyState with cohesive visual language
+- [ ] 08-03-PLAN.md — Library components: SheetList, SheetCard, CompositionCard with responsive grid
 
 **Success Criteria:**
 1. Desktop layout clearly separates dark shell (navigation) from warm canvas (content)
@@ -353,9 +362,14 @@
 | 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | VIS-01, VIS-02 | ✓ Complete |
 | 6 | Instrument-Specific Cues + Editor Precision | Replace shared chord lines with instrument-specific cues and improve cue editing/performance readability | CUE-01–05, EDIT-01–03, PERF-01–03 | ✓ Complete |
 | 7 | Design Foundations | Establish design-system tokens, typography, selection/focus language, and instrument identity colors | DSGN-01–04, A11Y-01–02 | In Progress |
-| 8 | Shell + Library Redesign | Rebuild app shell and library around warm-canvas / dark-shell split | SHEL-01, LIB-01, UI-01, RESP-01 | Planned |
+| 7 | Design Foundations | Establish design-system tokens, typography, selection/focus language, and instrument identity colors | DSGN-01–04, A11Y-01–02 | ✓ Complete |
+
+| 8 | Shell + Library Redesign | Rebuild app shell and library around warm-canvas / dark-shell split | SHEL-01, LIB-01, UI-01, RESP-01 | In Progress |
+
 | 9 | Sheet Canvas Redesign | Turn the editor into a canvas-first sheet surface while preserving Phase 6 capabilities | CANV-01–03, TRACK-01 | Planned |
+
 | 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | Planned |
+
 | 11 | Responsive + Motion Polish | Finish cross-screen refinement and subtle accessible motion | RESP-02, MOTN-01–02 | Planned |
 
 ---
