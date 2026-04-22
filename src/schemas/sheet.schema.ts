@@ -5,6 +5,7 @@ export const instrumentTypes: InstrumentType[] = ['piano', 'guitar', 'drums'];
 
 export const drumCueLaneOrder = ['C', 'H', 'R', 'S', 'B'] as const;
 
+// Phase 6: New schema validates instrument-specific cue model only (no backward compatibility)
 const drumCuesSchema: z.ZodType<DrumCues> = z.object({
   C: z.string(),
   H: z.string(),

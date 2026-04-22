@@ -1,3 +1,4 @@
+// Phase 6: Cue utilities verified for CUE-05 (copy), EDIT-01 (sync on lyric change)
 import type { DrumCues, DrumLane, InstrumentType, LyricsLine } from '../types';
 
 export const drumLaneOrder: DrumLane[] = ['C', 'H', 'R', 'S', 'B'];

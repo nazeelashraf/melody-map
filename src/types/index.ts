@@ -1,3 +1,4 @@
+// Phase 6: Instrument-specific cues model verified against 06-SPEC.md requirements CUE-01 through CUE-04
 export type InstrumentType = 'piano' | 'guitar' | 'drums';
 
 export type DrumLane = 'C' | 'H' | 'R' | 'S' | 'B';
