@@ -34,7 +34,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const handleNavigate = () => setMobileOpen(false);
 
   return (
-    <div className="flex h-full bg-canvas">
+    <div className="flex h-full">
       {/* Desktop sidebar */}
       <aside data-sidebar className="hidden md:flex md:flex-col w-64 border-r border-shell-border bg-shell overflow-hidden flex-shrink-0">
         <Sidebar />
@@ -42,7 +42,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile sidebar drawer */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="w-64 p-0">
+        <SheetContent side="left" className="w-64 p-0 bg-shell border-r border-shell-border">
           <Sidebar collapsed={false} onNavigate={handleNavigate} />
         </SheetContent>
       </Sheet>
