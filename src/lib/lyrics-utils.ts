@@ -223,6 +223,28 @@ export interface GroupedChord {
   lyricIndex: number;
 }
 
-export function deriveGroupedChords(_cueLine: string, _lyrics: string): GroupedChord[] {
-  return [];
+export function deriveGroupedChords(cueLine: string, lyrics: string): GroupedChord[] {
+  const normalizedCue = normalizeCueLine(cueLine, lyrics.length);
+  const chords: GroupedChord[] = [];
+  let index = 0;
+
+  while (index < normalizedCue.length) {
+    if (normalizedCue[index] === ' ') {
+      index += 1;
+      continue;
+    }
+
+    const startIndex = index;
+    let chord = '';
+    while (index < normalizedCue.length && normalizedCue[index] !== ' ') {
+      chord += normalizedCue[index];
+      index += 1;
+    }
+
+    if (chord.length > 0) {
+      chords.push({ chord, lyricIndex: startIndex });
+    }
+  }
+
+  return chords;
 }
