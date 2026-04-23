@@ -317,12 +317,12 @@
 
 ## Phase 10: Performance + Print Redesign
 
-**Status:** Ready to execute
+**Status:** In Progress
 **Plans:** 3 plans in 3 waves
 
 **Plans:**
-- [ ] 10-01-PLAN.md — Performance surface redesign: reading-first layout, shell recession, Back to edit
-- [ ] 10-02-PLAN.md — Grouped chord format + notes: deriveGroupedChords utility, view toggle, collapsible notes
+- [x] 10-01-PLAN.md — Performance surface redesign: reading-first layout, shell recession, Back to edit
+- [x] 10-02-PLAN.md — Grouped chord format + notes: deriveGroupedChords utility, view toggle, collapsible notes
 - [ ] 10-03-PLAN.md — Purposeful print stylesheet: selective hiding, typography, page-break rules
 
 **Goal:** Rework performance mode and print output into intentional reading surfaces with instrument-aware presentation.
@@ -375,15 +375,10 @@
 | 4 | Import/Export + Polish | JSON import/export, error handling, print styles, empty states | DATA-01–06 | ✓ Complete |
 | 5 | UI Overhaul — Modernize and Improve Usability | Improve layout, typography, spacing, responsiveness, and overall polish | VIS-01, VIS-02 | ✓ Complete |
 | 6 | Instrument-Specific Cues + Editor Precision | Replace shared chord lines with instrument-specific cues and improve cue editing/performance readability | CUE-01–05, EDIT-01–03, PERF-01–03 | ✓ Complete |
-| 7 | Design Foundations | Establish design-system tokens, typography, selection/focus language, and instrument identity colors | DSGN-01–04, A11Y-01–02 | In Progress |
 | 7 | Design Foundations | Establish design-system tokens, typography, selection/focus language, and instrument identity colors | DSGN-01–04, A11Y-01–02 | ✓ Complete |
-
-| 8 | Shell + Library Redesign | Rebuild app shell and library around warm-canvas / dark-shell split | SHEL-01, LIB-01, UI-01, RESP-01 | In Progress |
-
+| 8 | Shell + Library Redesign | Rebuild app shell and library around warm-canvas / dark-shell split | SHEL-01, LIB-01, UI-01, RESP-01 | ✓ Complete |
 | 9 | Sheet Canvas Redesign | Turn the editor into a canvas-first sheet surface while preserving Phase 6 capabilities | CANV-01–03, TRACK-01 | ✓ Complete |
-
-| 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | Planned |
-
+| 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | In Progress |
 | 11 | Responsive + Motion Polish | Finish cross-screen refinement and subtle accessible motion | RESP-02, MOTN-01–02 | Planned |
 
 ---

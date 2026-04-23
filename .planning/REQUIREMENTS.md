@@ -86,7 +86,7 @@
 
 - [x] **PERF-04
 **: User can switch to a performance surface that is optimized for reading rather than editing
-- [ ] **PERF-05**: User can read instrument-specific cues and notes in performance mode with stable instrument identity styling
+- [x] **PERF-05**: User can read instrument-specific cues and notes in performance mode with stable instrument identity styling
 - [ ] **PRNT-01**: User can print a sheet or performance view that preserves readable cue and lyric hierarchy and removes non-essential chrome
 
 ### Accessibility and Polish
@@ -211,8 +211,8 @@
 | CANV-02 | Phase 9 | Complete |
 | CANV-03 | Phase 9 | Complete |
 | TRACK-01 | Phase 9 | Complete |
-| PERF-04 | Phase 10 | Planned |
-| PERF-05 | Phase 10 | Planned |
+| PERF-04 | Phase 10 | Complete |
+| PERF-05 | Phase 10 | Complete |
 | PRNT-01 | Phase 10 | Planned |
 | A11Y-01 | Phase 7 | Planned |
 | A11Y-02 | Phase 7 | Planned |

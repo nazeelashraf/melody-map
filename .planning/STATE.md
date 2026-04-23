@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: "**Completed:** 2026-04-22"
 current_phase: 10 — Performance + Print Redesign
 status: in_progress
-last_updated: "2026-04-23T04:28:00Z"
+last_updated: "2026-04-23T04:50:45.503Z"
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 20
-  completed_plans: 14
-  percent: 70
+  completed_plans: 15
+  percent: 75
 ---
 
 # State: Melody Map
@@ -25,7 +25,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 **Core value:** A musician can quickly create, edit, and organize multi-instrument song sheets with lyrics — no account, no backend, just the browser.
 
 **Milestone:** Melody Map v1.1 — DESIGN.md Implementation — In Progress
-**Current phase:** 9 — Sheet Canvas Redesign
+**Current phase:** 10 — Performance + Print Redesign
 
 ## Phase Status
 
@@ -40,7 +40,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | 7 — Design Foundations | ✓ Complete | 1/1 | 100% |
 | 8 — Shell + Library Redesign | ✓ Complete | 3/3 | 100% |
 | 9 — Sheet Canvas Redesign | ✓ Complete | 3/3 | 100% |
-| 10 — Performance + Print Redesign | ○ In Progress | 1/3 | 33% |
+| 10 — Performance + Print Redesign | ○ In Progress | 2/3 | 67% |
 | 11 — Responsive + Motion Polish | Planned | — | 0% |
 
 ## Active Context
@@ -68,10 +68,11 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Phase 9 Plan 02 — Per-line Lane Styling Refinements: distinct instrument-colored cue lanes, underline-style lyric inputs, compact floating action buttons
 - Phase 9 Plan 03 — Track-style Instrument Controls + PerformanceView: track-header global toggle, per-line colored pills, PerformanceView track-style tabs with instrument identity colors
 - Phase 10 Plan 01 — Performance Surface Redesign: reading-first view with large title, tempo badge, shell recession, Back to edit affordance, generous blank line spacing
+- Phase 10 Plan 02 — Grouped Chord Format + Notes: grouped lead-sheet chord renderer with mono/grouped toggle and collapsible instrument-linked notes section
 
 **Current work:** Phase 10 — Performance + Print Redesign
 
-**Next step:** Phase 10 Plan 02 — Print stylesheet redesign
+**Next step:** Phase 10 Plan 03 — Print stylesheet redesign
 
 ## Notes
 
@@ -99,3 +100,5 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | Kept component interfaces unchanged during shell redesign | Avoid downstream breakage in SheetEditor and CompositionEditor | AppLayout, Sidebar, TopBar props unchanged; all existing navigation flows preserved |
 | Used cross-context read in CompositionCard for sheet titles | CompositionCard needs sheet titles for mini preview; both providers always mounted | `useSheet()` inside CompositionCard is safe and avoids prop drilling |
 | Replaced ExportButton with inline ghost button in SheetEditor header | ExportButton does not accept variant/className props; design spec requires ghost styling | Inline button preserves export logic while matching canvas-first minimal chrome design |
+| Extracted InstrumentTabContent sub-component | Need per-tab useState without violating Rules of Hooks | Each instrument tab manages its own notesOpen state independently |
+| Used controlled Tabs for view toggle visibility | Need to conditionally hide mono/grouped toggle when percussion is active | activeTab state drives both tab selection and toggle visibility |
