@@ -317,7 +317,14 @@
 
 ## Phase 10: Performance + Print Redesign
 
-**Status:** Planned
+**Status:** Ready to execute
+**Plans:** 3 plans in 3 waves
+
+**Plans:**
+- [ ] 10-01-PLAN.md — Performance surface redesign: reading-first layout, shell recession, Back to edit
+- [ ] 10-02-PLAN.md — Grouped chord format + notes: deriveGroupedChords utility, view toggle, collapsible notes
+- [ ] 10-03-PLAN.md — Purposeful print stylesheet: selective hiding, typography, page-break rules
+
 **Goal:** Rework performance mode and print output into intentional reading surfaces with instrument-aware presentation.
 
 **Depends on:** Phase 7, Phase 8, Phase 9
