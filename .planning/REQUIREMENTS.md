@@ -84,7 +84,8 @@
 
 ### Performance and Print
 
-- [ ] **PERF-04**: User can switch to a performance surface that is optimized for reading rather than editing
+- [x] **PERF-04
+**: User can switch to a performance surface that is optimized for reading rather than editing
 - [ ] **PERF-05**: User can read instrument-specific cues and notes in performance mode with stable instrument identity styling
 - [ ] **PRNT-01**: User can print a sheet or performance view that preserves readable cue and lyric hierarchy and removes non-essential chrome
 
