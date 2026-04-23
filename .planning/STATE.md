@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: "**Completed:** 2026-04-22"
 current_phase: 10 — Performance + Print Redesign
-status: in_progress
-last_updated: "2026-04-23T04:50:45.503Z"
+status: unknown
+last_updated: "2026-04-23T04:57:45Z"
 progress:
   total_phases: 11
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 20
-  completed_plans: 15
-  percent: 75
+  completed_plans: 16
+  percent: 80
 ---
 
 # State: Melody Map
@@ -40,7 +40,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | 7 — Design Foundations | ✓ Complete | 1/1 | 100% |
 | 8 — Shell + Library Redesign | ✓ Complete | 3/3 | 100% |
 | 9 — Sheet Canvas Redesign | ✓ Complete | 3/3 | 100% |
-| 10 — Performance + Print Redesign | ○ In Progress | 2/3 | 67% |
+| 10 — Performance + Print Redesign | ✓ Complete | 3/3 | 100% |
 | 11 — Responsive + Motion Polish | Planned | — | 0% |
 
 ## Active Context
@@ -69,10 +69,11 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Phase 9 Plan 03 — Track-style Instrument Controls + PerformanceView: track-header global toggle, per-line colored pills, PerformanceView track-style tabs with instrument identity colors
 - Phase 10 Plan 01 — Performance Surface Redesign: reading-first view with large title, tempo badge, shell recession, Back to edit affordance, generous blank line spacing
 - Phase 10 Plan 02 — Grouped Chord Format + Notes: grouped lead-sheet chord renderer with mono/grouped toggle and collapsible instrument-linked notes section
+- Phase 10 Plan 03 — Purposeful Print Stylesheet: purposeful print layout with selective hiding, readable typography, page-break rules, and expanded instrument notes for clean paper output
 
-**Current work:** Phase 10 — Performance + Print Redesign
+**Current work:** Phase 10 — Performance + Print Redesign (Complete)
 
-**Next step:** Phase 10 Plan 03 — Print stylesheet redesign
+**Next step:** Phase 11 — Responsive + Motion Polish
 
 ## Notes
 
@@ -102,3 +103,5 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | Replaced ExportButton with inline ghost button in SheetEditor header | ExportButton does not accept variant/className props; design spec requires ghost styling | Inline button preserves export logic while matching canvas-first minimal chrome design |
 | Extracted InstrumentTabContent sub-component | Need per-tab useState without violating Rules of Hooks | Each instrument tab manages its own notesOpen state independently |
 | Used controlled Tabs for view toggle visibility | Need to conditionally hide mono/grouped toggle when percussion is active | activeTab state drives both tab selection and toggle visibility |
+| Used data-print-hide attribute selector for print hiding | Broad `button, input, textarea, a` selectors hide meaningful text like links | Only elements explicitly marked with data-print-hide or .no-print are hidden in print |
+| Split notes into separate screen/print DOM branches | CSS-only override of collapsible behavior is fragile and requires specificity battles | Screen notes remain collapsible; print notes always render expanded via separate branch |
