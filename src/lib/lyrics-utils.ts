@@ -217,3 +217,12 @@ export function formatPreviewLine(line: LyricsLine, instrument: Exclude<Instrume
   }
   return `${normalizeCueLine(line.cues[instrument], line.lyrics.length)}\n${line.lyrics}`;
 }
+
+export interface GroupedChord {
+  chord: string;
+  lyricIndex: number;
+}
+
+export function deriveGroupedChords(_cueLine: string, _lyrics: string): GroupedChord[] {
+  return [];
+}
