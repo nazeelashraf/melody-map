@@ -90,14 +90,14 @@
 
   /* Instrument Identity Colors (dark) */
   --color-piano: #60a5fa;
-  --color-piano-bg: rgba(96, 165, 250, 0.15);
-  --color-piano-muted: rgba(96, 165, 250, 0.12);
+  --color-piano-bg: rgba(96, 165, 250, 0.25);
+  --color-piano-muted: rgba(96, 165, 250, 0.22);
   --color-guitar: #4ade80;
-  --color-guitar-bg: rgba(74, 222, 128, 0.15);
-  --color-guitar-muted: rgba(74, 222, 128, 0.12);
+  --color-guitar-bg: rgba(74, 222, 128, 0.25);
+  --color-guitar-muted: rgba(74, 222, 128, 0.22);
   --color-drums: #c084fc;
-  --color-drums-bg: rgba(192, 132, 252, 0.15);
-  --color-drums-muted: rgba(192, 132, 252, 0.12);
+  --color-drums-bg: rgba(192, 132, 252, 0.25);
+  --color-drums-muted: rgba(192, 132, 252, 0.22);
 
   /* shadcn compatibility (dark) */
   --color-background: var(--color-canvas);

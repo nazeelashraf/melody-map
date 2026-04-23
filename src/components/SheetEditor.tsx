@@ -2,11 +2,13 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
+  ArrowUp,
   CircleDot,
   Copy,
   Download,
   Edit3,
   Eye,
+  FileText,
   Music,
   Plus,
   Trash2,
@@ -19,6 +21,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import {
   clampTempo,
@@ -184,6 +194,8 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
   const [editorInstrument, setEditorInstrument] = useState<InstrumentType>('piano');
   const [lineInstrumentOverrides, setLineInstrumentOverrides] = useState<Record<number, InstrumentType>>({});
   const [lineGuideColumns, setLineGuideColumns] = useState<Record<string, number>>({});
+  const [pasteDialogOpen, setPasteDialogOpen] = useState(false);
+  const [pasteText, setPasteText] = useState('');
 
   const sheet = useMemo(
     () => state.sheets.find(currentSheet => currentSheet.id === sheetId),
@@ -345,6 +357,27 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
     nextLines.splice(lineIndex + 1, 0, createLyricsLine());
     setLineInstrumentOverrides((previousOverrides) => shiftLineOverrides(previousOverrides, lineIndex, 'up'));
     updateLyricsLines(nextLines);
+  };
+
+  const handleInsertLineAbove = (lineIndex: number) => {
+    const nextLines = [...sheet.lyricsLines];
+    nextLines.splice(lineIndex, 0, createLyricsLine());
+    setLineInstrumentOverrides((previousOverrides) => shiftLineOverrides(previousOverrides, lineIndex - 1, 'up'));
+    updateLyricsLines(nextLines);
+  };
+
+  const handlePasteLyrics = () => {
+    const lines = pasteText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+    if (lines.length === 0) return;
+
+    const newLyricsLines = lines.map((lyrics) => {
+      const newLine = createLyricsLine(lyrics);
+      return syncLyricsLine(newLine, lyrics);
+    });
+
+    updateLyricsLines([...sheet.lyricsLines, ...newLyricsLines]);
+    setPasteText('');
+    setPasteDialogOpen(false);
   };
 
   const handleDeleteLine = (lineIndex: number) => {
@@ -510,6 +543,10 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
               );
             })}
           </div>
+          <Button variant="outline" onClick={() => setPasteDialogOpen(true)}>
+            <FileText className="h-4 w-4 mr-1.5" />
+            Paste lyrics
+          </Button>
           <Button onClick={handleAddLine}>
             <Plus className="h-4 w-4 mr-1.5" />
             Add line
@@ -517,7 +554,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
         </div>
 
         {sheet.lyricsLines.length === 0 ? (
-          <div className="text-center py-8 rounded-lg border border-dashed border-canvas-muted bg-canvas-muted/30">
+          <div className="text-center py-8 rounded-lg border border-dashed border-canvas-muted bg-canvas-muted/50">
             <p className="text-base font-bold text-foreground mb-1">No lyric lines yet</p>
             <p className="text-sm text-muted-foreground">Add a line, type lyrics, and place instrument-specific cues directly above the text.</p>
           </div>
@@ -603,6 +640,16 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                         onClick={() => handleCopyLine(lineIndex, 'drums')}
                       >
                         <CircleDot className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        title="Insert line above"
+                        aria-label="Insert line above"
+                        onClick={() => handleInsertLineAbove(lineIndex)}
+                      >
+                        <ArrowUp className="h-3.5 w-3.5" />
                       </Button>
                       <Button
                         variant="ghost"
@@ -706,7 +753,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                           }
                           setGuideColumn(lineIndex, activeInstrument, event.currentTarget.selectionStart ?? 0);
                         }}
-                        className="h-9 w-full bg-transparent border-0 border-b border-border/50 focus-visible:border-accent focus-visible:ring-0 px-0 font-mono text-sm"
+                        className="h-9 w-full bg-transparent border-0 border-b border-border/50 focus-visible:border-accent focus-visible:ring-0 px-0 font-mono text-sm caret-accent"
                       />
                     </div>
                   </div>
@@ -728,7 +775,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
             </div>
 
             {editorInstrument === 'drums' ? (
-              <div className="rounded-lg bg-canvas-muted/30 text-foreground p-4 font-mono text-sm overflow-x-auto space-y-1">
+              <div className="rounded-lg bg-canvas-muted/50 text-foreground p-4 font-mono text-sm overflow-x-auto space-y-1">
                 {sheet.lyricsLines.map((line, lineIndex) => {
                   if (line.lyrics.length === 0) {
                     return <div key={`preview-${lineIndex}`} className="h-4" />;
@@ -747,7 +794,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                 })}
               </div>
             ) : (
-              <pre className="bg-canvas-muted/30 text-foreground rounded-lg p-4 font-mono text-sm overflow-x-auto whitespace-pre-wrap">
+              <pre className="bg-canvas-muted/50 text-foreground rounded-lg p-4 font-mono text-sm overflow-x-auto whitespace-pre-wrap">
                 {previewLines}
               </pre>
             )}
@@ -778,6 +825,37 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
           ))}
         </div>
       </section>
+
+      {/* Paste Lyrics Dialog */}
+      <Dialog open={pasteDialogOpen} onOpenChange={setPasteDialogOpen}>
+        <DialogContent className="bg-card text-card-foreground sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Paste Lyrics
+            </DialogTitle>
+            <DialogDescription className="text-sm text-muted-foreground">
+              Paste your song lyrics below. Each line will become a separate lyric row. Empty lines will be skipped.
+            </DialogDescription>
+          </DialogHeader>
+          <Textarea
+            value={pasteText}
+            onChange={(event) => setPasteText(event.target.value)}
+            rows={12}
+            placeholder="Verse 1:\nAmazing grace, how sweet the sound\nThat saved a wretch like me\n\nChorus:\nI once was lost, but now am found"
+            className="bg-canvas-muted/50 font-mono text-sm"
+          />
+          <DialogFooter className="flex gap-2 justify-end">
+            <Button variant="outline" onClick={() => { setPasteText(''); setPasteDialogOpen(false); }}>
+              Cancel
+            </Button>
+            <Button onClick={handlePasteLyrics} disabled={!pasteText.trim()}>
+              <Plus className="h-4 w-4 mr-1.5" />
+              Add {pasteText.split('\n').filter(line => line.trim().length > 0).length} line(s)
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

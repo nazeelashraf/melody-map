@@ -64,7 +64,7 @@ export default function PerformanceView({ sheet }: PerformanceViewProps) {
               {sheet.lyricsLines.length > 0 ? (
                 instrument === 'drums' ? (
                   <div className="space-y-4">
-                    <div className="rounded-lg bg-canvas-muted/30 p-4 md:p-5 overflow-x-auto">
+                      <div className="rounded-lg bg-canvas-muted/50 p-4 md:p-5 overflow-x-auto">
                       <div className="font-mono text-lg leading-relaxed min-w-max space-y-3 text-foreground">
                         {sheet.lyricsLines.map((line, lineIndex) => {
                           if (line.lyrics.length === 0) {
@@ -92,7 +92,7 @@ export default function PerformanceView({ sheet }: PerformanceViewProps) {
                     </div>
                   </div>
                 ) : (
-                  <pre className="rounded-lg bg-canvas-muted/30 p-6 text-xl font-mono leading-relaxed whitespace-pre-wrap overflow-x-auto text-foreground">
+                  <pre className="rounded-lg bg-canvas-muted/50 p-6 text-xl font-mono leading-relaxed whitespace-pre-wrap overflow-x-auto text-foreground">
                     {sheet.lyricsLines.map((line) => {
                       if (line.lyrics.length === 0) {
                         return '';
