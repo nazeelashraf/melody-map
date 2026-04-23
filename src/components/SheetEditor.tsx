@@ -420,7 +420,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
     : '';
 
   if (viewMode === 'performance') {
-    return <PerformanceView sheet={sheet} />;
+    return <PerformanceView sheet={sheet} onBackToEdit={() => setViewMode('edit')} />;
   }
 
   return (

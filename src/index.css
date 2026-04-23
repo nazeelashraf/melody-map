@@ -301,3 +301,22 @@
   --sidebar-border: #e5e5e5;
   --sidebar-ring: #5e6ad2;
 }
+
+/* Performance mode shell recession (D-03) */
+body.performance-mode-active [data-sidebar] {
+  opacity: 0.2;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+body.performance-mode-active [data-topbar] {
+  opacity: 0.2;
+  transition: opacity 300ms ease;
+}
+body.performance-mode-active [data-topbar] * {
+  pointer-events: auto;
+}
+@media (max-width: 768px) {
+  body.performance-mode-active [data-topbar] {
+    opacity: 0.4;
+  }
+}
