@@ -66,10 +66,10 @@ function GroupedChordLine({ line, instrument }: { line: LyricsLine; instrument: 
     <div className="leading-relaxed">
       {segments.map((segment, i) => (
         <span key={i} className="inline-block align-bottom">
-          <span className={`block font-mono text-sm font-medium ${instrumentColor} min-h-[1.25rem]`}>
+          <span className={`block font-mono text-sm font-medium ${instrumentColor} min-h-[1.25rem] print-chord-label`}>
             {segment.chord}
           </span>
-          <span className="block font-sans text-base whitespace-pre">{segment.text}</span>
+          <span className="block font-sans text-base whitespace-pre print-lyric-line">{segment.text}</span>
         </span>
       ))}
     </div>
@@ -94,20 +94,20 @@ function InstrumentTabContent({
           <div className="font-mono text-lg leading-relaxed min-w-max space-y-3 text-foreground overflow-x-auto">
             {sheet.lyricsLines.map((line, lineIndex) => {
               if (line.lyrics.length === 0) {
-                return <div key={`drums-${lineIndex}`} className="h-12" />;
+                return <div key={`drums-${lineIndex}`} className="h-12 print-lyric-block" />;
               }
 
               const normalizedDrums = normalizeDrumCues(line.cues.drums, line.lyrics.length);
 
               return (
-                <div key={`drums-${lineIndex}`} className="space-y-0.5 mb-6">
+                <div key={`drums-${lineIndex}`} className="space-y-0.5 mb-6 print-lyric-block">
                   {drumLaneOrder.map((lane) => (
-                    <div key={lane} className="whitespace-pre text-sm font-mono">
-                      <span className="inline-block w-6 text-drums font-bold">{lane}</span>
+                    <div key={lane} className="whitespace-pre text-sm font-mono print-mono-cue">
+                      <span className="inline-block w-6 text-drums font-bold print-lane-label">{lane}</span>
                       {normalizedDrums[lane]}
                     </div>
                   ))}
-                  <div className="whitespace-pre text-foreground text-base leading-relaxed">
+                  <div className="whitespace-pre text-foreground text-base leading-relaxed print-lyric-line">
                     <span className="inline-block w-6 text-transparent">_</span>
                     {line.lyrics}
                   </div>
@@ -116,7 +116,7 @@ function InstrumentTabContent({
             })}
           </div>
         ) : viewFormat === 'mono' ? (
-          <pre className="font-mono text-lg leading-relaxed whitespace-pre-wrap overflow-x-auto text-foreground">
+          <pre className="font-mono text-lg leading-relaxed whitespace-pre-wrap overflow-x-auto text-foreground print-mono-cue print-lyric-block">
             {sheet.lyricsLines.map((line) => {
               if (line.lyrics.length === 0) {
                 return '';
@@ -135,10 +135,10 @@ function InstrumentTabContent({
           <div className="space-y-6">
             {sheet.lyricsLines.map((line, lineIndex) => {
               if (line.lyrics.length === 0) {
-                return <div key={`grouped-${lineIndex}`} className="h-12" />;
+                return <div key={`grouped-${lineIndex}`} className="h-12 print-lyric-block" />;
               }
               return (
-                <div key={`grouped-${lineIndex}`} className="mb-6">
+                <div key={`grouped-${lineIndex}`} className="mb-6 print-lyric-block">
                   <GroupedChordLine line={line} instrument={instrument} />
                 </div>
               );
@@ -150,32 +150,42 @@ function InstrumentTabContent({
       )}
 
       {sheet.arrangements[instrument] && (
-        <div className="mt-8 border-t border-canvas-muted pt-4">
-          <button
-            type="button"
-            onClick={() => setNotesOpen(!notesOpen)}
-            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span
-              className={`inline-block w-2 h-2 rounded-full ${
-                instrument === 'piano' ? 'bg-piano' : instrument === 'guitar' ? 'bg-guitar' : 'bg-drums'
-              }`}
-            />
-            {instrumentLabels[instrument]} Notes
-            {notesOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </button>
-          {notesOpen && (
-            <div
-              className={`mt-3 pl-3 border-l-2 ${
-                instrument === 'piano' ? 'border-piano' : instrument === 'guitar' ? 'border-guitar' : 'border-drums'
-              }`}
+        <>
+          {/* Screen notes (collapsible) */}
+          <div className="mt-8 border-t border-canvas-muted pt-4 print:hidden">
+            <button
+              type="button"
+              onClick={() => setNotesOpen(!notesOpen)}
+              className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              data-print-notes-toggle
             >
-              <p className="text-base leading-relaxed whitespace-pre-wrap text-foreground">
-                {sheet.arrangements[instrument]}
-              </p>
-            </div>
-          )}
-        </div>
+              <span
+                className={`inline-block w-2 h-2 rounded-full ${
+                  instrument === 'piano' ? 'bg-piano' : instrument === 'guitar' ? 'bg-guitar' : 'bg-drums'
+                }`}
+              />
+              {instrumentLabels[instrument]} Notes
+              {notesOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+            {notesOpen && (
+              <div
+                className={`mt-3 pl-3 border-l-2 ${
+                  instrument === 'piano' ? 'border-piano' : instrument === 'guitar' ? 'border-guitar' : 'border-drums'
+                }`}
+              >
+                <p className="text-base leading-relaxed whitespace-pre-wrap text-foreground">
+                  {sheet.arrangements[instrument]}
+                </p>
+              </div>
+            )}
+          </div>
+          {/* Print notes (always expanded) */}
+          <div className="hidden print:block print-notes-block" data-print-notes-content>
+            <p className="text-base leading-relaxed whitespace-pre-wrap text-foreground print-lyric-line">
+              {sheet.arrangements[instrument]}
+            </p>
+          </div>
+        </>
       )}
     </div>
   );
@@ -199,10 +209,19 @@ export default function PerformanceView({ sheet, onBackToEdit }: PerformanceView
         </h1>
         <div className="flex items-center gap-3">
           <span className="text-sm font-mono text-muted-foreground">{sheet.tempo} BPM</span>
-          <Button variant="ghost" size="sm" onClick={onBackToEdit} className="hidden md:inline-flex">
+          <Button variant="ghost" size="sm" onClick={onBackToEdit} className="hidden md:inline-flex" data-print-hide>
             <Edit3 className="h-4 w-4 mr-1.5" />
             Back to edit
           </Button>
+        </div>
+      </div>
+
+      {/* Print-only header metadata */}
+      <div className="hidden print:block px-6 pt-4">
+        <h1 className="print-title">{sheet.title}</h1>
+        <div className="print-meta">
+          <span>{sheet.tempo} BPM</span>
+          <span className="print-instrument-label">{instrumentLabels[activeTab]}</span>
         </div>
       </div>
 
@@ -212,7 +231,7 @@ export default function PerformanceView({ sheet, onBackToEdit }: PerformanceView
         className="flex-1 flex flex-col"
       >
         <div className="flex items-center justify-between px-6 py-3">
-          <TabsList className="w-auto justify-start flex-wrap h-auto bg-transparent p-0 gap-1">
+          <TabsList className="w-auto justify-start flex-wrap h-auto bg-transparent p-0 gap-1" data-print-hide>
             {instrumentTypes.map((instrument) => (
               <TabsTrigger
                 key={instrument}
@@ -230,6 +249,7 @@ export default function PerformanceView({ sheet, onBackToEdit }: PerformanceView
             className={`inline-flex rounded-md border border-canvas-muted overflow-hidden ${
               activeTab === 'drums' ? 'hidden' : ''
             }`}
+            data-print-hide
           >
             <button
               type="button"

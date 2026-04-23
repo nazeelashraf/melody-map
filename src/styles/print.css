@@ -1,42 +1,145 @@
 @media print {
-  /* Hide layout chrome */
-  nav,
+  /* Page setup */
+  @page {
+    margin: 1.5cm 1.5cm 2cm;
+  }
+
+  /* Base: white background, black text, no shadows */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+  }
+
+  /* Hide shell chrome selectively */
   [data-sidebar],
-  [data-topbar],
-  button[aria-label="Toggle sidebar"],
-  button[aria-label="Toggle dark mode"],
-  .sidebar,
-  .topbar,
-  [role="navigation"],
-  button,
-  input,
-  textarea,
-  a {
+  [data-topbar] {
     display: none !important;
   }
 
-  /* Remove layout grid, make content full-width */
-  body {
-    background: white !important;
-  }
-
+  /* Remove main padding so content uses full page width */
   main {
     padding: 0 !important;
     margin: 0 !important;
-  }
-
-  pre {
     background: white !important;
-    color: black !important;
-    border: 1px solid #ccc !important;
-    page-break-inside: avoid;
   }
 
-  body, h1, h2, h3, p, span, pre {
+  /* Hide interactive controls that have no meaning on paper */
+  button,
+  .no-print,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Print typography */
+  .print-title {
+    font-size: 18pt !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.25rem !important;
     color: black !important;
   }
 
-  section {
+  .print-meta {
+    font-size: 11pt !important;
+    color: #333 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .print-lyric-line {
+    font-size: 13pt !important;
+    line-height: 1.6 !important;
+    color: black !important;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
+  }
+
+  .print-chord-label {
+    font-size: 11pt !important;
+    font-weight: 600 !important;
+    color: black !important;
+    font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  }
+
+  .print-mono-cue {
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    color: black !important;
+    font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  }
+
+  /* Page break rules: keep cue+lyric blocks together */
+  .print-lyric-block {
     page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .print-notes-block {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-top: 1.5rem !important;
+    padding-top: 0.75rem !important;
+    border-top: 1px solid #ccc !important;
+  }
+
+  /* Notes always expanded in print */
+  [data-print-notes-content] {
+    display: block !important;
+  }
+
+  [data-print-notes-toggle] {
+    display: none !important;
+  }
+
+  /* Instrument indicator for print */
+  .print-instrument-label {
+    display: inline !important;
+    font-size: 10pt !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+    margin-left: 1rem !important;
+  }
+
+  /* Ensure percussion lanes print cleanly */
+  .print-lane-label {
+    font-size: 10pt !important;
+    font-weight: 700 !important;
+    color: black !important;
+  }
+
+  /* Remove canvas backgrounds for ink saving */
+  .bg-canvas,
+  .bg-canvas-muted,
+  .bg-canvas-muted\/30,
+  .bg-canvas-muted\/50 {
+    background: transparent !important;
+  }
+
+  /* Force text colors to black for print */
+  .text-foreground,
+  .text-muted-foreground,
+  .text-piano,
+  .text-guitar,
+  .text-drums {
+    color: black !important;
+  }
+
+  /* Remove borders that don't add meaning on paper */
+  .border-canvas-muted,
+  .border-shell-border {
+    border-color: #ccc !important;
+  }
+
+  /* Ensure pre blocks don't overflow page */
+  pre {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-x: visible !important;
   }
 }
