@@ -206,10 +206,10 @@
 | LIB-01 | Phase 8 | Complete |
 | UI-01 | Phase 8 | Complete |
 | RESP-01 | Phase 8 | Complete |
-| CANV-01 | Phase 9 | Planned |
-| CANV-02 | Phase 9 | Planned |
-| CANV-03 | Phase 9 | Planned |
-| TRACK-01 | Phase 9 | Planned |
+| CANV-01 | Phase 9 | Complete |
+| CANV-02 | Phase 9 | Complete |
+| CANV-03 | Phase 9 | Complete |
+| TRACK-01 | Phase 9 | Complete |
 | PERF-04 | Phase 10 | Planned |
 | PERF-05 | Phase 10 | Planned |
 | PRNT-01 | Phase 10 | Planned |

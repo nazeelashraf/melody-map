@@ -288,13 +288,13 @@
 
 ## Phase 9: Sheet Canvas Redesign
 
-**Status:** In Progress
-**Plans:** 2/3 complete
+**Status:** ✓ Complete
+**Plans:** 3/3 complete
 
 **Plans:**
 - [x] 09-01-PLAN.md — Canvas-first layout and chrome reduction
 - [x] 09-02-PLAN.md — Cue lane visual system and per-line editing
-- [ ] 09-03-PLAN.md — Track-style instrument controls and PerformanceView
+- [x] 09-03-PLAN.md — Track-style instrument controls and PerformanceView
 
 **Goal:** Turn the editor into a canvas-first sheet surface while preserving current Phase 6 cue-editing capabilities.
 
@@ -373,7 +373,7 @@
 
 | 8 | Shell + Library Redesign | Rebuild app shell and library around warm-canvas / dark-shell split | SHEL-01, LIB-01, UI-01, RESP-01 | In Progress |
 
-| 9 | Sheet Canvas Redesign | Turn the editor into a canvas-first sheet surface while preserving Phase 6 capabilities | CANV-01–03, TRACK-01 | In Progress |
+| 9 | Sheet Canvas Redesign | Turn the editor into a canvas-first sheet surface while preserving Phase 6 capabilities | CANV-01–03, TRACK-01 | ✓ Complete |
 
 | 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | Planned |
 
