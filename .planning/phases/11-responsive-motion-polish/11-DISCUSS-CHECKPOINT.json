@@ -1,0 +1,23 @@
+{
+  "phase": "11",
+  "phase_name": "Responsive + Motion Polish",
+  "timestamp": "2026-04-24T00:00:00Z",
+  "areas_completed": ["Responsive breakpoint refinements"],
+  "areas_remaining": ["Motion scope and transitions", "Reduced-motion strategy", "Mobile editor UX priority"],
+  "decisions": {
+    "Responsive breakpoint refinements": [
+      {
+        "question": "How should the sheet editor behave on tablet widths (768px–1024px)?",
+        "answer": "Simplify on md-only (tablet)",
+        "options_presented": ["Keep full desktop layout", "Simplify on md-only (tablet)", "You decide"]
+      },
+      {
+        "question": "Which editor controls should be simplified/collapsed on tablet (md below lg)?",
+        "answer": "You decide",
+        "options_presented": ["Collapse arrangement panels", "Collapse line action buttons", "Both", "You decide"]
+      }
+    ]
+  },
+  "deferred_ideas": [],
+  "canonical_refs": [".planning/ROADMAP.md", ".planning/REQUIREMENTS.md", ".planning/PROJECT.md", ".planning/STATE.md", ".planning/phases/10-performance-print-redesign/10-CONTEXT.md"]
+}

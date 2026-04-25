@@ -35,6 +35,7 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 - Rebuild app shell, library, sheet editor, performance view, and print output to match DESIGN.md
 - Preserve existing dark-mode toggle while both themes share the new design language
 - Preserve Phase 6 instrument-specific cue editing capabilities
+- Add in-place semitone transposition for piano and guitar cue lines without breaking lyric alignment
 
 ### Out of Scope
 
@@ -45,7 +46,7 @@ A musician can quickly create, edit, and organize multi-instrument song sheets w
 - Multi-user or sharing features
 - Data model changes to cues, sheets, or compositions
 - New instruments beyond piano, guitar, and drums
-- Audio/metronome, transposition, and section-marker feature work
+- Audio/metronome, key-signature, and section-marker feature work
 
 ## Context
 

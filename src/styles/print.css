@@ -86,6 +86,12 @@
     border-top: 1px solid #ccc !important;
   }
 
+  .print-sheet-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 1rem !important;
+  }
+
   /* Notes always expanded in print */
   [data-print-notes-content] {
     display: block !important;

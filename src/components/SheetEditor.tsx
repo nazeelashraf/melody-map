@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
   ArrowUp,
-  CircleDot,
+  ChevronDown,
   Copy,
   Download,
   Edit3,
   Eye,
   FileText,
+  Minus,
   Music,
   Plus,
   Trash2,
@@ -41,6 +42,7 @@ import {
   normalizeCueLine,
   normalizeDrumCues,
   syncLyricsLine,
+  transposeLyricsLinesForInstrument,
 } from '@/lib/lyrics-utils';
 
 interface SheetEditorProps {
@@ -196,6 +198,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
   const [lineGuideColumns, setLineGuideColumns] = useState<Record<string, number>>({});
   const [pasteDialogOpen, setPasteDialogOpen] = useState(false);
   const [pasteText, setPasteText] = useState('');
+  const [copyToMenuOpen, setCopyToMenuOpen] = useState(false);
 
   const sheet = useMemo(
     () => state.sheets.find(currentSheet => currentSheet.id === sheetId),
@@ -407,12 +410,43 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
 
   const handleCopyLine = (lineIndex: number, target: InstrumentType | 'all') => {
     const source = getLineInstrument(lineIndex);
+    // Prevent copying between chorded and percussion instruments
+    if (target !== 'all') {
+      const sourceIsChorded = source === 'piano' || source === 'guitar';
+      const targetIsChorded = target === 'piano' || target === 'guitar';
+      if (sourceIsChorded !== targetIsChorded) return;
+    }
     const nextLines = [...sheet.lyricsLines];
     nextLines[lineIndex] = target === 'all'
       ? copyLineCuesToAll(nextLines[lineIndex], source)
       : copyLineCues(nextLines[lineIndex], source, target);
     updateLyricsLines(nextLines);
   };
+
+  const canTransposeInstrument = editorInstrument === 'piano' || editorInstrument === 'guitar';
+
+  const handleTransposeStep = (step: number) => {
+    if (!canTransposeInstrument || sheet.lyricsLines.length === 0) return;
+    updateLyricsLines(
+      transposeLyricsLinesForInstrument(sheet.lyricsLines, editorInstrument, step),
+    );
+  };
+
+  const handleCopyTo = (target: InstrumentType) => {
+    if (target === editorInstrument || sheet.lyricsLines.length === 0) return;
+    // Prevent copying from chorded instruments to percussion
+    if ((editorInstrument === 'piano' || editorInstrument === 'guitar') && target === 'drums') return;
+    const nextLines = sheet.lyricsLines.map((line) =>
+      copyLineCues(line, editorInstrument, target),
+    );
+    updateLyricsLines(nextLines);
+  };
+
+  const copyToTargets: InstrumentType[] = (() => {
+    if (editorInstrument === 'piano') return ['guitar'];
+    if (editorInstrument === 'guitar') return ['piano'];
+    return ['piano', 'guitar'];
+  })();
 
   const previewInstrument = editorInstrument === 'drums' ? 'piano' : editorInstrument;
   const previewLines = sheet.lyricsLines.length > 0
@@ -543,14 +577,82 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
               );
             })}
           </div>
-          <Button variant="outline" onClick={() => setPasteDialogOpen(true)}>
-            <FileText className="h-4 w-4 mr-1.5" />
-            Paste lyrics
-          </Button>
-          <Button onClick={handleAddLine}>
-            <Plus className="h-4 w-4 mr-1.5" />
-            Add line
-          </Button>
+
+          <div className="flex items-center gap-2 flex-wrap">
+            {canTransposeInstrument && (
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  title="Transpose down 1 semitone"
+                  aria-label="Transpose down 1 semitone"
+                  onClick={() => handleTransposeStep(-1)}
+                >
+                  <Minus className="h-4 w-4 mr-1.5" />
+                  Down
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  title="Transpose up 1 semitone"
+                  aria-label="Transpose up 1 semitone"
+                  onClick={() => handleTransposeStep(1)}
+                >
+                  <Plus className="h-4 w-4 mr-1.5" />
+                  Up
+                </Button>
+              </>
+            )}
+
+            {copyToTargets.length === 1 ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleCopyTo(copyToTargets[0])}
+              >
+                <Copy className="h-3.5 w-3.5 mr-1.5" />
+                Copy to {instrumentLabels[copyToTargets[0]]}
+              </Button>
+            ) : (
+              <div className="relative">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCopyToMenuOpen((prev) => !prev)}
+                >
+                  <Copy className="h-3.5 w-3.5 mr-1.5" />
+                  Copy to
+                  <ChevronDown className="h-3 w-3 ml-1" />
+                </Button>
+                {copyToMenuOpen && (
+                  <div className="absolute right-0 mt-1 w-36 rounded-md border border-border bg-popover shadow-lg z-50 overflow-hidden">
+                    {copyToTargets.map((target) => (
+                      <button
+                        key={target}
+                        type="button"
+                        className="w-full px-3 py-1.5 text-sm text-left text-popover-foreground hover:bg-muted transition-colors"
+                        onClick={() => {
+                          handleCopyTo(target);
+                          setCopyToMenuOpen(false);
+                        }}
+                      >
+                        {instrumentLabels[target]}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <Button variant="outline" size="sm" onClick={() => setPasteDialogOpen(true)}>
+              <FileText className="h-4 w-4 mr-1.5" />
+              Paste lyrics
+            </Button>
+            <Button size="sm" onClick={handleAddLine}>
+              <Plus className="h-4 w-4 mr-1.5" />
+              Add line
+            </Button>
+          </div>
         </div>
 
         {sheet.lyricsLines.length === 0 ? (
@@ -630,16 +732,6 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                         onClick={() => handleCopyLine(lineIndex, 'guitar')}
                       >
                         <Music className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7"
-                        title="Copy cues to drums"
-                        aria-label="Copy cues to drums"
-                        onClick={() => handleCopyLine(lineIndex, 'drums')}
-                      >
-                        <CircleDot className="h-3.5 w-3.5" />
                       </Button>
                       <Button
                         variant="ghost"
@@ -818,7 +910,8 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                 value={sheet.arrangements[instrument]}
                 onChange={(event) => handleArrangementChange(instrument, event.target.value)}
                 rows={10}
-                placeholder="Verse: sparse voicings\nChorus: open chords"
+                placeholder={`Verse: sparse voicings
+Chorus: open chords`}
                 className="bg-canvas-muted/50"
               />
             </label>
@@ -842,7 +935,12 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
             value={pasteText}
             onChange={(event) => setPasteText(event.target.value)}
             rows={12}
-            placeholder="Verse 1:\nAmazing grace, how sweet the sound\nThat saved a wretch like me\n\nChorus:\nI once was lost, but now am found"
+                placeholder={`Verse 1:
+Amazing grace, how sweet the sound
+That saved a wretch like me
+
+Chorus:
+I once was lost, but now am found`}
             className="bg-canvas-muted/50 font-mono text-sm"
           />
           <DialogFooter className="flex gap-2 justify-end">

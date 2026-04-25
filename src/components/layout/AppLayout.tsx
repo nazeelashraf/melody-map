@@ -17,13 +17,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (location.pathname === '/') return 'Library';
 
     if (location.pathname.startsWith('/sheet/')) {
-      const id = location.pathname.split('/sheet/')[1];
+      const id = location.pathname.split('/')[2] ?? '';
       const sheet = sheetState.sheets.find(s => s.id === id);
       return sheet ? sheet.title : 'Sheet';
     }
 
     if (location.pathname.startsWith('/composition/')) {
-      const id = location.pathname.split('/composition/')[1];
+      const id = location.pathname.split('/')[2] ?? '';
       const comp = compState.compositions.find(c => c.id === id);
       return comp ? comp.title : 'Composition';
     }

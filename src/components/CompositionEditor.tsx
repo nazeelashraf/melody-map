@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ChevronUp, ChevronDown, Trash2, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronUp, ChevronDown, Trash2, Plus, Eye } from 'lucide-react';
 import { useComposition, useCompositionActions } from '../context/CompositionContext';
 import { useSheet } from '../context/SheetContext';
 import type { Composition } from '../types';
 import ExportButton from './ExportButton';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 
@@ -125,6 +125,13 @@ export default function CompositionEditor({ compositionId }: CompositionEditorPr
               className="text-2xl font-bold border-0 px-0 h-auto focus-visible:ring-0"
             />
             <div className="flex gap-2 mt-2">
+              <Link
+                to={`/composition/${composition.id}/performance`}
+                className={buttonVariants({ variant: 'outline' })}
+              >
+                <Eye className="h-4 w-4 mr-1.5" />
+                Performance mode
+              </Link>
               <ExportButton data={composition} label="Export composition" />
             </div>
             <p className="text-muted-foreground mt-2 max-w-2xl leading-relaxed">

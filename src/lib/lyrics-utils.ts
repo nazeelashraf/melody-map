@@ -3,6 +3,9 @@ import type { DrumCues, DrumLane, InstrumentType, LyricsLine } from '../types';
 
 export const drumLaneOrder: DrumLane[] = ['C', 'H', 'R', 'S', 'B'];
 
+const transposableRoots = ['A#', 'C#', 'D#', 'F#', 'G#', 'A', 'B', 'C', 'D', 'E', 'F', 'G'] as const;
+const transpositionLookup = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'] as const;
+
 export const drumLaneLabels: Record<DrumLane, string> = {
   C: 'Crash',
   H: 'Hi-hat',
@@ -209,6 +212,93 @@ export function copyLineCuesToAll(line: LyricsLine, source: InstrumentType): Lyr
   const targets: InstrumentType[] = ['piano', 'guitar', 'drums'];
 
   return targets.reduce((nextLine, target) => copyLineCues(nextLine, source, target), line);
+}
+
+export function transposeChordToken(token: string, semitoneDelta: number): string {
+  const matchedRoot = transposableRoots.find((root) => token.startsWith(root));
+
+  if (!matchedRoot) {
+    return token;
+  }
+
+  const rootIndex = transpositionLookup.indexOf(matchedRoot);
+  if (rootIndex === -1) {
+    return token;
+  }
+
+  const nextIndex = (rootIndex + (semitoneDelta % transpositionLookup.length) + transpositionLookup.length) % transpositionLookup.length;
+  return `${transpositionLookup[nextIndex]}${token.slice(matchedRoot.length)}`;
+}
+
+export function transposeCueLinePreservingColumns(cueLine: string, semitoneDelta: number): string {
+  if (cueLine.length === 0 || semitoneDelta === 0) {
+    return cueLine;
+  }
+
+  const transposedTokens: Array<{ start: number; value: string }> = [];
+  let index = 0;
+
+  while (index < cueLine.length) {
+    if (cueLine[index] === ' ') {
+      index += 1;
+      continue;
+    }
+
+    const start = index;
+    let token = '';
+
+    while (index < cueLine.length && cueLine[index] !== ' ') {
+      token += cueLine[index];
+      index += 1;
+    }
+
+    transposedTokens.push({ start, value: transposeChordToken(token, semitoneDelta) });
+  }
+
+  const nextLength = transposedTokens.reduce(
+    (longestLength, token) => Math.max(longestLength, token.start + token.value.length),
+    cueLine.length,
+  );
+  const nextCharacters = Array.from({ length: nextLength }, () => ' ');
+
+  transposedTokens.forEach(({ start, value }) => {
+    for (let offset = 0; offset < value.length; offset += 1) {
+      nextCharacters[start + offset] = value[offset];
+    }
+  });
+
+  return nextCharacters.join('');
+}
+
+export function transposeLyricsLinesForInstrument(
+  lines: LyricsLine[],
+  instrument: Extract<InstrumentType, 'piano' | 'guitar'>,
+  semitoneDelta: number,
+): LyricsLine[] {
+  if (semitoneDelta === 0) {
+    return lines;
+  }
+
+  return lines.map((line) => {
+    const normalizedCueLine = normalizeCueLine(line.cues[instrument], line.lyrics.length);
+    const transposedCueLine = transposeCueLinePreservingColumns(normalizedCueLine, semitoneDelta);
+    const targetLength = Math.max(line.lyrics.length, transposedCueLine.length);
+
+    return {
+      lyrics: line.lyrics.padEnd(targetLength, ' '),
+      cues: {
+        piano: normalizeCueLine(
+          instrument === 'piano' ? transposedCueLine : line.cues.piano,
+          targetLength,
+        ),
+        guitar: normalizeCueLine(
+          instrument === 'guitar' ? transposedCueLine : line.cues.guitar,
+          targetLength,
+        ),
+        drums: normalizeDrumCues(line.cues.drums, targetLength),
+      },
+    };
+  });
 }
 
 export function formatPreviewLine(line: LyricsLine, instrument: Exclude<InstrumentType, 'drums'>): string {
