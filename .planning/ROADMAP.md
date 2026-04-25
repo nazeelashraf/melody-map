@@ -317,13 +317,13 @@
 
 ## Phase 10: Performance + Print Redesign
 
-**Status:** In Progress
+**Status:** ✓ Complete
 **Plans:** 3 plans in 3 waves
 
 **Plans:**
 - [x] 10-01-PLAN.md — Performance surface redesign: reading-first layout, shell recession, Back to edit
 - [x] 10-02-PLAN.md — Grouped chord format + notes: deriveGroupedChords utility, view toggle, collapsible notes
-- [ ] 10-03-PLAN.md — Purposeful print stylesheet: selective hiding, typography, page-break rules
+- [x] 10-03-PLAN.md — Purposeful print stylesheet: selective hiding, typography, page-break rules
 
 **Goal:** Rework performance mode and print output into intentional reading surfaces with instrument-aware presentation.
 
@@ -408,9 +408,10 @@
 | 7 | Design Foundations | Establish design-system tokens, typography, selection/focus language, and instrument identity colors | DSGN-01–04, A11Y-01–02 | ✓ Complete |
 | 8 | Shell + Library Redesign | Rebuild app shell and library around warm-canvas / dark-shell split | SHEL-01, LIB-01, UI-01, RESP-01 | ✓ Complete |
 | 9 | Sheet Canvas Redesign | Turn the editor into a canvas-first sheet surface while preserving Phase 6 capabilities | CANV-01–03, TRACK-01 | ✓ Complete |
-| 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | In Progress |
+| 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | ✓ Complete |
 | 11 | Responsive + Motion Polish | Finish cross-screen refinement and subtle accessible motion | RESP-02, MOTN-01–02 | Planned |
 | 12 | Chord Transposition | Allow in-place semitone transposition of piano and guitar cue lines while preserving chord start positions, schema-safe lyric alignment, and unknown-token passthrough | TRNS-01–04 | ✓ Complete |
+| 13 | Composition Performance Mode | Add a dedicated composition performance surface that collates sheets in composition order with shared instrument reading controls, clear section boundaries, and print-aware separation | CPERF-01–04 | ✓ Complete |
 
 ---
 
@@ -447,8 +448,8 @@ After each phase, the **Verifier** agent will confirm:
 **Plans:** 2 plans in 2 waves
 
 Plans:
-- [ ] 13-01-PLAN.md — Shared performance renderer + dedicated composition performance route
-- [ ] 13-02-PLAN.md — Composition editor entry, section-boundary polish, and print completion
+- [x] 13-01-PLAN.md — Shared performance renderer + dedicated composition performance route
+- [x] 13-02-PLAN.md — Composition editor entry, section-boundary polish, and print completion
 
 ---
 
