@@ -2,10 +2,10 @@
 
 **Project:** Melody Map
 **Milestone:** v1.1 — DESIGN.md Implementation — In Progress
-**Phases:** 11 (6 complete, 5 in progress/planned)
+**Phases:** 12 total
 **Requirements:** 64 mapped | 0 unmapped
 **Generated:** 2026-04-20
-**Last Updated:** 2026-04-22 (v1.1 milestone start)
+**Last Updated:** 2026-04-24 (Phase 12 added)
 
 ---
 
@@ -365,6 +365,36 @@
 
 ---
 
+## Phase 12: before phase 11 (can be phase 12 out of order), I need to allow transposition of chords in chorded instruments. for example A chord with 2 half steps up will be a B chord. Since the guitar is sometimes play with a capo, it's better to allow half step transposes. System should consider any sequence of letters between spaces in the cues to be a chord. for example ` Bm `. While the true note will be Bm still, the user is given the option to `transpose` the chords. the system will look at a pre-defined state machine to transition it to the right chords based on the half step selected. All chords in the current instrument will be shifted accordingly. sometimes, the chord length can change from Am to A#m, which increases the length of the cue and possible truncates the chords at the end. this should not happen. instead, pad the lyrics with spaces (at the end) where possible to create more space in the cues. the position of the chords MUST NOT CHANGE relative to the lyrics when transposing. The same transpose can be applied to the piano also. the transpose should be an edit in place of ALL the cues in the currently selected instrument. For chords that are not recognizable, leave them as such and do not modify them.
+
+**Status:** ✓ Complete
+**Goal:** Allow in-place semitone transposition of piano and guitar cue lines while preserving chord start positions, schema-safe lyric alignment, and unknown-token passthrough.
+
+**Depends on:** Phases 6, 9, 10
+
+**Requirements:** TRNS-01, TRNS-02, TRNS-03, TRNS-04
+
+**Plans:** 2 plans in 2 waves
+
+**Plans:**
+- [x] 12-01-PLAN.md — TDD transposition utilities for token shifting, column preservation, and lyric padding
+- [x] 12-02-PLAN.md — SheetEditor controls to apply in-place transposition to the current chorded instrument
+
+**Success Criteria:**
+1. User can select piano or guitar in the editor and transpose all cues for that instrument by semitone steps
+2. Recognized chord tokens move by the selected half-step count using a predefined sharp-based state machine
+3. Chord start positions remain anchored to the same lyric columns after transposition
+4. When a transposed chord grows longer at the end of a line, lyrics and all cue lanes are padded instead of truncating the chord
+5. Unrecognized chord tokens remain unchanged
+6. Percussion cues are excluded from transposition controls
+
+**Planned Artifacts:**
+- `src/lib/lyrics-utils.ts` — Chord-token and line-level transposition helpers
+- `src/lib/lyrics-utils.test.ts` — Vitest coverage for transposition, passthrough, and overflow padding
+- `src/components/SheetEditor.tsx` — Current-instrument transpose controls and apply handler
+
+---
+
 ## Phase Map
 
 | # | Phase | Goal | Requirements | Status |
@@ -380,6 +410,7 @@
 | 9 | Sheet Canvas Redesign | Turn the editor into a canvas-first sheet surface while preserving Phase 6 capabilities | CANV-01–03, TRACK-01 | ✓ Complete |
 | 10 | Performance + Print Redesign | Rework performance mode and print output into intentional reading surfaces | PERF-04–05, PRNT-01 | In Progress |
 | 11 | Responsive + Motion Polish | Finish cross-screen refinement and subtle accessible motion | RESP-02, MOTN-01–02 | Planned |
+| 12 | Chord Transposition | Allow in-place semitone transposition of piano and guitar cue lines while preserving chord start positions, schema-safe lyric alignment, and unknown-token passthrough | TRNS-01–04 | ✓ Complete |
 
 ---
 
@@ -392,7 +423,8 @@
 5. **Design foundations before shell** — Token and typography system must exist before shell and library can use them
 6. **Shell before canvas** — Navigation and layout structure must be in place before editor content can be positioned correctly
 7. **Canvas before performance** — Editor surface informs the reading surface design
-8. **Responsive/motion last** — Polish phase that depends on all surfaces being complete
+8. **Responsive/motion late** — Polish phase that depends on all surfaces being complete
+9. **Chord transposition can land out of order** — The feature is isolated to chorded-instrument cue transformation, so it can be added as a follow-on phase without reopening the earlier milestone sequence
 
 ---
 
@@ -406,6 +438,17 @@ After each phase, the **Verifier** agent will confirm:
 ## Backlog
 
 - **PDF Import** — Add PDF ingestion for song sheets once a stable, machine-readable source format is available. Scope should cover extracting lyrics, section markers, and instrument cues without weakening the JSON-first import path.
+
+### Phase 13: let's create a phase to do performance mode in compositions. it is the same as performance mode in sheets but the sheets are collated and displayed in the order of the composition. there should be clear breaks between sheets to show the separation.
+
+**Goal:** Add a dedicated composition performance surface that collates sheets in composition order with shared instrument reading controls, clear section boundaries, and print-aware separation.
+**Requirements**: CPERF-01, CPERF-02, CPERF-03, CPERF-04
+**Depends on:** Phase 12
+**Plans:** 2 plans in 2 waves
+
+Plans:
+- [ ] 13-01-PLAN.md — Shared performance renderer + dedicated composition performance route
+- [ ] 13-02-PLAN.md — Composition editor entry, section-boundary polish, and print completion
 
 ---
 
@@ -439,13 +482,11 @@ All 6 phases have been successfully implemented and verified:
 - Print stylesheet for clean output
 - Modern UI with Tailwind CSS and shadcn/ui components
 
----
-
 ## Milestone Start — v1.1
 
 **Started:** 2026-04-22
 **Goal:** Implement DESIGN.md visual system across the entire app
-**Phases:** 7–11
+**Phases:** 7–12
 
 **Key Decisions:**
 - Preserve dark-mode toggle (both themes share new shell/canvas language)

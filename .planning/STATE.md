@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: "**Completed:** 2026-04-22"
 current_phase: 10 — Performance + Print Redesign
-status: complete
-last_updated: "2026-04-23T05:20:00Z"
+status: unknown
+last_updated: "2026-04-25T02:18:23.053Z"
 progress:
-  total_phases: 11
-  completed_phases: 10
-  total_plans: 20
-  completed_plans: 19
-  percent: 91
+  total_phases: 13
+  completed_phases: 6
+  total_plans: 24
+  completed_plans: 17
+  percent: 71
 ---
 
 # State: Melody Map
@@ -42,10 +42,11 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | 9 — Sheet Canvas Redesign | ✓ Complete | 3/3 | 100% |
 | 10 — Performance + Print Redesign | ✓ Complete | 3/3 | 100% |
 | 11 — Responsive + Motion Polish | Planned | — | 0% |
+| 12 — Chord Transposition | ✓ Complete | 2/2 | 100% |
 
 ## Active Context
 
-**Current session:** Phase 10 — Performance + Print Redesign
+**Current session:** Phase 12 — Chord Transposition
 **Completed steps:**
 
 - v1.0 milestone complete (Phases 1–6)
@@ -71,9 +72,16 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 - Phase 10 Plan 02 — Grouped Chord Format + Notes: grouped lead-sheet chord renderer with mono/grouped toggle and collapsible instrument-linked notes section
 - Phase 10 Plan 03 — Purposeful Print Stylesheet: purposeful print layout with selective hiding, readable typography, page-break rules, and expanded instrument notes for clean paper output
 
-**Current work:** Phase 10 — Performance + Print Redesign (Complete)
+**Current work:** Phase 12 — Chord Transposition (Complete)
 
 **Next step:** Phase 11 — Responsive + Motion Polish
+
+## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 12 added: before phase 11 (can be phase 12 out of order), I need to allow transposition of chords in chorded instruments. for example A chord with 2 half steps up will be a B chord. Since the guitar is sometimes play with a capo, it's better to allow half step transposes. System should consider any sequence of letters between spaces in the cues to be a chord. for example ` Bm `. While the true note will be Bm still, the user is given the option to `transpose` the chords. the system will look at a pre-defined state machine to transition it to the right chords based on the half step selected. All chords in the current instrument will be shifted accordingly. sometimes, the chord length can change from Am to A#m, which increases the length of the cue and possible truncates the chords at the end. this should not happen. instead, pad the lyrics with spaces (at the end) where possible to create more space in the cues. the position of the chords MUST NOT CHANGE relative to the lyrics when transposing. The same transpose can be applied to the piano also. the transpose should be an edit in place of ALL the cues in the currently selected instrument. For chords that are not recognizable, leave them as such and do not modify them.
+- Phase 13 added: let's create a phase to do performance mode in compositions. it is the same as performance mode in sheets but the sheets are collated and displayed in the order of the composition. there should be clear breaks between sheets to show the separation.
 
 ## Notes
 
@@ -105,3 +113,5 @@ See: `.planning/PROJECT.md` (updated 2026-04-22)
 | Used controlled Tabs for view toggle visibility | Need to conditionally hide mono/grouped toggle when percussion is active | activeTab state drives both tab selection and toggle visibility |
 | Used data-print-hide attribute selector for print hiding | Broad `button, input, textarea, a` selectors hide meaningful text like links | Only elements explicitly marked with data-print-hide or .no-print are hidden in print |
 | Split notes into separate screen/print DOM branches | CSS-only override of collapsible behavior is fragile and requires specificity battles | Screen notes remain collapsible; print notes always render expanded via separate branch |
+
+**Planned Phase:** 13 (Composition Performance Mode) — 2 plans — 2026-04-25T02:18:23.049Z

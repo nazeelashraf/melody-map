@@ -90,6 +90,13 @@
 - [x] **PRNT-01
 **: User can print a sheet or performance view that preserves readable cue and lyric hierarchy and removes non-essential chrome
 
+### Composition Performance
+
+- [ ] **CPERF-01**: User can open a composition performance surface that collates the composition's sheets in stored order on one reading-first page
+- [ ] **CPERF-02**: User can switch one shared instrument context across the entire composition performance surface, with piano/guitar grouped-or-mono behavior matching sheet performance mode and percussion keeping lane rendering
+- [ ] **CPERF-03**: User can distinguish composition sheet boundaries through visible section wrappers that show sheet index, title, tempo, and inline missing-sheet warnings without dropping order slots
+- [ ] **CPERF-04**: User can print composition performance mode with composition metadata, active instrument label, clear section boundaries, and an empty-state surface when the composition has no sheets
+
 ### Accessibility and Polish
 
 - [ ] **A11Y-01**: User can identify keyboard focus on interactive controls throughout the redesigned UI
@@ -134,6 +141,13 @@
 
 - [ ] **AUDIO-01**: User can play back a simple metronome click at the sheet's tempo
 - [ ] **KEY-01**: User can set a key signature for a sheet and transpose chords
+
+### Transposition
+
+- [x] **TRNS-01**: User can transpose all cues for the currently selected piano or guitar instrument by semitone steps in place
+- [x] **TRNS-02**: Recognized chord tokens keep their original lyric start columns after transposition; unrecognized tokens remain unchanged
+- [x] **TRNS-03**: When a transposed chord token grows beyond the current line length, lyrics and all cue lanes are padded with trailing spaces instead of truncating the cue
+- [x] **TRNS-04**: Sheet editor exposes transposition controls for piano and guitar only; percussion is excluded
 
 ## Out of Scope
 
@@ -215,15 +229,23 @@
 | PERF-04 | Phase 10 | Complete |
 | PERF-05 | Phase 10 | Complete |
 | PRNT-01 | Phase 10 | Complete |
+| CPERF-01 | Phase 13 | Planned |
+| CPERF-02 | Phase 13 | Planned |
+| CPERF-03 | Phase 13 | Planned |
+| CPERF-04 | Phase 13 | Planned |
 | A11Y-01 | Phase 7 | Planned |
 | A11Y-02 | Phase 7 | Planned |
 | RESP-02 | Phase 11 | Planned |
 | MOTN-01 | Phase 11 | Planned |
 | MOTN-02 | Phase 11 | Planned |
+| TRNS-01 | Phase 12 | Planned |
+| TRNS-02 | Phase 12 | Planned |
+| TRNS-03 | Phase 12 | Planned |
+| TRNS-04 | Phase 12 | Planned |
 
 **Coverage:**
-- Total requirements: 64
-- Mapped to phases: 64
+- Total requirements: 72
+- Mapped to phases: 72
 - Unmapped: 0
 
 ---
